@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Contracts;
+namespace Inside\Repositories\Contracts;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface ExecutivoPsyRepository.
  *
- * @package namespace App\Repositories\Contracts;
+ * @package namespace Inside\Repositories\Contracts;
  */
 interface ExecutivoPsyRepository extends RepositoryInterface
 {

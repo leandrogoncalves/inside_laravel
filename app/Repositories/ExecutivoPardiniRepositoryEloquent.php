@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace Inside\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Contracts\ExecutivoPardiniRepository;
-use App\Models\ExecutivoPardini;
-use App\Validators\ExecutivoPardiniValidator;
+use Inside\Repositories\Contracts\ExecutivoPardiniRepository;
+use Inside\Models\ExecutivoPardini;
+use Inside\Validators\ExecutivoPardiniValidator;
 
 /**
  * Class ExecutivoPardiniRepositoryEloquent.
@@ -25,7 +25,7 @@ class ExecutivoPardiniRepositoryEloquent extends BaseRepository implements Execu
         return ExecutivoPardini::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -34,5 +34,5 @@ class ExecutivoPardiniRepositoryEloquent extends BaseRepository implements Execu
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
 }
