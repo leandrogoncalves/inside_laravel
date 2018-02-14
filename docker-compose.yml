@@ -10,12 +10,12 @@ volumes:
 services:
   # PHP (nginx)
   api:
-    image: php:7.0-apache
-    container_name: inside-apache
+    image: ambientum/php:latest-nginx
+    container_name: inside-nginx
     volumes:
-      - .:/var/www/html
+      - .:/var/www/app
     ports:
-      - "8000:80"
+      - "8000:8080"
     links:
       - mysql
 
