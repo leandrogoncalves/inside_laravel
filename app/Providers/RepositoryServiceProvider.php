@@ -23,9 +23,10 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Repositories\Contracts\LaboratorioRepository::class, \App\Repositories\LaboratorioRepositoryEloquent::class);
-        $this->app->bind(\App\Repositories\Contracts\ExecutivoPsyRepository::class, \App\Repositories\ExecutivoPsyRepositoryEloquent::class);
-        $this->app->bind(\App\Repositories\Contracts\ExecutivoPardiniRepository::class, \App\Repositories\ExecutivoPardiniRepositoryEloquent::class);
+        $this->app->bind(\Inside\Repositories\Contracts\LaboratorioRepository::class, \Inside\Repositories\LaboratorioRepositoryEloquent::class);
+        $this->app->bind(\Inside\Repositories\Contracts\ExecutivoPsyRepository::class, \Inside\Repositories\ExecutivoPsyRepositoryEloquent::class);
+        $this->app->bind(\Inside\Repositories\Contracts\ExecutivoPardiniRepository::class, \Inside\Repositories\ExecutivoPardiniRepositoryEloquent::class);
+        $this->app->bind(\Inside\Repositories\Contracts\FormularioRepository::class, \Inside\Repositories\FormularioRepositoryEloquent::class);
         //:end-bindings:
     }
 }
