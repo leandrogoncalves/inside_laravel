@@ -1,0 +1,34 @@
+# v3 syntax
+version: '3'
+
+# Named volumes
+volumes:
+  # Mysql Data
+  inside-mysql-data:
+    driver: local
+
+services:
+  # PHP (nginx)
+  api:
+    image: php:7.0-apache
+    container_name: inside-apache
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:80"
+    links:
+      - mysql
+
+  # Mysql (5.7)
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: inside-mysql
+    volumes:
+      - inside-mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=inside
+      - MYSQL_USER=inside
+      - MYSQL_PASSWORD=secret
