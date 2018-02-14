@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "psychemedics/inside",
+    "description": "Projeto Inside, que visa ajudar o setor comercial.",
+    "keywords": ["psychemedics", "inside"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -27,7 +27,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "Inside\\": "app/"
         }
     },
     "autoload-dev": {
