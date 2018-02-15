@@ -12,18 +12,19 @@ class Executivos
     {
         $this->repository = $repository;
     }
-    public function getIdExecutivoByCodigoExecutivo()
+
+    public function getIdExecutivoByCodigoExecutivo(int $id)
     {
-        return collect(($this->repository->findByField('codigo_executivo', 12007, ['id_executivo'])->toArray()))->collapse()->all();
+        return $this->repository->findByField('codigo_executivo', $id, ['id_executivo'])->toArray();
     }
 
-    public function getIdExecutivoByCodigoSupervisor()
+    public function getIdExecutivoByCodigoSupervisor(int $id)
     {
-        return $this->repository->findByField('codigo_supervisor', 110, ['id_executivo'])->implode("id_executivo", ",");
+        return $this->repository->findByField('codigo_supervisor', $id, ['id_executivo'])->toArray();
     }
 
-    public function getIdExecutivoByCodigoGerente()
+    public function getIdExecutivoByCodigoGerente(int $id)
     {
-        return $this->repository->findByField('codigo_gerente', 10, ['id_executivo'])->toArray();
+        return $this->repository->findByField('codigo_gerente', $id, ['id_executivo'])->toArray();
     }
 }
