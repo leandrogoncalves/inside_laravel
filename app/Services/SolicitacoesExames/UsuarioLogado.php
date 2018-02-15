@@ -69,7 +69,7 @@ class UsuarioLogado
         }
     }
 
-    public function isUserPardini(UsuarioLogado &$user)
+    public function isUserPardini()
     {
         switch ($this->perfilAcesso) {
             case 'admin':
