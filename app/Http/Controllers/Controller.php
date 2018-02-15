@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $view = [];
+
+    public function __construct()
+    {
+        $this->view['title'] = 'Inside';
+        $this->view['menu'] = 'home';
+    }
 }

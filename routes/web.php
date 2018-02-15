@@ -15,6 +15,14 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/logout', function()
+{
+    \Auth::logout();
+    \Session::flush();
+    return  redirect()->route('login');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

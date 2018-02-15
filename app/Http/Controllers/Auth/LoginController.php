@@ -36,9 +36,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest')->except('logout');
     }
-
 
 
     /**
@@ -48,11 +48,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-
-        $view = [
-          'title' => 'Inside'
-        ];
-
-        return view('auth.login', $view);
+        return view('auth.login', $this->view);
     }
 }

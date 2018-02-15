@@ -39,31 +39,9 @@
         <div class="col-md-5">
             <div class="row">
 
-                <?php /* ?>
-                @foreach( Session::get('usuario')->getTrimestre() as $trimestre)
-                    <div class="col-md-3 text-center">
-                        <a href="/trimestre?t={!! $trimestre->trimestre !!}">
-                            {!! $trimestre->trimestre !!}
-                            <br/>
-                            {!! $trimestre->total !!}
-                        </a>
-                        <span class="glyphicon glyphicon-question-sign" data-toggle="modal"
-                              data-target="#myModalTrimestre" aria-hidden="true"></span>
-                    </div>
-                @endforeach
-
-                @if( isset($tendencia) && $tendencia )
-                    <div class="col-md-3 text-center">
-                        <a href="">
-                            Tendência de vendas
-                            <br>
-                            {!! $tendencia !!}
-                        </a>
-                        <span class="glyphicon glyphicon-question-sign" data-toggle="modal"
-                              data-target="#myModalTendencia" aria-hidden="true"></span>
-                    </div>
+                @if(Auth::check())
+                    @include('_header.indicadores',compact($menu))
                 @endif
-                <?php */ ?>
 
             </div>
             <!-- /row -->
@@ -71,17 +49,9 @@
         <!-- /col -->
 
 
-        <?php /* ?>
-        <div class="col-md-4 text-right">
-            @if(Session::has('usuario'))
-                <p>Olá, <strong>{{ Session::get('usuario')->nome }}</strong>.
-                    <a href="/minha-conta" class="inline">Minha Conta</a> | <a href="/logout" class="inline">Sair</a></p>
-                <p><span class='bloco' style='background-color: #1b9e77; '></span> Solicitações <span class='bloco' style="background-color: rgb(51, 102, 204);"></span>
-                    Coletas </p>
-            @endif
-        </div>
-
-        <?php */ ?>
+        @if(Auth::check())
+            @include('_header.user',compact($menu))
+        @endif
 
     </div>
     <!-- /row -->
@@ -89,47 +59,11 @@
 </div>
 <!-- /header -->
 
-<?php /* ?>
-<!-- Collect the nav links, forms, and other content for toggling -->
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-
-        <li class="{{ $menu == 'home' ? 'active' : '' }}"><a href="/">Home</a></li>
-        <li class="{{ $menu == 'performance' ? 'active' : '' }}"><a
-                    href="/performance{{ $url }}">Performance</a></li>
-        <li class="{{ $menu == 'evolucao' ? 'active' : '' }}"><a href="/evolucao{{ $url }}">Evolução</a></li>
-        <li class="{{ $menu == 'comparacao' ? 'active' : '' }}"><a href="/comparacao{{ $url }}">Comparação</a>
-        </li>
-        <li class="{{ $menu == 'prazos' ? 'active' : '' }}"><a href="/prazos{{ $url }}">Prazos</a></li>
-        <li class="{{ $menu == 'grafico' ? 'active' : '' }}"><a href="/grafico{{ $url }}">Gráficos</a></li>
-        <li class="{{ $menu == 'sugestao' ? 'active' : '' }}"><a href="/sugestao{{ $url }}">Sugestão</a></li>
-
-        @if( in_array( Session::get('usuario')->perfil_acesso, array('admin', 'psy', 'ger-psy', 'sup-psy') ) )
-            <li class="{{ $menu == 'comentarios' ? 'active' : ''}}"><a href="/comentarios{{ $url }}">Comentários</a></li>
-            <li class="{{ $menu == 'relatorio-aceite' ? 'active' : ''}}"><a href="/relatorio-aceite">Relatório de Aceite </a></li>
-        @endif
-
-        @if( in_array( Session::get('usuario')->perfil_acesso, array('admin', 'psy', 'ger-psy', 'sup-psy', 'exec-psy') ) )
-            <li class="{{ $menu == 'novos-clientes' ? 'active' : ''}}"><a href="/novos-clientes">Novos clientes</a></li>
-        @endif
-
-        @if( !in_array(Session::get('usuario')->perfil_acesso, array('admin-pard', 'executivo', 'gerente', 'supervisor') ) )
-            <li class="{{ $menu == 'exibicao-site' ? 'active' : ''}}"><a href="/exibicao-site">Exibição Site <sup style="color: red;">Novo</sup></a></li>
-        @endif
-
-        @if( in_array(Session::get('usuario')->perfil_acesso, array('admin', 'ger-psy', 'sup-psy') ) || Session::get('usuario')->perfil_acesso == 'admin-pard' )
-            <li class="{{ $menu == 'acessos' ? 'active' : ''}}"><a href="/acessos{{ $url }}">Acessos</a></li>
-        @endif
-
-        ?>
-    </ul>
-</div>
-<!-- /.navbar-collapse -->
-
-<?php */ ?>
-
-
 <div class="container-fluid">
+
+    @if(Auth::check())
+        @include('_header.menu',compact($menu))
+    @endif
 
     @yield('content')
 
@@ -138,13 +72,13 @@
     @include('_modal.modal_trimestre')
 
 </div>
-<!-- /container -->
+<!-- /container-fluid -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.jss"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" ></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.4/datepicker.min.js"></script>
@@ -155,12 +89,8 @@
 <script src="{{ asset('js/vendor/jquery/jquery.mask.js') }}"></script>
 <script src="{{ asset('js/vendor/jquery/jquery.tablesorter.min.js') }}"></script>
 <script src="{{ asset('js/vendor/jquery/jquery.twbsPagination.min.js') }}" ></script>
-<script src="{{ asset('js/pages.js') }}" ></script>
 
 @yield('js')
 
-
 </body>
 </html>
-
-
