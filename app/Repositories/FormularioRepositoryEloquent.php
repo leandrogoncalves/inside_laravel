@@ -46,4 +46,11 @@ class FormularioRepositoryEloquent extends BaseRepository implements FormularioR
 
         return $this;
     }
+
+    public function groupBy($by)
+    {
+        $this->model = $this->model->groupBy($by);
+
+        return $this;
+    }
 }
