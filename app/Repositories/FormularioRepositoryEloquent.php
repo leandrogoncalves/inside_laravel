@@ -25,7 +25,7 @@ class FormularioRepositoryEloquent extends BaseRepository implements FormularioR
         return Formulario::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -34,5 +34,16 @@ class FormularioRepositoryEloquent extends BaseRepository implements FormularioR
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    public function getLaboratorios($dataInicio = '2018-02-01 00:00:00', $dataFim = '2018-02-12 23:59:59')
+    {
+        $this->model = $this->model
+        ->where("OprFrmDtHrIncl", ">=", $dataInicio)
+        ->where("OprFrmDtHrIncl", "<=", $dataFim)
+        ->where("OprFrmStatus", "<>", "C")
+        ->where("OprFrmOrigem", "<>", "CAG")
+        ->where("OprFrmOrigem", "<>", "LAB");
+
+        return $this;
+    }
 }

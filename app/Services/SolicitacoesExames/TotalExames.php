@@ -8,6 +8,8 @@ use Inside\Services\SolicitacoesExames\Pardini\Executivos as ExecutivosPardini;
 use Inside\Repositories\Contracts\LaboratorioRepository;
 use Inside\Repositories\Contracts\FormularioRepository;
 
+use Inside\Models\Formulario;
+
 class TotalExames
 {
     private $laboratorioRepository;
@@ -25,10 +27,13 @@ class TotalExames
 
     public function getTotalExamesSolicitados()
     {
-        $this->formularioRepository->with([
-            "laboratorio" => function ($query) {
-                return $query->where("PesPesLabAuto", 3518)->get();
-            }
-            ])->first();
+        $idExecutivoPsy = $this->executivoRepository->getIdExecutivoByCodigoGerente();
+
+        return $this->formularioRepository
+        ->with(["laboratorio"])
+        ->whereHas("laboratorio", function ($query) use ($idExecutivoPsy) {
+            $query->whereIn('id_executivo_psy', $idExecutivoPsy);
+        })
+        ->first();
     }
 }
