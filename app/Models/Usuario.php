@@ -12,6 +12,8 @@ class Usuario extends Authenticatable
     protected $table = "usuario";
     protected $connection = 'log_inteligencia';
 
+    protected $connection = 'log_inteligencia';
+
     protected $hidden = [
         'password', 'remember_token',
     ];

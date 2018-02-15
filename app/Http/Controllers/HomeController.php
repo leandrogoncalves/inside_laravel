@@ -11,16 +11,13 @@ class HomeController extends Controller
 
     public function __construct(HomeService $service)
     {
+        parent::__construct();
+        $this->middleware('auth');
         $this->service = $service;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        try {
-            $data = $this->service->getData($request);
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), ($e->getCode() > 200? $e->getCode() : '404'));
-        }
+        return view('home.index', $this->view);
     }
 }
