@@ -5,11 +5,11 @@ namespace Inside\Repositories\Contracts;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface LaboratorioRepository.
+ * Interface FormularioRepository.
  *
  * @package namespace Inside\Repositories\Contracts;
  */
-interface LaboratorioRepository extends RepositoryInterface
+interface FormularioRepository extends RepositoryInterface
 {
     //
 }

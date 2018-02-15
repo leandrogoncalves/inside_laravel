@@ -4,16 +4,16 @@ namespace Inside\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Inside\Repositories\Contracts\LaboratorioRepository;
-use Inside\Models\Laboratorio;
-use Inside\Validators\LaboratorioValidator;
+use Inside\Repositories\Contracts\ExecutivoPardiniRepository;
+use Inside\Models\ExecutivoPardini;
+use Inside\Validators\ExecutivoPardiniValidator;
 
 /**
- * Class LaboratorioRepositoryEloquent.
+ * Class ExecutivoPardiniRepositoryEloquent.
  *
- * @package namespace Inside\Repositories;
+ * @package namespace App\Repositories;
  */
-class LaboratorioRepositoryEloquent extends BaseRepository implements LaboratorioRepository
+class ExecutivoPardiniRepositoryEloquent extends BaseRepository implements ExecutivoPardiniRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +22,7 @@ class LaboratorioRepositoryEloquent extends BaseRepository implements Laboratori
      */
     public function model()
     {
-        return Laboratorio::class;
+        return ExecutivoPardini::class;
     }
 
 

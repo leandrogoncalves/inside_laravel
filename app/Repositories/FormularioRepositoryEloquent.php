@@ -4,16 +4,16 @@ namespace Inside\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Inside\Repositories\Contracts\LaboratorioRepository;
-use Inside\Models\Laboratorio;
-use Inside\Validators\LaboratorioValidator;
+use Inside\Repositories\Contracts\FormularioRepository;
+use Inside\Models\Formulario;
+use Inside\Validators\FormularioValidator;
 
 /**
- * Class LaboratorioRepositoryEloquent.
+ * Class FormularioRepositoryEloquent.
  *
  * @package namespace Inside\Repositories;
  */
-class LaboratorioRepositoryEloquent extends BaseRepository implements LaboratorioRepository
+class FormularioRepositoryEloquent extends BaseRepository implements FormularioRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +22,7 @@ class LaboratorioRepositoryEloquent extends BaseRepository implements Laboratori
      */
     public function model()
     {
-        return Laboratorio::class;
+        return Formulario::class;
     }
 
 
@@ -35,4 +35,10 @@ class LaboratorioRepositoryEloquent extends BaseRepository implements Laboratori
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    public function groupBy($by)
+    {
+        $this->model = $this->model->groupBy($by);
+
+        return $this;
+    }
 }
