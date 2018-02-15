@@ -4,7 +4,7 @@ namespace Inside\Services;
 
 use Illuminate\Http\Request;
 use Inside\Services\UsuarioLogadoService;
-use Inside\Domain\SolicitacoesExames\TotalExames;
+use Inside\Domain\SolicitacoesExames\TotalExames\TotalExames;
 use Carbon\Carbon;
 
 class HomeService

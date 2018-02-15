@@ -1,10 +1,10 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames;
+namespace Inside\Domain\SolicitacoesExames\Executivos;
 
 use Inside\Domain\SolicitacoesExames\UsuarioLogado;
-use Inside\Domain\SolicitacoesExames\Psy\Executivos as ExecutivosPsy;
-use Inside\Domain\SolicitacoesExames\Pardini\Executivos as ExecutivosPardini;
+use Inside\Domain\SolicitacoesExames\Executivos\Psy\Executivos as ExecutivosPsy;
+use Inside\Domain\SolicitacoesExames\Executivos\Pardini\Executivos as ExecutivosPardini;
 
 class Executivos
 {

@@ -1,9 +1,12 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames;
+namespace Inside\Domain\SolicitacoesExames\TotalExames;
 
 use Inside\Repositories\Contracts\LaboratorioRepository;
 use Inside\Repositories\Contracts\FormularioRepository;
+
+use Inside\Domain\SolicitacoesExames\UsuarioLogado;
+use Inside\Domain\SolicitacoesExames\Executivos\Executivos;
 
 use Carbon\Carbon;
 use \DB;
