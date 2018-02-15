@@ -20,7 +20,7 @@ class HomeController extends Controller
             $data = $this->service->getData($request);
             return response()->json($data);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), $e->getCode());
+            return response()->json($e->getMessage(), ($e->getCode() > 200? $e->getCode() : '404'));
         }
     }
 }
