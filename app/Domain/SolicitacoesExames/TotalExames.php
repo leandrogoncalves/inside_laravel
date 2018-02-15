@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Services\SolicitacoesExames;
+namespace Inside\Domain\SolicitacoesExames;
 
 use Inside\Repositories\Contracts\LaboratorioRepository;
 use Inside\Repositories\Contracts\FormularioRepository;
