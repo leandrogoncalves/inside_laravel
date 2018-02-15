@@ -15,9 +15,9 @@ class HomeController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data =  $this->service->getData();
+        $data =  $this->service->getData($request);
         dd($data);
         return view('home.index', $this->view);
     }
