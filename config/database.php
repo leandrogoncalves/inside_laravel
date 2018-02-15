@@ -27,13 +27,13 @@ return [
             'engine' => null,
         ],
 
-        'psy_transp' => [
+        'log_inteligencia' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST_PSY_TRANSP', '127.0.0.1'),
-            'port' => env('DB_PORT_PSY_TRANSP', '3306'),
-            'database' => env('DB_DATABASE_PSY_TRANSP', 'forge'),
-            'username' => env('DB_USERNAME_PSY_TRANSP', 'forge'),
-            'password' => env('DB_PASSWORD_PSY_TRANSP', ''),
+            'host' => env('DB_HOST_LOG_INTELIGENCIA', '127.0.0.1'),
+            'port' => env('DB_PORT_LOG_INTELIGENCIA', '3306'),
+            'database' => env('DB_DATABASE_LOG_INTELIGENCIA', 'forge'),
+            'username' => env('DB_USERNAME_LOG_INTELIGENCIA', 'forge'),
+            'password' => env('DB_PASSWORD_LOG_INTELIGENCIA', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
