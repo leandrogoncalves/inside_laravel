@@ -7,7 +7,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 /**
  * Interface ExecutivoPardiniRepository.
  *
- * @package namespace App\Repositories\Contracts;
+ * @package namespace Inside\Repositories\Contracts;
  */
 interface ExecutivoPardiniRepository extends RepositoryInterface
 {

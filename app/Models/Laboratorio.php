@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Laboratorio extends Model
 {
     protected $table = 'pespeslab';
-    protected $connection = 'psy_transp';
+
+    public function formulario()
+    {
+        return $this->hasMany(Formulario::class, "PesPesLabAuto", "PesPesLabAuto");
+    }
 }
