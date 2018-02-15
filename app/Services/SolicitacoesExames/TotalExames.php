@@ -2,33 +2,28 @@
 
 namespace Inside\Services\SolicitacoesExames;
 
-use Inside\Services\SolicitacoesExames\Psy\Executivos;
-use Inside\Services\SolicitacoesExames\Pardini\Executivos as ExecutivosPardini;
-
 use Inside\Repositories\Contracts\LaboratorioRepository;
 use Inside\Repositories\Contracts\FormularioRepository;
 
-use Inside\Models\Formulario;
+use Carbon\Carbon;
 use \DB;
 
 class TotalExames
 {
     private $formularioRepository;
-    private $executivoRepository;
-    private $executivoPardiniRepository;
+    private $executivos;
 
-    public function __construct(Executivos $executivoRepository, ExecutivosPardini $executivoPardiniRepository, FormularioRepository $formularioRepository)
+    public function __construct(Executivos $executivos, FormularioRepository $formularioRepository)
     {
         $this->formularioRepository = $formularioRepository;
-        $this->executivoRepository = $executivoRepository;
-        $this->executivoPardiniRepository = $executivoPardiniRepository;
+        $this->executivos = $executivos;
     }
 
-    public function getTotalExamesSolicitados()
+    public function getTotalExamesSolicitados(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
-        $idExecutivoPsy = $this->executivoRepository->getIdExecutivoByCodigoExecutivo();
-        $dataInicio = '2018-02-01 00:00:00';
-        $dataFim = '2018-02-12 23:59:59';
+        $idExecutivoPsy = $this->executivos->getIdExecutivo($user);
+        $dataInicio = $this->getDateFormatted($dataInicio);
+        $dataFim = $this->getDateFormatted($dataFim);
 
         return $this->formularioRepository
         ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
@@ -46,5 +41,10 @@ class TotalExames
         ->groupBy("OprFrmOrigem")
         ->orderBy("OprFrmOrigem")
         ->all(["OprFrmOrigem", DB::raw("count(1) as total")]);
+    }
+
+    private function getDateFormatted(Carbon $date)
+    {
+        return $date->toDateTimeString();
     }
 }
