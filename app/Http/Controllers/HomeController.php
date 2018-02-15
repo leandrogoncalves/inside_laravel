@@ -12,12 +12,13 @@ class HomeController extends Controller
     public function __construct(HomeService $service)
     {
         parent::__construct();
-        $this->middleware('auth');
         $this->service = $service;
     }
 
     public function index()
     {
+        $data =  $this->service->getData();
+        dd($data);
         return view('home.index', $this->view);
     }
 }
