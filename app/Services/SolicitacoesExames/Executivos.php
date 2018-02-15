@@ -11,7 +11,7 @@ class Executivos
     protected $executivosPsy;
     protected $executivosPardini;
 
-    public function __construct(ExecutivosPsy $executivosPsy, ExecutivosPsy $executivosPardini)
+    public function __construct(ExecutivosPsy $executivosPsy, ExecutivosPardini $executivosPardini)
     {
         $this->executivosPsy = $executivosPsy;
         $this->executivosPardini = $executivosPardini;
@@ -21,36 +21,37 @@ class Executivos
     {
         switch ($user->getPerfilAcessoPorExtenso()) {
             case UsuarioLogado::ADMIN_PSY:
-            dd($user->getIdExecutivo());
-            return $this->executivosPsy->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
+                return $this->executivosPsy->getIdExecutivoByAdmin();
             break;
 
             case UsuarioLogado::EXECUTIVO_PSY:
-            return $this->executivosPsy->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
+                return $this->executivosPsy->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
             break;
 
             case UsuarioLogado::SUPERVISOR_PSY:
-            return $this->executivosPsy->getIdExecutivoByCodigoSupervisor($user->getIdExecutivo());
+                return $this->executivosPsy->getIdExecutivoByCodigoSupervisor($user->getIdExecutivo());
             break;
             case UsuarioLogado::GERENTE_PSY:
-            return $this->executivosPsy->getIdExecutivoByCodigoGerente($user->getIdExecutivo());
+                return $this->executivosPsy->getIdExecutivoByCodigoGerente($user->getIdExecutivo());
             break;
 
             case UsuarioLogado::ADMIN_PARDINI:
-            return false;
+                return $this->executivosPardini->getIdExecutivoByAdmin();
             break;
+
             case UsuarioLogado::EXECUTIVO_PARDINI:
-            return false;
+                return $this->executivosPardini->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
             break;
+
             case UsuarioLogado::SUPERVISOR_PARDINI:
-            return false;
+                return $this->executivosPardini->getIdExecutivoByCodigoSupervisor($user->getIdExecutivo());
             break;
             case UsuarioLogado::GERENTE_PARDINI:
-            return false;
+                return $this->executivosPardini->getIdExecutivoByCodigoGerente($user->getIdExecutivo());
             break;
 
             default:
-            throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+                throw new \Exception("Erro, perfil de acesso desconhecido", 400);
             break;
         }
     }
