@@ -27,4 +27,9 @@ class Executivos
     {
         return $this->repository->findByField('codigo_gerente', $id, ['id_executivo'])->toArray();
     }
+
+    public function getIdExecutivoByAdmin()
+    {
+        return $this->repository->all(['id_executivo'])->toArray();
+    }
 }
