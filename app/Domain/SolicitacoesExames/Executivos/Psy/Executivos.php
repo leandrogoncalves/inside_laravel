@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames\Psy;
+namespace Inside\Domain\SolicitacoesExames\Executivos\Psy;
 
 use Inside\Repositories\Contracts\ExecutivoPsyRepository;
 
