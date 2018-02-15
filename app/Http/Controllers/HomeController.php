@@ -16,7 +16,7 @@ class HomeController extends Controller
         $this->service = $service;
     }
 
-    public function index(Request $request)
+    public function index()
     {
         return view('home.index', $this->view);
     }
