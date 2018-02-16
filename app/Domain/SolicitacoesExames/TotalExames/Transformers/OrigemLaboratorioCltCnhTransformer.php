@@ -10,8 +10,10 @@ class OrigemLaboratorioCltCnhTransformer extends OrigemTransformer
     public function transform(Collection $data, Carbon $periodStart)
     {
         $data->each(function ($item, $key) use ($periodStart) {
-            $this->transformerDataPush($periodStart->format("d-m-Y"), $item->origem, $item->total);
+            $this->transformerDataPush($periodStart->format("d/m/Y"), $item->origem, $item->total);
         });
+
+        $this->fillFieldsMissing($periodStart);
 
         return $this->dataTransformer;
     }
