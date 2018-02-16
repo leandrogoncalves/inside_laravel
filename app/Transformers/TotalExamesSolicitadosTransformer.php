@@ -21,12 +21,14 @@ class TotalExamesSolicitadosTransformer
                 //PERCORRE TODAS AS ORIGENS (MACRO) DENTRO DE CADA PERIODO
                 $periodo->each(function ($origens) use ($keyPeriodo) {
                     //PERCORRE CADA ORIGEM (MICRO) DENTRO DA ORIGEM MACRO
-                    $origens->each(function ($origem) use ($keyPeriodo) {
-                        //PEGA O VALOR EM PERCENTUAL DO TOTAL DESSA ORIGEM
-                        $percentage = $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"]);
-                        //COLOCA (PUT) ESSA VALOR PERCENTUAL DENTRO DA ORIGEM (MICRO)
-                        $origem["origem"]->put("porcentualTotal", $percentage);
-                    });
+                    if ($origens instanceof Collection) {
+                        $origens->each(function ($origem) use ($keyPeriodo) {
+                            //PEGA O VALOR EM PERCENTUAL DO TOTAL DESSA ORIGEM
+                            $percentage = $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"]);
+                            //COLOCA (PUT) ESSA VALOR PERCENTUAL DENTRO DA ORIGEM (MICRO)
+                            $origem["origem"]->put("porcentualTotal", $percentage);
+                        });
+                    }
                 });
             });
             return $data;
@@ -37,10 +39,12 @@ class TotalExamesSolicitadosTransformer
     {
         $data->each(function ($periodo, $key) {
             $totalPorOrigem = $periodo->map(function ($origem, $key) {
-                $origensTotais = $origem->map(function ($item) {
-                    return $item["origem"]["total"];
-                });
-                return $origensTotais->sum();
+                if ($origem instanceof Collection) {
+                    $origensTotais = $origem->map(function ($item) {
+                        return $item["origem"]["total"];
+                    });
+                    return $origensTotais->sum();
+                }
             });
 
             $this->totalExamesSolicitadosPorPeriodo->put($key, $totalPorOrigem->sum());
