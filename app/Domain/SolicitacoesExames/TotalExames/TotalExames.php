@@ -48,9 +48,9 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return [
-                $origemBasicaTransformer,
-                $origemLaboratorioTransformer,
-                $origemLaboratorioCltCnhTransoformer
+                "origemBasica" => $origemBasicaTransformer,
+                "origemLaboratorio" => $origemLaboratorioTransformer,
+                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
             ];
         }
 
@@ -69,9 +69,9 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return [
-                $origemBasicaTransformer,
-                $origemLaboratorioTransformer,
-                $origemLaboratorioCltCnhTransoformer
+                "origemBasica" => $origemBasicaTransformer,
+                "origemLaboratorio" => $origemLaboratorioTransformer,
+                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
             ];
         }
 
