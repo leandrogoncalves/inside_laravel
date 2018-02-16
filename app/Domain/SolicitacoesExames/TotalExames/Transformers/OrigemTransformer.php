@@ -26,7 +26,7 @@ abstract class OrigemTransformer
 
     protected function transformerDataPush($period, $name, $total)
     {
-        $this->dataTransformer->push([
+        $this->dataTransformer->put($name, [
             'period' => $period,
             'origem' => [
                 'nome' => $name,
