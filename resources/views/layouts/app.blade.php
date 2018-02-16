@@ -16,12 +16,12 @@
 <body>
     <div id="app">
         @include('layouts.header')
+
+        @if(isset($menu))
         @include('layouts.menu-superior', ['menu' => $menu])
+        @endif
 
         <main class="container">
-            <div id="page-title" class="d-flex mb-4">
-                <h2 class="display-4">{{ $page_title }}</h2>
-            </div>
             @yield('content')
         </main>
     </div>

@@ -1,9 +1,13 @@
 @extends('layouts.app', [
-    'menu' => 'home',
-    'page_title' => ('Dashboard' . (isset(Auth::user()->perfil)? ' - ' . ucfirst(Auth::user()->perfil): '')),
+    'menu' => 'home'
 ])
 
 @section('content')
+
+<div id="page-title" class="d-flex mb-4">
+    <h2 class="display-4">{{ ('Dashboard' . (isset(Auth::user()->perfil)? ' - ' . ucfirst(Auth::user()->perfil): '')) }}</h2>
+</div>
+
 <div class="row">
     @foreach($data as $periodo) <!-- PRIMEIRO VAMOS PERCORRER ENTRE OS PERIODOS -->
     <div class="col-12 col-md-6 col-lg-4">
@@ -41,7 +45,7 @@
                         <tr>
                             <td><strong>Total:</strong></td>
                             <td><strong>{{ $periodo["totalExamesPorPeriodo"] }}</strong></td>
-                            <td><strong>100%</strong></td>
+                            <td><strong>{{ $periodo["totalExamesPorPeriodoPorcentagem"] . "%" }}</strong></td>
                         </tr>
                     </tfoot>
                 </table>
