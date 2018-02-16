@@ -7,10 +7,12 @@ use Illuminate\Support\Collection;
 class TotalExamesSolicitadosTransformer
 {
     protected $totalExamesSolicitadosPorPeriodo;
+    protected $totalExamesPorPeriodo;
 
     public function __construct()
     {
         $this->totalExamesSolicitadosPorPeriodo = collect([]);
+        $this->totalExamesPorPeriodo = 0;
     }
 
     public function transform(Collection $data)
@@ -25,11 +27,14 @@ class TotalExamesSolicitadosTransformer
                         $origens->each(function ($origem) use ($keyPeriodo) {
                             //PEGA O VALOR EM PERCENTUAL DO TOTAL DESSA ORIGEM
                             $percentage = $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"]);
+                            $this->totalExamesPorPeriodo += ((int) $origem["origem"]["total"]);
                             //COLOCA (PUT) ESSA VALOR PERCENTUAL DENTRO DA ORIGEM (MICRO)
                             $origem["origem"]->put("porcentualTotal", $percentage);
                         });
                     }
                 });
+                $periodo->put("totalExamesPorPeriodo", $this->totalExamesPorPeriodo);
+                $this->totalExamesPorPeriodo = 0;
             });
             return $data;
         }
