@@ -10,6 +10,7 @@ class Usuario extends Authenticatable
     use Notifiable;
 
     protected $table = "usuario";
+    protected $connection = 'log_inteligencia';
 
     protected $hidden = [
         'password', 'remember_token',

@@ -3,26 +3,21 @@
 namespace Inside\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inside\Services\HomeService;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $service;
+
+    public function __construct(HomeService $service)
     {
-        $this->middleware('auth');
+        parent::__construct();
+        $this->service = $service;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $data = $this->service->getData($request);
+        return view('home.index', compact('data'));
     }
 }
