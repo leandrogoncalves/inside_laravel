@@ -36,7 +36,6 @@ class HomeService
 
     private function getExamesDaysDate()
     {
-        $now = Carbon::now();
         $now = Carbon::createFromFormat("Y-m-d H:i:s", "2018-02-09 00:00:00");
 
         return collect([

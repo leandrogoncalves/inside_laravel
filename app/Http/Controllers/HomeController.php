@@ -12,7 +12,6 @@ class HomeController extends Controller
     public function __construct(HomeService $service)
     {
         parent::__construct();
-        $this->middleware('auth');
         $this->service = $service;
     }
 

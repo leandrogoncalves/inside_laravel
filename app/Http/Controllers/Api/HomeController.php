@@ -13,19 +13,23 @@ class HomeController extends Controller
     public function __construct(HomeService $service)
     {
         parent::__construct();
-        $this->middleware('auth');
         $this->service = $service;
     }
 
 
-    public function index(Request $request)
+    public function getQuadrosTotais(Request $request)
     {
+        dd($request->user());
         try {
             $data = $this->service->getData($request);
             return response()->json($data);
         } catch (\Exception $e) {
+            \Log::error('[API INSIDE HOME] Erro ao acessar quadros totais, detalhes = '.$e->getMessage());
+            \Log::error('[API INSIDE HOME] File = '.$e->getFile().': '.$e->getLine());
+            \Log::error('[API INSIDE HOME] Trace = '.$e->getTraceAsString());
             return response()->json($e->getMessage(), ($e->getCode() > 200? $e->getCode() : '404'));
         }
 
     }
+
 }
