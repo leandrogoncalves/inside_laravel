@@ -1,4 +1,7 @@
-@extends('layouts.app', ['menu' => 'home'])
+@extends('layouts.app', [
+    'menu' => 'home',
+    'page_title' => ('Dashboard' . (isset(Auth::user()->perfil)? ' - ' . ucfirst(Auth::user()->perfil): '')),
+])
 
 @section('content')
 <div class="row">
@@ -47,4 +50,16 @@
     </div>
     @endforeach <!-- FIM DE UM CARD COM O PERIODO -->
 </div>
+
+<div class="row">
+    <div class="col d-flex justify-content-center">
+        <div class="card bg-light mb-3">
+            <div class="card-header">Preço Médio:</div>
+            <div class="card-body">
+                R$ 210,00
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
