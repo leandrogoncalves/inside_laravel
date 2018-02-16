@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Services\SolicitacoesExames;
+namespace Inside\Domain\SolicitacoesExames;
 
 use Inside\Models\Usuario;
 use Exception;
@@ -69,7 +69,7 @@ class UsuarioLogado
         }
     }
 
-    public function isUserPardini(UsuarioLogado &$user)
+    public function isUserPardini()
     {
         switch ($this->perfilAcesso) {
             case 'admin':

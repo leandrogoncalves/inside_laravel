@@ -12,12 +12,16 @@ class HomeController extends Controller
 
     public function __construct(HomeService $service)
     {
-        parent::__construct();
         $this->service = $service;
     }
 
 
     public function getQuadrosTotais(Request $request)
+    {
+
+    }
+
+    public function index(Request $request)
     {
         dd($request->user());
         try {

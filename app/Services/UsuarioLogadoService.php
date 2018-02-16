@@ -3,7 +3,7 @@
 namespace Inside\Services;
 
 use Illuminate\Http\Request;
-use Inside\Services\SolicitacoesExames\UsuarioLogado;
+use Inside\Domain\SolicitacoesExames\UsuarioLogado;
 
 class UsuarioLogadoService
 {

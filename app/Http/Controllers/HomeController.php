@@ -11,12 +11,12 @@ class HomeController extends Controller
 
     public function __construct(HomeService $service)
     {
-        parent::__construct();
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('home.index', $this->view);
+        $data = $this->service->getData($request);
+        return view('home.index', compact('data'));
     }
 }
