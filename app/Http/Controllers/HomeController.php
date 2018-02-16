@@ -11,7 +11,6 @@ class HomeController extends Controller
 
     public function __construct(HomeService $service)
     {
-        parent::__construct();
         $this->service = $service;
     }
 
