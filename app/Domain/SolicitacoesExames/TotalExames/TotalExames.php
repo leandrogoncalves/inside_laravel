@@ -48,6 +48,7 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return collect([
+                "periodo" => $dataInicio->format("d/m/Y"),
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
                 "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
@@ -69,6 +70,7 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return collect([
+                "periodo" => $dataInicio->format("d/m/Y"),
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
                 "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
