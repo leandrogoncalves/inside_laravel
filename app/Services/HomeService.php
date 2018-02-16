@@ -27,11 +27,11 @@ class HomeService
         $key2 = "total-exames-" . $dates["startPeriodTwo"]->format("d-m-Y");
         $key3 = "total-exames-" . $dates["startPeriodThree"]->format("d-m-Y");
 
-        return [
+        return collect([
             $key1 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodOne"], $dates["finishPeriodOne"], $user),
             $key2 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodTwo"], $dates["finishPeriodTwo"], $user),
             $key3 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodThree"], $dates["finishPeriodThree"], $user),
-        ];
+        ]);
     }
 
     private function getExamesDaysDate()
