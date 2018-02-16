@@ -47,11 +47,11 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
-            return [
+            return collect([
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
                 "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
-            ];
+            ]);
         }
 
         if ($user->isUserPardini()) {
@@ -68,11 +68,11 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
-            return [
+            return collect([
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
                 "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
-            ];
+            ]);
         }
 
         throw new Exception("Usuário de perfil inválido, não é nem Pardini e nem Psy.", 400);
