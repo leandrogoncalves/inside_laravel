@@ -9,6 +9,13 @@ use \DB;
 class OrigemBasica implements OrigemInterface
 {
     use HelpMethods;
+    const FIELDS_SELECTED = [
+        "CLI",
+        "MAP",
+        "SIS",
+        "TEL",
+        "TAV"
+    ];
 
     private $formularioRepository;
 

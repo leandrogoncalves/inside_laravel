@@ -35,16 +35,16 @@ class TotalExames
 
         if ($user->isUserPsy()) {
             $origemBasica = $this->origemBasica->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
-            $origemBasicaTransformer = new OrigemBasicaTransformer();
+            $origemBasicaTransformer = new OrigemBasicaTransformer(OrigemBasica::FIELDS_SELECTED);
             $origemBasicaTransformer = $origemBasicaTransformer->transform($origemBasica, $dataInicio);
 
             $origemLaboratorio = $this->origemLaboratorio->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
-            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer();
+            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer(OrigemLaboratorio::FIELDS_SELECTED);
             $origemLaboratorioTransformer = $origemLaboratorioTransformer->transform($origemLaboratorio, $dataInicio);
 
 
             $origemLaboratorioCltCnh = $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
-            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
+            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer(OrigemLaboratorioCltCnh::FIELDS_SELECTED);
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return collect([
@@ -56,16 +56,16 @@ class TotalExames
 
         if ($user->isUserPardini()) {
             $origemBasica = $this->origemBasica->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
-            $origemBasicaTransformer = new OrigemBasicaTransformer();
+            $origemBasicaTransformer = new OrigemBasicaTransformer(OrigemBasica::FIELDS_SELECTED);
             $origemBasicaTransformer = $origemBasicaTransformer->transform($origemBasica, $dataInicio);
 
             $origemLaboratorio = $this->origemLaboratorio->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
-            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer();
+            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer(OrigemLaboratorio::FIELDS_SELECTED);
             $origemLaboratorioTransformer = $origemLaboratorioTransformer->transform($origemLaboratorio, $dataInicio);
 
 
             $origemLaboratorioCltCnh = $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
-            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
+            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer(OrigemLaboratorioCltCnh::FIELDS_SELECTED);
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
             return collect([

@@ -10,6 +10,11 @@ class OrigemLaboratorioCltCnh implements OrigemInterface
 {
     use HelpMethods;
 
+    const FIELDS_SELECTED = [
+        "LABT",
+        "LABC",
+    ];
+
     private $formularioRepository;
 
     public function __construct(FormularioRepository $formularioRepository)
