@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inside\Services\UsuarioLogadoService;
 use Inside\Domain\SolicitacoesExames\TotalExames\TotalExames;
 use Carbon\Carbon;
+use Inside\Transformers\TotalExamesSolicitadosTransformer;
 
 class HomeService
 {
@@ -23,15 +24,20 @@ class HomeService
         $user = $this->usuarioLogadoService->getUsuarioLogadoData($request);
         $dates = $this->getExamesDaysDate();
 
-        $key1 = "total-exames-" . $dates["startPeriodOne"]->format("d-m-Y");
-        $key2 = "total-exames-" . $dates["startPeriodTwo"]->format("d-m-Y");
-        $key3 = "total-exames-" . $dates["startPeriodThree"]->format("d-m-Y");
+        $data = collect([]);
 
-        return collect([
-            $key1 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodOne"], $dates["finishPeriodOne"], $user),
-            $key2 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodTwo"], $dates["finishPeriodTwo"], $user),
-            $key3 => $this->totalExames->getTotalExamesSolicitados($dates["startPeriodThree"], $dates["finishPeriodThree"], $user),
-        ]);
+        $periodOne = $this->totalExames->getTotalExamesSolicitados($dates["startPeriodOne"], $dates["finishPeriodOne"], $user);
+        $periodTwo = $this->totalExames->getTotalExamesSolicitados($dates["startPeriodTwo"], $dates["finishPeriodTwo"], $user);
+        $periodThree = $this->totalExames->getTotalExamesSolicitados($dates["startPeriodThree"], $dates["finishPeriodThree"], $user);
+
+        $data->put('periodo1', $periodOne);
+        $data->put('periodo2', $periodTwo);
+        $data->put('periodo3', $periodThree);
+
+        $transformer = new TotalExamesSolicitadosTransformer();
+        $data = $transformer->transform($data);
+
+        return $data;
     }
 
     private function getExamesDaysDate()
