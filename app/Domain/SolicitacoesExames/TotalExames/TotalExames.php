@@ -9,6 +9,10 @@ use Inside\Domain\SolicitacoesExames\TotalExames\OrigemBasica;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemLaboratorio;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemLaboratorioCltCnh;
 
+use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemBasicaTransformer;
+use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemLaboratorioTransformer;
+use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemLaboratorioCltCnhTransformer;
+
 use Carbon\Carbon;
 
 class TotalExames
@@ -30,19 +34,45 @@ class TotalExames
         $idExecutivo = $this->executivos->getIdExecutivo($user);
 
         if ($user->isUserPsy()) {
-            return collect([
-                $this->origemBasica->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo),
-                $this->origemLaboratorio->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo),
-                $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo),
-            ]);
+            $origemBasica = $this->origemBasica->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
+            $origemBasicaTransformer = new OrigemBasicaTransformer();
+            $origemBasicaTransformer = $origemBasicaTransformer->transform($origemBasica, $dataInicio);
+
+            $origemLaboratorio = $this->origemLaboratorio->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
+            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer();
+            $origemLaboratorioTransformer = $origemLaboratorioTransformer->transform($origemLaboratorio, $dataInicio);
+
+
+            $origemLaboratorioCltCnh = $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
+            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
+            $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
+
+            return [
+                $origemBasicaTransformer,
+                $origemLaboratorioTransformer,
+                $origemLaboratorioCltCnhTransoformer
+            ];
         }
 
         if ($user->isUserPardini()) {
-            return collect([
-                $this->origemBasica->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo),
-                $this->origemLaboratorio->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo),
-                $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo),
-            ]);
+            $origemBasica = $this->origemBasica->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
+            $origemBasicaTransformer = new OrigemBasicaTransformer();
+            $origemBasicaTransformer = $origemBasicaTransformer->transform($origemBasica, $dataInicio);
+
+            $origemLaboratorio = $this->origemLaboratorio->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
+            $origemLaboratorioTransformer = new OrigemLaboratorioTransformer();
+            $origemLaboratorioTransformer = $origemLaboratorioTransformer->transform($origemLaboratorio, $dataInicio);
+
+
+            $origemLaboratorioCltCnh = $this->origemLaboratorioCltCnh->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
+            $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer();
+            $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
+
+            return [
+                $origemBasicaTransformer,
+                $origemLaboratorioTransformer,
+                $origemLaboratorioCltCnhTransoformer
+            ];
         }
 
         throw new Exception("Usuário de perfil inválido, não é nem Pardini e nem Psy.", 400);
