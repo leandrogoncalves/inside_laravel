@@ -7,12 +7,14 @@ use Illuminate\Support\Collection;
 class TotalExamesSolicitadosTransformer
 {
     protected $totalExamesSolicitadosPorPeriodo;
-    protected $totalExamesPorPeriodo;
+    protected $sumTotalExamesPorPeriodo;
+    protected $sumTotalExamesPorPeriodoPorcentagem;
 
     public function __construct()
     {
         $this->totalExamesSolicitadosPorPeriodo = collect([]);
-        $this->totalExamesPorPeriodo = 0;
+        $this->sumTotalExamesPorPeriodo = 0;
+        $this->sumTotalExamesPorPeriodoPorcentagem = 0;
     }
 
     public function transform(Collection $data)
@@ -27,14 +29,18 @@ class TotalExamesSolicitadosTransformer
                         $origens->each(function ($origem) use ($keyPeriodo) {
                             //PEGA O VALOR EM PERCENTUAL DO TOTAL DESSA ORIGEM
                             $percentage = $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"]);
-                            $this->totalExamesPorPeriodo += ((int) $origem["origem"]["total"]);
+                            $this->sumTotalExamesPorPeriodo += ((int) $origem["origem"]["total"]);
+                            $this->sumTotalExamesPorPeriodoPorcentagem += $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"], false);
                             //COLOCA (PUT) ESSA VALOR PERCENTUAL DENTRO DA ORIGEM (MICRO)
                             $origem["origem"]->put("porcentualTotal", $percentage);
                         });
                     }
                 });
-                $periodo->put("totalExamesPorPeriodo", $this->totalExamesPorPeriodo);
-                $this->totalExamesPorPeriodo = 0;
+                $periodo->put("totalExamesPorPeriodo", $this->sumTotalExamesPorPeriodo);
+                $this->sumTotalExamesPorPeriodoPorcentagem = round($this->sumTotalExamesPorPeriodoPorcentagem, 0);
+                $periodo->put("totalExamesPorPeriodoPorcentagem", ($this->sumTotalExamesPorPeriodoPorcentagem > 98 || $this->sumTotalExamesPorPeriodoPorcentagem < 101? 100: $this->sumTotalExamesPorPeriodoPorcentagem));
+                $this->sumTotalExamesPorPeriodo = 0;
+                $this->sumTotalExamesPorPeriodoPorcentagem = 0;
             });
             return $data;
         }
@@ -59,8 +65,11 @@ class TotalExamesSolicitadosTransformer
     }
 
 
-    private function getPercentageFromExames($periodo, $exames)
+    private function getPercentageFromExames($periodo, $exames, $concatPercentageSymbol = true)
     {
-        return (round(($exames * 100 /$this->totalExamesSolicitadosPorPeriodo[$periodo]), 2)) . "%";
+        if ($this->totalExamesSolicitadosPorPeriodo[$periodo]) {
+            return $concatPercentageSymbol? (round(($exames * 100 /$this->totalExamesSolicitadosPorPeriodo[$periodo]), 2)) . "%" : (round(($exames * 100 /$this->totalExamesSolicitadosPorPeriodo[$periodo]), 2));
+        }
+        return 0;
     }
 }
