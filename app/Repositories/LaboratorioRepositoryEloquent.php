@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Repositories;
+namespace Inside\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Contracts\LaboratorioRepository;
-use App\Models\Laboratorio;
-use App\Validators\LaboratorioValidator;
+use Inside\Repositories\Contracts\LaboratorioRepository;
+use Inside\Models\Laboratorio;
+use Inside\Validators\LaboratorioValidator;
 
 /**
  * Class LaboratorioRepositoryEloquent.
  *
- * @package namespace App\Repositories;
+ * @package namespace Inside\Repositories;
  */
 class LaboratorioRepositoryEloquent extends BaseRepository implements LaboratorioRepository
 {
@@ -25,7 +25,7 @@ class LaboratorioRepositoryEloquent extends BaseRepository implements Laboratori
         return Laboratorio::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -34,5 +34,5 @@ class LaboratorioRepositoryEloquent extends BaseRepository implements Laboratori
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
 }
