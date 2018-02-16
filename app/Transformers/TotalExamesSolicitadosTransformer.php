@@ -16,10 +16,15 @@ class TotalExamesSolicitadosTransformer
     public function transform(Collection $data)
     {
         if ($this->getTotalExamesSolicitados($data)) {
+            //PERCORRE TODOS OS PERIODOS
             $data->each(function ($periodo, $keyPeriodo) {
+                //PERCORRE TODAS AS ORIGENS (MACRO) DENTRO DE CADA PERIODO
                 $periodo->each(function ($origens) use ($keyPeriodo) {
+                    //PERCORRE CADA ORIGEM (MICRO) DENTRO DA ORIGEM MACRO
                     $origens->each(function ($origem) use ($keyPeriodo) {
+                        //PEGA O VALOR EM PERCENTUAL DO TOTAL DESSA ORIGEM
                         $percentage = $this->getPercentageFromExames($keyPeriodo, $origem["origem"]["total"]);
+                        //COLOCA (PUT) ESSA VALOR PERCENTUAL DENTRO DA ORIGEM (MICRO)
                         $origem["origem"]->put("porcentualTotal", $percentage);
                     });
                 });
