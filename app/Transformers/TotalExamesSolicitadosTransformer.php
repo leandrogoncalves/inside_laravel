@@ -24,8 +24,7 @@ class TotalExamesSolicitadosTransformer
                     });
                 });
             });
-
-            dd($data, "xaninha");
+            return $data;
         }
     }
 
