@@ -8,10 +8,12 @@ use Inside\Domain\SolicitacoesExames\Executivos\Executivos;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemBasica;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemLaboratorio;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemLaboratorioCltCnh;
+use Inside\Domain\SolicitacoesExames\TotalExames\OrigemCaged;
 
 use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemBasicaTransformer;
 use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemLaboratorioTransformer;
 use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemLaboratorioCltCnhTransformer;
+use Inside\Domain\SolicitacoesExames\TotalExames\Transformers\OrigemCagedTransformer;
 
 use Carbon\Carbon;
 
@@ -21,12 +23,13 @@ class TotalExames
     private $origemBasica;
 
 
-    public function __construct(Executivos $executivos, OrigemBasica $origemBasica, OrigemLaboratorio $origemLaboratorio, OrigemLaboratorioCltCnh $origemLaboratorioCltCnh)
+    public function __construct(Executivos $executivos, OrigemBasica $origemBasica, OrigemLaboratorio $origemLaboratorio, OrigemLaboratorioCltCnh $origemLaboratorioCltCnh, OrigemCaged $origemCaged)
     {
         $this->executivos = $executivos;
         $this->origemBasica = $origemBasica;
         $this->origemLaboratorio = $origemLaboratorio;
         $this->origemLaboratorioCltCnh = $origemLaboratorioCltCnh;
+        $this->origemCaged = $origemCaged;
     }
 
     public function getTotalExamesSolicitados(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
@@ -47,11 +50,17 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer(OrigemLaboratorioCltCnh::FIELDS_SELECTED);
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
+            $this->origemCaged->setUsuario($user);
+            $origemCaged = $this->origemCaged->getTotalExamesSolicitadosPsy($dataInicio, $dataFim, $idExecutivo);
+            $origemCagedTransformer = new OrigemCagedTransformer(OrigemCaged::FIELDS_SELECTED);
+            $origemCagedTransformer = $origemCagedTransformer->transform($origemCaged, $dataInicio);
+
             return collect([
                 "periodo" => $dataInicio->format("d/m/Y"),
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
-                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
+                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer,
+                "origemCaged" => $origemCagedTransformer
             ]);
         }
 
@@ -69,11 +78,18 @@ class TotalExames
             $origemLaboratorioCltCnhTransoformer = new OrigemLaboratorioCltCnhTransformer(OrigemLaboratorioCltCnh::FIELDS_SELECTED);
             $origemLaboratorioCltCnhTransoformer = $origemLaboratorioCltCnhTransoformer->transform($origemLaboratorioCltCnh, $dataInicio);
 
+            $this->origemCaged->setUsuario($user);
+            $origemCaged = $this->origemCaged->getTotalExamesSolicitadosPardini($dataInicio, $dataFim, $idExecutivo);
+            $origemCagedTransformer = new OrigemCagedTransformer(OrigemCaged::FIELDS_SELECTED);
+            $origemCagedTransformer = $origemCagedTransformer->transform($origemCaged, $dataInicio);
+
+
             return collect([
                 "periodo" => $dataInicio->format("d/m/Y"),
                 "origemBasica" => $origemBasicaTransformer,
                 "origemLaboratorio" => $origemLaboratorioTransformer,
-                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer
+                "origemLaboratorioCltCnh" => $origemLaboratorioCltCnhTransoformer,
+                "origemCaged" => $origemCagedTransformer
             ]);
         }
 

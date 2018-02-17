@@ -38,7 +38,7 @@ class TotalExamesSolicitadosTransformer
                 });
                 $periodo->put("totalExamesPorPeriodo", $this->sumTotalExamesPorPeriodo);
                 $this->sumTotalExamesPorPeriodoPorcentagem = round($this->sumTotalExamesPorPeriodoPorcentagem, 0);
-                $periodo->put("totalExamesPorPeriodoPorcentagem", ($this->sumTotalExamesPorPeriodoPorcentagem > 98 || $this->sumTotalExamesPorPeriodoPorcentagem < 101? 100: $this->sumTotalExamesPorPeriodoPorcentagem));
+                $periodo->put("totalExamesPorPeriodoPorcentagem", ($this->sumTotalExamesPorPeriodoPorcentagem > 98 && $this->sumTotalExamesPorPeriodoPorcentagem < 101? 100: $this->sumTotalExamesPorPeriodoPorcentagem));
                 $this->sumTotalExamesPorPeriodo = 0;
                 $this->sumTotalExamesPorPeriodoPorcentagem = 0;
             });

@@ -40,7 +40,6 @@ class OrigemLaboratorio implements OrigemInterface
         ->with(["laboratorio"])
         ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
             $query
-            ->where("PesPesRedeAuto", "=", "1")
             ->whereIn('id_laboratorio', $idExecutivo);
         })
         ->groupBy("OprFrmOrigem")
