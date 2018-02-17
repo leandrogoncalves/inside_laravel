@@ -5,6 +5,7 @@ namespace Inside\Services;
 use Illuminate\Http\Request;
 use Inside\Services\UsuarioLogadoService;
 use Inside\Domain\SolicitacoesExames\TotalExames;
+use Inside\Domain\PrecoMedio\PrecoMedio;
 use Carbon\Carbon;
 use Inside\Transformers\TotalExamesSolicitadosTransformer;
 
@@ -12,11 +13,13 @@ class HomeService
 {
     private $usuarioLogadoService;
     private $totalExames;
+    private $precoMedio;
 
-    public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames)
+    public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames, PrecoMedio $precoMedio)
     {
         $this->usuarioLogadoService = $usuarioLogadoService;
         $this->totalExames = $totalExames;
+        $this->precoMedio = $precoMedio;
     }
 
     public function getData(Request $request)
@@ -30,6 +33,8 @@ class HomeService
         $periodTwo = $this->totalExames->getTotalExamesSolicitados($dates["startPeriodTwo"], $dates["finishPeriodTwo"], $user);
         $periodThree = $this->totalExames->getTotalExamesSolicitados($dates["startPeriodThree"], $dates["finishPeriodThree"], $user);
 
+        $precoMedio = $this->precoMedio->getPrecoMedio($user);
+
         $data->put('periodo1', $periodOne);
         $data->put('periodo2', $periodTwo);
         $data->put('periodo3', $periodThree);
@@ -37,7 +42,7 @@ class HomeService
         $transformer = new TotalExamesSolicitadosTransformer();
         $data = $transformer->transform($data);
 
-        return $data;
+        return ['data' => $data, 'precoMedio' => $precoMedio];
     }
 
     private function getExamesDaysDate()
