@@ -43,7 +43,7 @@ class HomeService
     private function getExamesDaysDate()
     {
         $now = Carbon::now();
-        $now = Carbon::createFromFormat("Y-m-d H:i:s", "2018-02-09 00:00:00");
+        $now = Carbon::createFromFormat("Y-m-d H:i:s", "2018-01-18 00:00:00");
 
         return collect([
             "startPeriodOne" => $now->copy()->addDays(0)->hour(0)->minute(0)->second(0),
