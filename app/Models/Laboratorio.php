@@ -12,4 +12,9 @@ class Laboratorio extends Model
     {
         return $this->hasMany(Formulario::class, "PesPesLabAuto", "PesPesLabAuto");
     }
+
+    public function vendaOrigem()
+    {
+        return $this->belongsTo(VendaOrigem::class, "id_laboratorio", "PesPesLabAuto");
+    }
 }
