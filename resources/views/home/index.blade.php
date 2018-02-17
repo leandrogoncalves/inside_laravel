@@ -24,6 +24,7 @@
                     </thead>
                     <tbody>
                         <!-- AGORA VAMOS PERCORRER ENTRE AS ORIGENS (MACRO) -->
+
                         @foreach($periodo as $origens)
                         @if (!$origens instanceof \Illuminate\Support\Collection)
                             @continue;
@@ -60,7 +61,7 @@
         <div class="card bg-light mb-3">
             <div class="card-header">Preço Médio:</div>
             <div class="card-body">
-                R$ 210,00
+                <p class="card-text">{{ $precoMedio["precoMedio"] }}</p>
             </div>
         </div>
     </div>
