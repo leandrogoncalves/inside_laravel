@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames\Executivos\Pardini;
+namespace Inside\Domain\Executivos\Pardini;
 
 use Inside\Repositories\Contracts\ExecutivoPardiniRepository;
 

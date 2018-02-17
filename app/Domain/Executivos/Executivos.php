@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames\Executivos;
+namespace Inside\Domain\Executivos;
 
 use Inside\Domain\UsuarioLogado;
 use Inside\Domain\Executivos\Psy\Executivos as ExecutivosPsy;
