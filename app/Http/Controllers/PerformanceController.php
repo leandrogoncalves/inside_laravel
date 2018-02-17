@@ -3,9 +3,8 @@
 namespace Inside\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inside\Services\HomeService;
 
-class HomeController extends Controller
+class PerformanceController extends Controller
 {
     private $service;
 
@@ -16,7 +15,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $data = $this->service->getData($request);
-        return view('home.index', $data);
+        $data = ['data' => 'ola mundo'];
+        return view('performance.index', $data);
     }
 }
