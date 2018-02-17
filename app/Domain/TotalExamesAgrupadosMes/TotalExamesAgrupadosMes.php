@@ -33,7 +33,7 @@ class TotalExamesAgrupadosMes
 
         $dataInicio = Carbon::now()->copy()->subMonth(6)->hour(0)->minute(0)->second(0);
         $dataFim = Carbon::now()->copy()->hour(23)->minute(59)->second(59);
-        $differenceDataFimAndDataInicio = $dataFim->copy()->diffInDays($dataInicio);
+        $differenceDataFimAndDataInicio = $dataFim->copy()->diffInDays($dataInicio) + 1;
 
         $results = $this->returnTotalExamesAgrupadosByUser($dataInicio->toDateTimeString(), $dataFim->toDateTimeString(), $idExecutivo);
 
