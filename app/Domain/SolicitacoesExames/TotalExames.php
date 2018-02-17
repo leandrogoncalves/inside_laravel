@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames\TotalExames;
+namespace Inside\Domain\SolicitacoesExames;
 
 use Inside\Domain\UsuarioLogado;
 use Inside\Domain\Executivos\Executivos;
