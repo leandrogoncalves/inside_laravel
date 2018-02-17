@@ -5,7 +5,7 @@ namespace Inside\Domain\SolicitacoesExames\TotalExames;
 use Carbon\Carbon;
 use Inside\Repositories\Contracts\FormularioRepository;
 use Inside\Repositories\Contracts\VendaLoteRepository;
-use Inside\Domain\SolicitacoesExames\UsuarioLogado;
+use Inside\Domain\UsuarioLogado;
 use \DB;
 
 class OrigemCaged implements OrigemInterface

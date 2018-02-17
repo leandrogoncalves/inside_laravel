@@ -1,6 +1,6 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames;
+namespace Inside\Domain;
 
 use Inside\Models\Usuario;
 use Exception;

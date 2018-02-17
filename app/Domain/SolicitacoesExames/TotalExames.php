@@ -1,9 +1,9 @@
 <?php
 
-namespace Inside\Domain\SolicitacoesExames\TotalExames;
+namespace Inside\Domain\SolicitacoesExames;
 
-use Inside\Domain\SolicitacoesExames\UsuarioLogado;
-use Inside\Domain\SolicitacoesExames\Executivos\Executivos;
+use Inside\Domain\UsuarioLogado;
+use Inside\Domain\Executivos\Executivos;
 
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemBasica;
 use Inside\Domain\SolicitacoesExames\TotalExames\OrigemLaboratorio;
