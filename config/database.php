@@ -40,6 +40,20 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+
+        'inteligencia' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_INTELIGENCIA', '127.0.0.1'),
+            'port' => env('DB_PORT_INTELIGENCIA', '3306'),
+            'database' => env('DB_DATABASE_INTELIGENCIA', 'forge'),
+            'username' => env('DB_USERNAME_INTELIGENCIA', 'forge'),
+            'password' => env('DB_PASSWORD_INTELIGENCIA', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
     ],
     'migrations' => 'migrations',
 
