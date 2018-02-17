@@ -29,6 +29,6 @@ class TotalExamesAgrupadosMesTransformer
         }
         return ($newData->sortBy(function ($obj) {
             return Carbon::createFromFormat("d/m/Y", $obj["data_inclusao"])->timestamp;
-        })->values()->toJson());
+        })->values());
     }
 }
