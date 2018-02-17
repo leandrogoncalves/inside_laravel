@@ -25,7 +25,7 @@ class VendaOrigemRepositoryEloquent extends BaseRepository implements VendaOrige
         return VendaOrigem::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -34,5 +34,11 @@ class VendaOrigemRepositoryEloquent extends BaseRepository implements VendaOrige
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    public function groupBy($by)
+    {
+        $this->model = $this->model->groupBy($by);
+
+        return $this;
+    }
 }
