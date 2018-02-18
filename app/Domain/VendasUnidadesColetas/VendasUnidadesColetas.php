@@ -20,12 +20,20 @@ class VendasUnidadesColetas
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
     }
 
-    public function get(UsuarioLogado $user)
+    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
         $idExecutivo = $this->executivos->getIdExecutivo($user);
-        $dataInicio = Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
-        $dataFim = Carbon::now()->copy()->hour(23)->minute(59)->second(59);
 
-        dd($this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo));
+        if ($user->isUserPsy()) {
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+        }
+
+        if ($user->isUserPardini()) {
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+        }
     }
 }

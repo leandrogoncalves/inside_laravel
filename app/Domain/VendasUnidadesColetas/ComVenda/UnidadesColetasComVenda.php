@@ -34,11 +34,26 @@ class UnidadesColetasComVenda
         ->groupBy("id_laboratorio")
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
 
-        dd($laboratoriosComVenda->pluck('id_laboratorio')->toJson());
+        return $laboratoriosComVenda->sum('qtd');
     }
 
     public function getUnidadesColetasPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
-        return "xana";
+        $laboratorios = $this->laboratorioRepository
+        ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $idExecutivo) {
+            return $query->whereIn('id_laboratorio', $idExecutivo);
+        })->all(['pespeslabauto']);
+
+        $laboratoriosComVenda = $this->vendaLaboratorioRepository
+        ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $laboratorios) {
+            return $query
+            ->where("data_inclusao", ">=", $dataInicio->toDateTimeString())
+            ->where("data_inclusao", "<=", $dataFim->toDateTimeString())
+            ->whereIn('id_laboratorio', $laboratorios->toArray());
+        })
+        ->groupBy("id_laboratorio")
+        ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
+
+        return $laboratoriosComVenda->sum('qtd');
     }
 }
