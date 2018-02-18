@@ -12,7 +12,7 @@ class UsuarioLogadoService
         try {
             $requestData = $this->getIdExecutivoAndPerfil($request);
             return new UsuarioLogado($requestData["perfilAcesso"], $requestData["idExecutivo"]);
-        } catch (\Excetion $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }

@@ -25,7 +25,7 @@ class TotalExamesAgrupadosMesService
             $totalExamesAgrupadosMes = $this->totalExamesAgrupadosMes->get($user);
 
             return $totalExamesAgrupadosMes;
-        } catch (\Excetion $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
