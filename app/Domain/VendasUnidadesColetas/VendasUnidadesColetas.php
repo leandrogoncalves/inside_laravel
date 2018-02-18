@@ -2,6 +2,7 @@
 
 namespace Inside\Domain\VendasUnidadesColetas;
 
+use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetaComVendaDetail;
 use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetasComVenda;
 
 use Inside\Domain\UsuarioLogado;
@@ -14,18 +15,41 @@ class VendasUnidadesColetas
     private $executivos;
     private $unidadesColetasComVenda;
 
-    public function __construct(Executivos $executivos, UnidadesColetasComVenda $unidadesColetasComVenda)
+    public function __construct(Executivos $executivos,
+                                UnidadesColetasComVenda $unidadesColetasComVenda,
+                                UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail
+    )
     {
         $this->executivos = $executivos;
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
+        $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
     }
 
-    public function get(UsuarioLogado $user)
+    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
+        dd($user);
         $idExecutivo = $this->executivos->getIdExecutivo($user);
-        $dataInicio = Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
-        $dataFim = Carbon::now()->copy()->hour(23)->minute(59)->second(59);
+        $comVenda = $semVenda = $nuncaVenderam = $comVendaDetail = 0;
 
-        dd($this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo));
+        if ($user->isUserPsy()) {
+//            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+//            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+//            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetasPsyDetail($dataInicio, $dataFim, $idExecutivo);
+        }
+
+        if ($user->isUserPardini()) {
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetasPardiniDetail($dataInicio, $dataFim, $idExecutivo);
+        }
+
+        return collect([
+            'comVenda' => $comVenda,
+            'semVenda' => $semVenda,
+            'nuncaVenderam' => $nuncaVenderam,
+            'comVendaDetail' => $comVendaDetail,
+        ]);
     }
 }

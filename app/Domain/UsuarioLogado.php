@@ -10,7 +10,6 @@ class UsuarioLogado
     private $perfilAcesso;
     private $idExecutivo;
     private $usuarioRepository;
-    private $executivo;
 
     const PERFIL_ACESSO = [
         "ADMIN-PSY" => "admin",
@@ -200,7 +199,7 @@ class UsuarioLogado
             } else {
                 throw new Exception("Erro, id de Executivo Inválido", 400);
             }
-        } catch (\Excetion $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
