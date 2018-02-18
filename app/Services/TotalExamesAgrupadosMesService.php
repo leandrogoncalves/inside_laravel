@@ -21,7 +21,7 @@ class TotalExamesAgrupadosMesService
     {
         try {
             $user = $this->usuarioLogadoService->getUsuarioLogadoData($request);
-            $totalExamesAgrupadosMes = $this->totalExamesAgrupadosMes($user);
+            $totalExamesAgrupadosMes = $this->totalExamesAgrupadosMes->get($user);
 
             return $totalExamesAgrupadosMes;
         } catch (\Excetion $e) {
