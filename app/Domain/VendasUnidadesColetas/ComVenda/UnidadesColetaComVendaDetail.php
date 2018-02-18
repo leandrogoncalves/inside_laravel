@@ -2,6 +2,7 @@
 
 namespace Inside\Domain\VendasUnidadesColetas\ComVenda;
 
+use Inside\Repositories\Contracts\PerformanceLaboratorioRepository;
 use Inside\Repositories\Contracts\VendaLaboratorioRepository;
 use Inside\Repositories\Contracts\LaboratorioRepository;
 use Carbon\Carbon;
@@ -12,51 +13,95 @@ class UnidadesColetaComVendaDetail
 {
     private $vendaLaboratorioRepository;
     private $laboratorioRepository;
+    private $performanceLaboratorioRepository;
 
-    public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository, LaboratorioRepository $laboratorioRepository)
+    public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository,
+                                PerformanceLaboratorioRepository $performanceLaboratorioRepository,
+                                LaboratorioRepository $laboratorioRepository)
     {
         $this->vendaLaboratorioRepository = $vendaLaboratorioRepository;
         $this->laboratorioRepository = $laboratorioRepository;
+        $this->performanceLaboratorioRepository = $performanceLaboratorioRepository;
     }
 
-    public function getUnidadesColetasPsyDetail(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
+    public function getUnidadesColetaPsyDetail(array $idExecutivos)
     {
-        $laboratorios = $this->laboratorioRepository
-            ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $idExecutivo) {
+        $idExecutivo = [];
+        foreach ($idExecutivos as $id){
+            $idExecutivo[] = $id['id_executivo'];
+        }
+
+        $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
                 return $query->whereIn('id_executivo_psy', $idExecutivo);
-            })->all(['pespeslabauto']);
-
-
-        $laboratoriosComVenda = $this->vendaLaboratorioRepository
-            ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $laboratorios) {
-                return $query
-                    ->where("data_inclusao", ">=", $dataInicio->toDateTimeString())
-                    ->where("data_inclusao", "<=", $dataFim->toDateTimeString())
-                    ->whereIn('id_laboratorio', $laboratorios->toArray());
             })
-            ->groupBy("id_laboratorio")
-            ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
+            ->all([
+                'nome_laboratorio',
+                'cidade',
+                'estado',
+                'ativo',
+                'id_executivo_psy',
+                'id_executivo_pardini',
+                'nome_executivo_psy',
+                'nome_executivo_pardini',
+                'data_base',
+                'periodo_a_glaudyson',
+                'periodo_b_glaudyson',
+                'variacao_glaudyson',
+                'variacao_porcentual_glaudyson',
+                'periodo_a_teza',
+                'periodo_b_teza',
+                'variacao_teza',
+                'variacao_porcentual_teza',
+                'valor_exame_clt',
+                'valor_exame_cnh',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
 
-        return $laboratoriosComVenda;
+            ]);
+
+        return $laboratoriosComVendaDetail;
+
     }
 
-    public function getUnidadesColetasPardiniDetail(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
+    public function getUnidadesColetaPardiniDetail(array $idExecutivos)
     {
-        $laboratorios = $this->laboratorioRepository
-            ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $idExecutivo) {
-                return $query->whereIn('id_laboratorio', $idExecutivo);
-            })->all(['pespeslabauto']);
+        $idExecutivo = [];
+        foreach ($idExecutivos as $id){
+            $idExecutivo[] = $id['id_executivo'];
+        }
 
-        $laboratoriosComVenda = $this->vendaLaboratorioRepository
-            ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $laboratorios) {
-                return $query
-                    ->where("data_inclusao", ">=", $dataInicio->toDateTimeString())
-                    ->where("data_inclusao", "<=", $dataFim->toDateTimeString())
-                    ->whereIn('id_laboratorio', $laboratorios->toArray());
+        $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
+                return $query->whereIn('id_executivo_pardini', $idExecutivo);
             })
-            ->groupBy("id_laboratorio")
-            ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
+            ->all([
+                'nome_laboratorio',
+                'cidade',
+                'estado',
+                'ativo',
+                'id_executivo_psy',
+                'id_executivo_pardini',
+                'nome_executivo_psy',
+                'nome_executivo_pardini',
+                'data_base',
+                'periodo_a_glaudyson',
+                'periodo_b_glaudyson',
+                'variacao_glaudyson',
+                'variacao_porcentual_glaudyson',
+                'periodo_a_teza',
+                'periodo_b_teza',
+                'variacao_teza',
+                'variacao_porcentual_teza',
+                'valor_exame_clt',
+                'valor_exame_cnh',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
 
-        return $laboratoriosComVenda->sum('qtd');
+            ]);
+
+        return $laboratoriosComVendaDetail;
     }
+
+
 }

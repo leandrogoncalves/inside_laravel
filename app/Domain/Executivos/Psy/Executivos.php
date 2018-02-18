@@ -33,11 +33,23 @@ class Executivos
         return $this->repository->all(['id_executivo'])->toArray();
     }
 
-    public function setCodExecutivo(int $codExecutivo)
+    public function getIdGerenteByCodigoExecutivo(int $id)
     {
-        $this->codigoExecutivo = $codExecutivo;
-        return $this;
+        return $this->repository->findByField('codigo_executivo', $id, ['codigo_gerente'])->toArray();
     }
 
+    public function getIdGerenteByCodigoSupervisor(int $id)
+    {
+        return $this->repository->findByField('codigo_supervisor', $id, ['codigo_gerente'])->toArray();
+    }
 
+    public function getIdGerenteByCodigoGerente(int $id)
+    {
+        return $this->repository->findByField('codigo_gerente', $id, ['codigo_gerente'])->toArray();
+    }
+
+    public function getIdGerenteByAdmin()
+    {
+        return $this->repository->all(['codigo_gerente'])->toArray();
+    }
 }
