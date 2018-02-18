@@ -25,7 +25,7 @@ class VendaLaboratorioRepositoryEloquent extends BaseRepository implements Venda
         return VendaLaboratorio::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -34,5 +34,11 @@ class VendaLaboratorioRepositoryEloquent extends BaseRepository implements Venda
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    public function groupBy($by)
+    {
+        $this->model = $this->model->groupBy($by);
+
+        return $this;
+    }
 }
