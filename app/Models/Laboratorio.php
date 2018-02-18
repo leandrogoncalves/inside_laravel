@@ -15,6 +15,11 @@ class Laboratorio extends Model
 
     public function vendaOrigem()
     {
-        return $this->belongsTo(VendaOrigem::class, "id_laboratorio", "PesPesLabAuto");
+        return $this->hasMany(VendaOrigem::class, "id_laboratorio", "PesPesLabAuto");
+    }
+
+    public function vendaLaboratorio()
+    {
+        return $this->hasOne(VendaLaboratorio::class, "id_laboratorio", "PesPesLabAuto");
     }
 }
