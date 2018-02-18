@@ -24,7 +24,8 @@ class PerformanceService
         $dataInicio = $request->exists('data_inicio')? $request->only('data_inicio') : Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
         $dataFim = $request->exists('data_fim')? $request->only('data_fim') : Carbon::now()->copy()->hour(23)->minute(59)->second(59);
 
-        $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user);
-        return 'ola mundo';
+        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user);
+
+        return $unidadesColetasTotalizadores;
     }
 }
