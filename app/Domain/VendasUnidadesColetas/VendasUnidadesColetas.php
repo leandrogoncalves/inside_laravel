@@ -35,7 +35,6 @@ class VendasUnidadesColetas
 
     public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
-        dd($user);
         $idExecutivo = $this->executivos->getIdExecutivo($user);
         $comVenda = $semVenda = $nuncaVenderam = $comVendaDetail = 0;
 

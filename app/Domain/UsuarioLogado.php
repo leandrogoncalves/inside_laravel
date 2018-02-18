@@ -3,13 +3,11 @@
 namespace Inside\Domain;
 
 use Exception;
-use Inside\Repositories\Contracts\UsuarioRepository;
 
 class UsuarioLogado
 {
     private $perfilAcesso;
     private $idExecutivo;
-    private $usuarioRepository;
 
     const PERFIL_ACESSO = [
         "ADMIN-PSY" => "admin",
@@ -31,14 +29,10 @@ class UsuarioLogado
     const SUPERVISOR_PARDINI = 'SUPERVISOR-PARDINI';
     const GERENTE_PARDINI = 'GERENTE-PARDINI';
 
-    public function __construct(string $perfilAcesso = null,
-                                int $idExecutivo = 0,
-                                UsuarioRepository $usuarioRepository
-                                )
+    public function __construct(string $perfilAcesso = null,int $idExecutivo = 0)
     {
         $perfilAcesso !== null? $this->setPerfilAcesso($perfilAcesso) : null;
         $idExecutivo > 0? $this->setIdExecutivo($idExecutivo) : null;
-        $this->usuarioRepository = $usuarioRepository;
     }
 
     public function isUserPsy()
