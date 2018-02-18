@@ -8,10 +8,12 @@ class Executivos
 {
     private $repository;
 
+
     public function __construct(ExecutivoPardiniRepository $repository)
     {
         $this->repository = $repository;
     }
+
     public function getIdExecutivoByCodigoExecutivo(int $id)
     {
         return $this->repository->findByField('cod_executivo', $id, ['id_laboratorio'])->toArray();

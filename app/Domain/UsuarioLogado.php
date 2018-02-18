@@ -2,7 +2,6 @@
 
 namespace Inside\Domain;
 
-use Inside\Models\Usuario;
 use Exception;
 
 class UsuarioLogado
@@ -30,7 +29,7 @@ class UsuarioLogado
     const SUPERVISOR_PARDINI = 'SUPERVISOR-PARDINI';
     const GERENTE_PARDINI = 'GERENTE-PARDINI';
 
-    public function __construct(string $perfilAcesso = null, int $idExecutivo = 0)
+    public function __construct(string $perfilAcesso = null,int $idExecutivo = 0)
     {
         $perfilAcesso !== null? $this->setPerfilAcesso($perfilAcesso) : null;
         $idExecutivo > 0? $this->setIdExecutivo($idExecutivo) : null;
@@ -167,7 +166,7 @@ class UsuarioLogado
             } else {
                 throw new Exception("Erro, perfil de Acesso inválido", 400);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
@@ -194,8 +193,11 @@ class UsuarioLogado
             } else {
                 throw new Exception("Erro, id de Executivo Inválido", 400);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
+
+
+
 }
