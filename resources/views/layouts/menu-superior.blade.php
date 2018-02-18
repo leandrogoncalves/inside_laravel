@@ -15,7 +15,7 @@
                 <a href="{{ route('home') }}" data-toggle="tooltip"  class="nav-link">Home {!! $menu == 'home'? '<span class="sr-only">(current)</span>':null !!}</a>
             </li>
             <li class="nav-item nav-hover mr-3 {{ $menu == 'performance'? 'active':null }}">
-                <a href="#" data-toggle="tooltip"  class="nav-link">Performance {!! $menu == 'performance'? '<span class="sr-only">(current)</span>':null !!}</a>
+                <a href="{{ route('performance') }}" class="nav-link">Performance {!! $menu == 'performance'? '<span class="sr-only">(current)</span>':null !!}</a>
             </li>
         </ul>
         @include('layouts.header')
