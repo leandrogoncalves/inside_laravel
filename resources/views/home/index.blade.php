@@ -66,13 +66,12 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 <div class="row title-Grafico">
 <h4 class="col-md-4">Acumulado nos últimos 6 meses</h4>
 </div>
 <div class="row">
-    <div class="col d-flex justify-content-center" style="background-color: white">
-        <canvas id="meuCanvas">
+    <div class="col d-flex justify-content-center" style="background-color: white;height: 60vh ; width: 60vh;">
+        <canvas id="meuCanvas" >
         </canvas>
     </div>
 </div>
@@ -82,36 +81,35 @@
         <p id="perfil_acesso" class="d-none">{{ isset(Auth::user()->id_executivo)?  Auth::user()->id_executivo:0 }}</p>
     </div>
 </div>
+<div class="loading" style="display: none"></div>
 @push('scripts')
 <script>
-    /*
-    var grafico =
-    console.log(grafico);
-    var dias = [];
-    var quantidade = [];
-    for(var i=0; i <  Object.keys(grafico).length; i++){
-        dias.push(grafico[i].data_inclusao);
-        quantidade.push(grafico[i].quantidade);
-    }
-     init(dias, quantidade );
-     */
-    /*
-    function loadData() {
-        try {
-            var ajax = new XMLHttpRequest();
-            ajax.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.response);
-                }
-            };
-            ajax.open('POST', '/total-exames-acumulado');
-            ajax.send();
-        }catch(err) {
-            alert('Um erro foi identificado ao enviar o email');
+    function convertDate(date) {
+        var grafico = date;
+        var dias = [];
+        var quantidade = [];
+        for(var i=0; i <  Object.keys(grafico).length; i++){
+            dias.push(grafico[i].data_inclusao);
+            quantidade.push(grafico[i].quantidade);
         }
+        init(dias, quantidade );
     }
-    loadData();
-    */
+    function loadData(link, _callBackBefore, _callBackAfter) {
+        $.ajax({
+            url:link,
+            context: document.body,
+            beforeSend: _callBackBefore,
+            complete: _callBackAfter
+        }).done(function(data) {
+            convertDate(data);
+        });;
+    }
+    loadData('/total-exames-acumulado/'+$('#id_executivo').text()+'/'+$('#perfil_acesso').text(),
+        function () {
+            /*Fazer loading*/
+         }, function () {
+
+    });
 </script>
 @endpush
 @endsection
