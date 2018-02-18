@@ -17,13 +17,13 @@
     <!-- Script-->
 </head>
 <body>
-    <div id="app">
+    <div id="app" style="height:100vH;">
 
         @if(isset($menu))
         @include('layouts.menu-superior', ['menu' => $menu])
         @endif
 
-        <main class="container">
+        <main class="container h-100">
             @yield('content')
         </main>
     </div>

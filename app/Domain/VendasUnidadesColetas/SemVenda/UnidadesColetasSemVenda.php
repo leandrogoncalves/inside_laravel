@@ -9,7 +9,8 @@ use \DB;
 
 class UnidadesColetasSemVenda
 {
-    private $repository;
+    private $vendaLaboratorioRepository;
+    private $laboratorioRepository;
 
     public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository, LaboratorioRepository $laboratorioRepository)
     {

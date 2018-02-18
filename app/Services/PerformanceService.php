@@ -35,7 +35,8 @@ class PerformanceService
                  ? $request->only('data_fim')
                  : Carbon::now()->copy()->hour(23)->minute(59)->second(59);
 
-        return $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user);
+        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user);
 
+        return $unidadesColetasTotalizadores;
     }
 }
