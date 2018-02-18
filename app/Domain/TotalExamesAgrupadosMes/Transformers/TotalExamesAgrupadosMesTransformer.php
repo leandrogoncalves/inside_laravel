@@ -21,14 +21,23 @@ class TotalExamesAgrupadosMesTransformer
                     "quantidade" => 0
                 ]);
             } else {
+                $quantidade = $data->filter(function ($item) use ($actualData) {
+                    $diasAnteriores = $actualData->first()->data_inclusao->copy()->addDays(-30);
+
+                    if ($item->data_inclusao <= $actualData->first()->data_inclusao->copy() &&
+                    $item->data_inclusao >= $diasAnteriores) {
+                        return $item;
+                    }
+                });
+
                 $newData->push([
                     "data_inclusao" => $actualData->first()->data_inclusao->format("d/m/Y"),
-                    "quantidade" => $actualData->first()->quantidade
+                    "quantidade" => $quantidade->sum('quantidade'),
                 ]);
             }
         }
-        return ($newData->sortBy(function ($obj) {
+        return $newData->sortBy(function ($obj) {
             return Carbon::createFromFormat("d/m/Y", $obj["data_inclusao"])->timestamp;
-        })->values());
+        })->values();
     }
 }
