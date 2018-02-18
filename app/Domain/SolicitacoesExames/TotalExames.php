@@ -21,7 +21,9 @@ class TotalExames
 {
     private $executivos;
     private $origemBasica;
-
+    private $origemLaboratorio;
+    private $origemLaboratorioCltCnh;
+    private $origemCaged;
 
     public function __construct(Executivos $executivos, OrigemBasica $origemBasica, OrigemLaboratorio $origemLaboratorio, OrigemLaboratorioCltCnh $origemLaboratorioCltCnh, OrigemCaged $origemCaged)
     {
