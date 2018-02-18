@@ -20,10 +20,9 @@ class UsuarioLogadoService
         try {
             $requestData = $this->getIdExecutivoAndPerfil($request);
             $this->usuarioLogado->setIdExecutivo($requestData["idExecutivo"])
-                                ->setPerfilAcesso($requestData["perfilAcesso"])
-                                ->setExecutivoTipo();
+                                ->setPerfilAcesso($requestData["perfilAcesso"]);
             return $this->usuarioLogado;
-        } catch (\Excetion $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
