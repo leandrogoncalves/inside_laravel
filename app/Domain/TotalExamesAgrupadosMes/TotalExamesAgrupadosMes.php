@@ -38,7 +38,7 @@ class TotalExamesAgrupadosMes
         $results = $this->returnTotalExamesAgrupadosByUser($dataInicio->toDateTimeString(), $dataFim->toDateTimeString(), $idExecutivo);
 
         $totalExamesAgrupadosMesTransformer = new TotalExamesAgrupadosMesTransformer();
-        return $totalExamesAgrupadosMesTransformer->transform($dataInicio, $dataFim, $differenceDataFimAndDataInicio, $results);
+        return $totalExamesAgrupadosMesTransformer->transform($dataInicio->addMonth(1), $dataFim, $differenceDataFimAndDataInicio, $results);
     }
 
     private function returnTotalExamesAgrupadosByUser($dataInicio, $dataFim, array $idExecutivo)
@@ -93,7 +93,7 @@ class TotalExamesAgrupadosMes
         })
         ->groupBy("data_inclusao")
         ->orderBy("data_inclusao")
-        ->all(["data_inclusao", DB::raw("IFNULL(MAX(quantidade), 0) AS quantidade")]);
+        ->all(["data_inclusao", DB::raw("IFNULL(SUM(quantidade), 0) AS quantidade")]);
     }
 
     private function getTotalExamesAgrupadosPardini($dataInicio, $dataFim, array $idExecutivo)
@@ -110,7 +110,7 @@ class TotalExamesAgrupadosMes
         })
         ->groupBy("data_inclusao")
         ->orderBy("data_inclusao")
-        ->all(["data_inclusao", DB::raw("IFNULL(MAX(quantidade), 0) AS quantidade")]);
+        ->all(["data_inclusao", DB::raw("IFNULL(SUM(quantidade), 0) AS quantidade")]);
     }
 
     private function getTotalExamesAgrupadosPsyNotAdmin($dataInicio, $dataFim, array $idExecutivo)
@@ -127,6 +127,6 @@ class TotalExamesAgrupadosMes
         })
         ->groupBy("data_inclusao")
         ->orderBy("data_inclusao")
-        ->all(["data_inclusao", DB::raw("IFNULL(MAX(quantidade), 0) AS quantidade")]);
+        ->all(["data_inclusao", DB::raw("IFNULL(SUM(quantidade), 0) AS quantidade")]);
     }
 }
