@@ -18,5 +18,4 @@ class PerformanceService
     {
         return 'ola mundo';
     }
-
 }
