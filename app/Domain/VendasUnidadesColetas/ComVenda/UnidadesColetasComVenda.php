@@ -34,7 +34,7 @@ class UnidadesColetasComVenda
         ->groupBy("id_laboratorio")
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
 
-        return $laboratoriosComVenda->sum('qtd');
+        return $laboratoriosComVenda->count();
     }
 
     public function getUnidadesColetasPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
@@ -54,6 +54,6 @@ class UnidadesColetasComVenda
         ->groupBy("id_laboratorio")
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
 
-        return $laboratoriosComVenda->sum('qtd');
+        return $laboratoriosComVenda->count();
     }
 }
