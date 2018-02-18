@@ -34,13 +34,26 @@ class VendasUnidadesColetas
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-            dd($nuncaVenderam);
+
+            return collect([
+                'unidadesColetasComVenda' => $comVenda,
+                'unidadesColetasSemVenda' => $semVenda,
+                'unidadesColetasNuncaVenderam' => $nuncaVenderam,
+            ]);
         }
 
         if ($user->isUserPardini()) {
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+
+            return collect([
+                'unidadesColetasComVenda' => $comVenda,
+                'unidadesColetasSemVenda' => $semVenda,
+                'unidadesColetasNuncaVenderam' => $nuncaVenderam,
+            ]);
         }
+
+        throw new \Exception("Erro, perfil de acesso desconhecido", 400);
     }
 }
