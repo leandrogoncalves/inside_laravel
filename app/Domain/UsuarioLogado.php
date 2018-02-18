@@ -172,7 +172,7 @@ class UsuarioLogado
             } else {
                 throw new Exception("Erro, perfil de Acesso inválido", 400);
             }
-        } catch (Excetion $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }
