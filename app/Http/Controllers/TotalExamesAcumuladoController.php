@@ -16,6 +16,7 @@ class TotalExamesAcumuladoController extends Controller
 
     public function index(Request $request)
     {
-        $this->service->getData($request);
+        $data = $this->service->getData($request);
+        return response()->json($data);
     }
 }
