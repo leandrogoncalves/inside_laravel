@@ -15,4 +15,9 @@ class Usuario extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function laboratorios()
+    {
+        return $this->hasMany(Laboratorio::class, "id_executivo_psy", "id_executivo_psy");
+    }
 }

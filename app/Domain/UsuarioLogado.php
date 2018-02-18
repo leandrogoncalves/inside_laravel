@@ -2,13 +2,15 @@
 
 namespace Inside\Domain;
 
-use Inside\Models\Usuario;
 use Exception;
+use Inside\Repositories\Contracts\UsuarioRepository;
 
 class UsuarioLogado
 {
     private $perfilAcesso;
     private $idExecutivo;
+    private $usuarioRepository;
+    private $executivo;
 
     const PERFIL_ACESSO = [
         "ADMIN-PSY" => "admin",
@@ -30,10 +32,14 @@ class UsuarioLogado
     const SUPERVISOR_PARDINI = 'SUPERVISOR-PARDINI';
     const GERENTE_PARDINI = 'GERENTE-PARDINI';
 
-    public function __construct(string $perfilAcesso = null, int $idExecutivo = 0)
+    public function __construct(string $perfilAcesso = null,
+                                int $idExecutivo = 0,
+                                UsuarioRepository $usuarioRepository
+                                )
     {
         $perfilAcesso !== null? $this->setPerfilAcesso($perfilAcesso) : null;
         $idExecutivo > 0? $this->setIdExecutivo($idExecutivo) : null;
+        $this->usuarioRepository = $usuarioRepository;
     }
 
     public function isUserPsy()
@@ -194,8 +200,76 @@ class UsuarioLogado
             } else {
                 throw new Exception("Erro, id de Executivo Inválido", 400);
             }
-        } catch (Excetion $e) {
+        } catch (\Excetion $e) {
             return $e;
         }
+    }
+
+    public function setExecutivoTipo()
+    {
+        if($this->isUserPsy()){
+             $this->executivo = app()->make('Inside\Domain\Executivos\Psy\Executivos');
+        }
+
+        if($this->isUserPardini()){
+            $this->executivo = app()->make('Inside\Domain\Executivos\Pardini\Executivos');
+        }
+
+    }
+
+
+    public function getIdExecutivoByUsuarioLogado()
+    {
+        switch ($this->perfilAcesso) {
+            case 'admin':
+                return $this->executivo->getIdExecutivoByAdmin($this->idExecutivo);
+                break;
+            case 'exec-psy':
+                return $this->executivo->getIdExecutivoByCodigoExecutivo($this->idExecutivo);
+                break;
+            case 'sup-psy':
+                return $this->executivo->getIdExecutivoByCodigoSupervisor($this->idExecutivo);
+                break;
+            case 'ger-psy':
+                return $this->executivo->getIdExecutivoByCodigoGerente($this->idExecutivo);
+                break;
+            case 'admin-pard':
+                return $this->executivo->getIdExecutivoByAdmin($this->idExecutivo);
+                break;
+            case 'executivo':
+                return $this->executivo->getIdExecutivoByCodigoExecutivo($this->idExecutivo);
+                break;
+            case 'supervisor':
+                return $this->executivo->getIdExecutivoByCodigoSupervisor($this->idExecutivo);
+                break;
+            case 'gerente':
+                return $this->executivo->getIdExecutivoByCodigoGerente($this->idExecutivo);
+                break;
+            default:
+                return false;
+                break;
+        }
+    }
+
+
+    public function idLaboratorios()
+    {
+        $executivoId = $this->getIdExecutivoByUsuarioLogado();
+
+        $idExecutivos = [];
+
+        foreach ($executivoId as $executivo){
+            $idExecutivos[] = $executivo['id_executivo'];
+        }
+
+        if($this->isUserPsy()){
+
+            $teste = $this->usuarioRepository->with(['laboratorios'])
+                                            ->scopeQuery(function ($query) use ($idExecutivos) {
+                                                return $query->whereIn('id_executivo_psy', $idExecutivos);
+                                            })
+                                           ->get(['id_executivo_psy']);
+        }
+
     }
 }

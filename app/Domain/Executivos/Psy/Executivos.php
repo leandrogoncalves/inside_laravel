@@ -32,4 +32,12 @@ class Executivos
     {
         return $this->repository->all(['id_executivo'])->toArray();
     }
+
+    public function setCodExecutivo(int $codExecutivo)
+    {
+        $this->codigoExecutivo = $codExecutivo;
+        return $this;
+    }
+
+
 }

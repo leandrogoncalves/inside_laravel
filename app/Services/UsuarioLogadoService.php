@@ -7,11 +7,22 @@ use Inside\Domain\UsuarioLogado;
 
 class UsuarioLogadoService
 {
+
+    private $usuarioLogado;
+
+    public function __construct(UsuarioLogado $usuarioLogado)
+    {
+        $this->usuarioLogado = $usuarioLogado;
+    }
+
     public function getUsuarioLogadoData(Request $request)
     {
         try {
             $requestData = $this->getIdExecutivoAndPerfil($request);
-            return new UsuarioLogado($requestData["perfilAcesso"], $requestData["idExecutivo"]);
+            $this->usuarioLogado->setIdExecutivo($requestData["idExecutivo"])
+                                ->setPerfilAcesso($requestData["perfilAcesso"])
+                                ->setExecutivoTipo();
+            return $this->usuarioLogado;
         } catch (\Excetion $e) {
             return $e;
         }
