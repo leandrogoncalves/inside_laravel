@@ -41,7 +41,6 @@ class TotalExamesAgrupadosMesTransformer
                 ]);
             }
         }
-
         //AGORA, ANTES DE RETORNAR EU FAÇO UMA ORDENAÇÃO.
         return $newData->sortBy(function ($obj) {
             return Carbon::createFromFormat("d/m/Y", $obj["data_inclusao"])->timestamp;
