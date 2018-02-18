@@ -11,7 +11,7 @@
 <div class="row">
     @foreach($data as $periodo) <!-- PRIMEIRO VAMOS PERCORRER ENTRE OS PERIODOS -->
     <div class="col-12 col-md-6 col-lg-4">
-        <div class="card bg-light mb-3">
+        <div class="card bg-light mb-3  colorGelo boderTable">
             <div class="card-header">Total de Exames Solicitados em: {{ $periodo["periodo"] }}</div>
             <div class="card-body">
                 <table class="table table-hover table-striped">
@@ -58,7 +58,7 @@
 
 <div class="row">
     <div class="col d-flex justify-content-center">
-        <div class="card bg-light mb-3">
+        <div class="card bg-light mb-3 colorGelo boderTable">
             <div class="card-header">Preço Médio:</div>
             <div class="card-body">
                 <p class="card-text">{{ $precoMedio["precoMedio"] }}</p>
@@ -66,5 +66,26 @@
         </div>
     </div>
 </div>
-
+<div class="row title-Grafico">
+<h4 class="col-md-4">Acumulado nos últimos 6 meses</h4>
+</div>
+<div class="row">
+    <div class="col d-flex justify-content-center" style="background-color: white">
+        <canvas id="meuCanvas">
+        </canvas>
+    </div>
+</div>
+@push('scripts')
+<script>
+    var grafico = {!! $grafico !!};
+    console.log(grafico);
+    var dias = [];
+    var quantidade = [];
+    for(var i=0; i <  Object.keys(grafico).length; i++){
+        dias.push(grafico[i].data_inclusao);
+        quantidade.push(grafico[i].quantidade);
+    }
+     init(dias, quantidade );
+</script>
+@endpush
 @endsection
