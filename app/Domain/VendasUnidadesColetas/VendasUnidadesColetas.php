@@ -4,6 +4,8 @@ namespace Inside\Domain\VendasUnidadesColetas;
 
 use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetaComVendaDetail;
 use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetasComVenda;
+use Inside\Domain\VendasUnidadesColetas\SemVenda\UnidadesColetasSemVenda;
+use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetasNuncaVenderam;
 
 use Inside\Domain\UsuarioLogado;
 use Inside\Domain\Executivos\Executivos;
@@ -14,14 +16,20 @@ class VendasUnidadesColetas
 {
     private $executivos;
     private $unidadesColetasComVenda;
+    private $unidadesColetasSemVenda;
+    private $unidadesColetasNuncaVenderam;
 
     public function __construct(Executivos $executivos,
                                 UnidadesColetasComVenda $unidadesColetasComVenda,
+                                UnidadesColetasSemVenda $unidadesColetasSemVenda,
+                                UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
                                 UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail
     )
     {
         $this->executivos = $executivos;
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
+        $this->unidadesColetasSemVenda = $unidadesColetasSemVenda;
+        $this->unidadesColetasNuncaVenderam = $unidadesColetasNuncaVenderam;
         $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
     }
 
@@ -32,16 +40,17 @@ class VendasUnidadesColetas
         $comVenda = $semVenda = $nuncaVenderam = $comVendaDetail = 0;
 
         if ($user->isUserPsy()) {
-//            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-//            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-//            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetasPsyDetail($dataInicio, $dataFim, $idExecutivo);
+            dd($nuncaVenderam);
         }
 
         if ($user->isUserPardini()) {
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $semVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $nuncaVenderam = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetasPardiniDetail($dataInicio, $dataFim, $idExecutivo);
         }
 
