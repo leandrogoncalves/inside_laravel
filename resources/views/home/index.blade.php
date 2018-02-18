@@ -77,7 +77,8 @@
 </div>
 @push('scripts')
 <script>
-    var grafico = {!! $grafico !!};
+    /*
+    var grafico =
     console.log(grafico);
     var dias = [];
     var quantidade = [];
@@ -86,6 +87,24 @@
         quantidade.push(grafico[i].quantidade);
     }
      init(dias, quantidade );
+     */
+    /*
+    function loadData() {
+        try {
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.response);
+                }
+            };
+            ajax.open('POST', '/total-exames-acumulado');
+            ajax.send();
+        }catch(err) {
+            alert('Um erro foi identificado ao enviar o email');
+        }
+    }
+    loadData();
+    */
 </script>
 @endpush
 @endsection
