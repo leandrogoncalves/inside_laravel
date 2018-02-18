@@ -67,4 +67,10 @@
     </div>
 </div>
 
+<div class="row d-none">
+    <div class="col">
+        <p id="id_executivo" class="d-none">{{ isset(Auth::user()->perfil_acesso)?  Auth::user()->perfil_acesso: "" }}</p>
+        <p id="perfil_acesso" class="d-none">{{ isset(Auth::user()->id_executivo)?  Auth::user()->id_executivo:0 }}</p>
+    </div>
+</div>
 @endsection

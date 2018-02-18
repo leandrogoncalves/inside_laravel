@@ -3,13 +3,13 @@
 namespace Inside\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inside\Services\HomeService;
+use Inside\Services\TotalExamesAgrupadosMesService;
 
-class HomeController extends Controller
+class TotalExamesAcumuladoController extends Controller
 {
     private $service;
 
-    public function __construct(HomeService $service)
+    public function __construct(TotalExamesAgrupadosMesService $service)
     {
         $this->service = $service;
     }
@@ -17,6 +17,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $data = $this->service->getData($request);
-        return view('home.index', $data);
+        return response()->json($data);
     }
 }
