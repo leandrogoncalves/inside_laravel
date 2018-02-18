@@ -33,7 +33,16 @@ class VendasUnidadesColetas
         $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
     }
 
-    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
+    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
+    {
+        if ($isDefaultDate) {
+            return $this->returnDataIfIsDefaultDate($dataInicio, $dataFim, $user);
+        }
+
+        return $this->returnDataIfIsNotDefaultDate($dataInicio, $dataFim, $user);
+    }
+
+    private function returnDataIfIsDefaultDate(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
         $comVenda = $semVenda = $nuncaVenderam = $comVendaDetail = 0;
         $idExecutivo = $this->executivos->getIdExecutivo($user);
@@ -67,5 +76,10 @@ class VendasUnidadesColetas
         }
 
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+    }
+
+    private function returnDataIfIsNotDefaultDate(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
+    {
+
     }
 }
