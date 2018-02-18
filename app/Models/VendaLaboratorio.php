@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VendaLaboratorio extends Model
 {
-    protected $table = 'dw_vendas_origem';
+    protected $table = 'dw_vendas_laboratorios';
     protected $connection = 'inteligencia';
 
     public function laboratorio()
