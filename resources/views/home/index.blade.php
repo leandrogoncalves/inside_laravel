@@ -1,7 +1,7 @@
 @extends('layouts.app', [
     'menu' => 'home'
 ])
-
+<link href="{{ asset('css/inside.css') }}" rel="stylesheet">
 @section('content')
 
 <div id="page-title" class="d-flex mb-4">

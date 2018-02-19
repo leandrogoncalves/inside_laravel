@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/inside.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
 
     <!-- Script-->
 </head>
@@ -23,7 +23,7 @@
         @include('layouts.menu-superior', ['menu' => $menu])
         @endif
 
-        <main class="container h-100">
+        <main class="h-100 ml-4 mr-4" >
             @yield('content')
         </main>
     </div>

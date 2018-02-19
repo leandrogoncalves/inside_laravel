@@ -5,32 +5,30 @@ namespace Inside\Domain\VendasUnidadesColetas\ComVenda;
 use Inside\Repositories\Contracts\PerformanceLaboratorioRepository;
 use Inside\Repositories\Contracts\VendaLaboratorioRepository;
 use Inside\Repositories\Contracts\LaboratorioRepository;
+use Inside\Domain\VendasUnidadesColetas\ComVenda\Transformers\UnidadeColetaComVendaDetailTransformer;
 use Carbon\Carbon;
 use \DB;
-
 
 class UnidadesColetaComVendaDetail
 {
     private $vendaLaboratorioRepository;
     private $laboratorioRepository;
     private $performanceLaboratorioRepository;
+    private $transformer;
 
     public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository,
                                 PerformanceLaboratorioRepository $performanceLaboratorioRepository,
-                                LaboratorioRepository $laboratorioRepository)
+                                LaboratorioRepository $laboratorioRepository,
+                                UnidadeColetaComVendaDetailTransformer $transformer)
     {
         $this->vendaLaboratorioRepository = $vendaLaboratorioRepository;
         $this->laboratorioRepository = $laboratorioRepository;
         $this->performanceLaboratorioRepository = $performanceLaboratorioRepository;
+        $this->transformer = $transformer;
     }
 
-    public function getUnidadesColetaPsyDetail(array $idExecutivos)
+    public function getUnidadesColetaPsyDetail(array $idExecutivo)
     {
-        $idExecutivo = [];
-        foreach ($idExecutivos as $id){
-            $idExecutivo[] = $id['id_executivo'];
-        }
-
         $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
             ->scopeQuery(function ($query) use ($idExecutivo) {
                 return $query->whereIn('id_executivo_psy', $idExecutivo);
@@ -40,8 +38,12 @@ class UnidadesColetaComVendaDetail
                 'cidade',
                 'estado',
                 'ativo',
+                'rede',
+                'logistica_pardini',
                 'id_executivo_psy',
                 'id_executivo_pardini',
+                'id_laboratorio_psy',
+                'id_laboratorio_pardini',
                 'nome_executivo_psy',
                 'nome_executivo_pardini',
                 'data_base',
@@ -57,20 +59,13 @@ class UnidadesColetaComVendaDetail
                 'valor_exame_cnh',
                 'data_ultimo_comentario',
                 'nome_ultimo_comentario'
-
             ]);
 
-        return $laboratoriosComVendaDetail;
-
+        return $this->transformer->transform($laboratoriosComVendaDetail);
     }
 
-    public function getUnidadesColetaPardiniDetail(array $idExecutivos)
+    public function getUnidadesColetaPardiniDetail(array $idExecutivo)
     {
-        $idExecutivo = [];
-        foreach ($idExecutivos as $id){
-            $idExecutivo[] = $id['id_executivo'];
-        }
-
         $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
             ->scopeQuery(function ($query) use ($idExecutivo) {
                 return $query->whereIn('id_executivo_pardini', $idExecutivo);
@@ -80,8 +75,12 @@ class UnidadesColetaComVendaDetail
                 'cidade',
                 'estado',
                 'ativo',
+                'rede',
+                'logistica_pardini',
                 'id_executivo_psy',
                 'id_executivo_pardini',
+                'id_laboratorio_psy',
+                'id_laboratorio_pardini',
                 'nome_executivo_psy',
                 'nome_executivo_pardini',
                 'data_base',
@@ -100,8 +99,6 @@ class UnidadesColetaComVendaDetail
 
             ]);
 
-        return $laboratoriosComVendaDetail;
+        return $this->transformer->transform($laboratoriosComVendaDetail);
     }
-
-
 }

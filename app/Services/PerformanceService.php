@@ -27,15 +27,15 @@ class PerformanceService
     public function getData(Request $request)
     {
         $user = $this->usuarioLogadoService->getUsuarioLogadoData($request);
-
         $dataInicio = $request->exists('data_inicio')
-                    ? $request->only('data_inicio')
+                    ? Carbon::createFromFormat('Y-m-d', $request->input('data_inicio'))->hour(0)->minute(0)->second(0)
                     : Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
         $dataFim = $request->exists('data_fim')
-                 ? $request->only('data_fim')
+                 ? Carbon::createFromFormat('Y-m-d', $request->input('data_fim'))->hour(23)->minute(59)->second(59)
                  : Carbon::now()->copy()->hour(23)->minute(59)->second(59);
+        $existsDate = $request->exists('data_inicio');
 
-        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user);
+        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->get($dataInicio, $dataFim, $user, !$existsDate);
 
         return $unidadesColetasTotalizadores;
     }
