@@ -17,7 +17,7 @@ class PerformanceController extends Controller
     public function index(Request $request)
     {
         $data = ['data' =>$this->service->getData($request)];
-
+dd($data);
         return view('performance.index', $data);
     }
 }
