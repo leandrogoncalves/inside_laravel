@@ -22,37 +22,80 @@ class Executivos
         switch ($user->getPerfilAcessoPorExtenso()) {
             case UsuarioLogado::ADMIN_PSY:
                 return $this->executivosPsy->getIdExecutivoByAdmin();
-            break;
+                break;
 
             case UsuarioLogado::EXECUTIVO_PSY:
                 return $this->executivosPsy->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
-            break;
+                break;
 
             case UsuarioLogado::SUPERVISOR_PSY:
                 return $this->executivosPsy->getIdExecutivoByCodigoSupervisor($user->getIdExecutivo());
-            break;
+                break;
+
             case UsuarioLogado::GERENTE_PSY:
                 return $this->executivosPsy->getIdExecutivoByCodigoGerente($user->getIdExecutivo());
-            break;
+                break;
 
             case UsuarioLogado::ADMIN_PARDINI:
                 return $this->executivosPardini->getIdExecutivoByAdmin();
-            break;
+                break;
 
             case UsuarioLogado::EXECUTIVO_PARDINI:
                 return $this->executivosPardini->getIdExecutivoByCodigoExecutivo($user->getIdExecutivo());
-            break;
+                break;
 
             case UsuarioLogado::SUPERVISOR_PARDINI:
                 return $this->executivosPardini->getIdExecutivoByCodigoSupervisor($user->getIdExecutivo());
-            break;
+                break;
+
             case UsuarioLogado::GERENTE_PARDINI:
                 return $this->executivosPardini->getIdExecutivoByCodigoGerente($user->getIdExecutivo());
-            break;
+                break;
 
             default:
                 throw new \Exception("Erro, perfil de acesso desconhecido", 400);
             break;
+        }
+    }
+
+    public function getIdGerente(UsuarioLogado $user)
+    {
+
+        switch ($user->getPerfilAcessoPorExtenso()) {
+            case UsuarioLogado::ADMIN_PSY:
+                return $this->executivosPsy->getIdGerenteByAdmin();
+                break;
+
+            case UsuarioLogado::EXECUTIVO_PSY:
+                return $this->executivosPsy->getIdGerenteByCodigoExecutivo($user->getIdExecutivo());
+                break;
+
+            case UsuarioLogado::SUPERVISOR_PSY:
+                return $this->executivosPsy->getIdGerenteByCodigoSupervisor($user->getIdExecutivo());
+                break;
+
+            case UsuarioLogado::GERENTE_PSY:
+                return $this->executivosPsy->getIdGerenteByCodigoGerente($user->getIdExecutivo());
+                break;
+
+            case UsuarioLogado::ADMIN_PARDINI:
+                return $this->executivosPardini->getIdGerenteByAdmin();
+                break;
+
+            case UsuarioLogado::EXECUTIVO_PARDINI:
+                return $this->executivosPardini->getIdGerenteByCodigoExecutivo($user->getIdExecutivo());
+                break;
+
+            case UsuarioLogado::SUPERVISOR_PARDINI:
+                return $this->executivosPardini->getIdGerenteByCodigoSupervisor($user->getIdExecutivo());
+                break;
+            case UsuarioLogado::GERENTE_PARDINI:
+                return $this->executivosPardini->getIdGerenteByCodigoGerente($user->getIdExecutivo());
+                break;
+
+            default:
+                throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+                break;
         }
     }
 }

@@ -9,7 +9,8 @@ use \DB;
 
 class UnidadesColetasNuncaVenderam
 {
-    private $repository;
+    private $vendaLaboratorioRepository;
+    private $laboratorioRepository;
 
     public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository, LaboratorioRepository $laboratorioRepository)
     {
@@ -30,7 +31,8 @@ class UnidadesColetasNuncaVenderam
             ->whereIn('id_laboratorio', $laboratorios->toArray());
         })
         ->groupBy("id_laboratorio")
-        ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
+        ->all(["id_laboratorio"]);
+
         return $laboratorios->whereNotIn('pespeslabauto', $laboratoriosComVenda->pluck('id_laboratorio'))->count();
     }
 
@@ -47,7 +49,7 @@ class UnidadesColetasNuncaVenderam
             ->whereIn('id_laboratorio', $laboratorios->toArray());
         })
         ->groupBy("id_laboratorio")
-        ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
+        ->all(["id_laboratorio"]);
 
         return $laboratorios->whereNotIn('pespeslabauto', $laboratoriosComVenda->pluck('id_laboratorio'))->count();
     }
