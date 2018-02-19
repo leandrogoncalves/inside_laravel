@@ -66,7 +66,6 @@ class VendasUnidadesColetas
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($dataInicio, $dataFim, $idExecutivo);
 
             if ($isDefaultDate) {
                 $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($idExecutivo);
