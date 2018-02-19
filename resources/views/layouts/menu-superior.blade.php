@@ -1,5 +1,4 @@
 <nav class="navbar navbar-light nav-back colorGelo  mb-3">
-    <div class="container">
         <ul class="navbar-nav d-flex flex-row">
             <li class="nav-item mr-1">
                 <a class="navbar-brand panel-logo" href="{{ url('/') }}">
@@ -19,5 +18,4 @@
             </li>
         </ul>
         @include('layouts.header')
-    </div>
 </nav>

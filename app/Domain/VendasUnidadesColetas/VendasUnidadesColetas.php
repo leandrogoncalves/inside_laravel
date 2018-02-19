@@ -22,6 +22,7 @@ class VendasUnidadesColetas
     private $unidadesColetasNuncaVenderam;
     private $unidadesColetaComVendaDetail;
     private $performanceLaboratorioNewDates;
+    private $idExecutivos;
 
     public function __construct(Executivos $executivos,
                                 UnidadesColetasComVenda $unidadesColetasComVenda,
@@ -41,52 +42,73 @@ class VendasUnidadesColetas
         $this->performanceLaboratorioNewDates = $performanceLaboratorioNewDates;
     }
 
-    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
+    public function getTotais(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
     {
-        $idExecutivo = $this->executivos->getIdExecutivo($user);
+        $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
 
         if ($user->isUserPsy()) {
-            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
-            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPsy($idExecutivo);
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
+            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
+            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
 
-            if ($isDefaultDate) {
-                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($idExecutivo);
-            } else {
-                $comVendaDetail = $this->unidadesColetaPsyNotDefaultDate($dataInicio, $dataFim, $idExecutivo);
-            }
 
             return collect([
                 'unidadesColetasComVenda' => $comVenda,
                 'unidadesColetasSemVenda' => $semVenda,
                 'unidadesColetasNuncaVenderam' => $nuncaVenderam,
+            ]);
+        }
+
+        if ($user->isUserPardini()) {
+            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $this->idExecutivos);
+            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $this->idExecutivos);
+            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $this->idExecutivos);
+
+            return collect([
+                'unidadesColetasComVenda' => $comVenda,
+                'unidadesColetasSemVenda' => $semVenda,
+                'unidadesColetasNuncaVenderam' => $nuncaVenderam,
+            ]);
+        }
+
+        throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+    }
+
+    public function getTotaisDetail(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
+    {
+        $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
+
+        if ($user->isUserPsy()) {
+            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPsy($this->idExecutivos);
+
+            if ($isDefaultDate) {
+                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($this->idExecutivos);
+            } else {
+                $comVendaDetail = $this->unidadesColetaPsyNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
+            }
+
+            return collect([
                 'unidadesColetasDetalhes' => $comVendaDetail
             ]);
         }
 
         if ($user->isUserPardini()) {
-            $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
-            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPardini($idExecutivo);
+            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPardini($this->idExecutivos);
 
             if ($isDefaultDate) {
-                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($idExecutivo);
+                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($this->idExecutivos);
             } else {
-                $comVendaDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $idExecutivo);
+                $comVendaDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
             }
 
             return collect([
-                'unidadesColetasComVenda' => $comVenda,
-                'unidadesColetasSemVenda' => $semVenda,
-                'unidadesColetasNuncaVenderam' => $nuncaVenderam,
                 'unidadesColetasDetalhes' => $comVendaDetail
             ]);
         }
 
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);
     }
+
 
     private function unidadesColetaPsyNotDefaultDate(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {

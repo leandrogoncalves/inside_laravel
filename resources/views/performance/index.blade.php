@@ -1,7 +1,12 @@
 @extends('layouts.app', [
     'menu' => 'performance'
 ])
-<link href="{{ asset('css/performance.css') }}" rel="stylesheet">
+
+@section('page_style')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
     <div id="page-title" class="d-flex mb-4">
@@ -39,7 +44,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
+            <div class="card bg-light mb-3 colorGelo boderTable">
+                <div class="card-header">Preço médio</div>
+                <div class="card-body">
+                    <strong><p style="text-align: center">{{ $data['precoMedio']['precoMedio'] }}</p></strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC com Venda</div>
                 <div class="card-body">
@@ -47,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC sem Venda</div>
                 <div class="card-body">
@@ -55,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC Nunca Venda</div>
                 <div class="card-body">
@@ -64,12 +77,29 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <strong>ATENÇÃO:</strong> Caso não encontre algum laboratório ou algum laboratório está
+                sem venda e você tem conhecimento que ele efetuou vendas,
+                por favor, entre em contato o seu regional para que possamos ajustar o vinculo dos Códigos Pardini com os
+                Códigos Psy.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <p>Diferença dos períodos A e B para cálculo da performance.<br/>O período A sempre equivale a mesma
+                    quantidade de dias que corresponde o Período B.</p>
+            </div>
+
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="table-listagem-leads">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -180,4 +210,38 @@
         </div>
     </div>
 
+@endsection
+
+
+@section('page_scripts')
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table-listagem-leads').DataTable({
+                language: {
+                    processing:     "Aguarde Processando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ linhas",
+                    info:           "Mostrando  _START_ de _END_ - total: _MAX_ leads",
+                    infoEmpty:      "Mostrando  _START_ de _END_ - total: _TOTAL_ leads",
+                    infoFiltered:   " ",
+                    infoPostFix:    "",
+                    loadingRecords: "Aguarde carregando...",
+                    zeroRecords:    "Nenhum registro encontrado",
+                    emptyTable:     "Nenhum registro encontrado",
+                    paginate: {
+                        first:      "Primeiro",
+                        previous:   "Anterior",
+                        next:       "Próximo",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Ordenar crescentet",
+                        sortDescending: ": Ordenar decrescente"
+                    },
+                    decimal: ","
+                }
+            });
+        } );
+    </script>
 @endsection

@@ -57,11 +57,35 @@
 </div>
 
 <div class="row">
-    <div class="col d-flex justify-content-center">
+    <div class="col-3">
         <div class="card bg-light mb-3 colorGelo boderTable">
-            <div class="card-header">Preço Médio:</div>
+            <div class="card-header">Preço médio</div>
             <div class="card-body">
-                <p class="card-text">{{ $precoMedio["precoMedio"] }}</p>
+                <strong><p style="text-align: center">{{ $precoMedio['precoMedio'] }}</p></strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-light mb-3 colorGelo boderTable">
+            <div class="card-header">Total de UC com Venda</div>
+            <div class="card-body">
+                <strong><p style="text-align: center">{{ $unidadesColetasComVenda }}</p></strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-light mb-3 colorGelo boderTable">
+            <div class="card-header">Total de UC sem Venda</div>
+            <div class="card-body">
+                <strong> <p style="text-align: center">{{ $unidadesColetasSemVenda }}</p></strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-light mb-3 colorGelo boderTable">
+            <div class="card-header">Total de UC Nunca Venda</div>
+            <div class="card-body">
+                <strong> <p style="text-align: center">{{ $unidadesColetasNuncaVenderam }}</p></strong>
             </div>
         </div>
     </div>
