@@ -30,7 +30,7 @@ class UsuarioLogado
     const SUPERVISOR_PARDINI = 'SUPERVISOR-PARDINI';
     const GERENTE_PARDINI = 'GERENTE-PARDINI';
 
-    const ID_GERENTE_LABORATORIOS = 10;
+    const ID_GERENTE_LABORATORIO = 10;
     const ID_GERENTE_CORPORATIVO = 20;
 
     public function __construct(string $perfilAcesso = null, int $idExecutivo = 0, int $idGerente = 0)
