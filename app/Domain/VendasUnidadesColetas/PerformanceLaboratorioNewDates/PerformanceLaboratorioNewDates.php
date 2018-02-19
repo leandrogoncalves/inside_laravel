@@ -33,10 +33,10 @@ class PerformanceLaboratorioNewDates
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPsy($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePsy($idExecutivo);
 
-        $dataInicio = $dataInicio->toDateString();
-        $dataFim = $dataFim->toDateString();
-        $dataInicioPeriodoA = $dataInicioPeriodoA->toDateString();
-        $dataFimPeriodoA = $dataFimPeriodoA->toDateString();
+        $dataInicio = $dataInicio->format('d/m/Y');
+        $dataFim = $dataFim->format('d/m/Y');
+        $dataInicioPeriodoA = $dataInicioPeriodoA->format('d/m/Y');
+        $dataFimPeriodoA = $dataFimPeriodoA->format('d/m/Y');
 
         return $this->pushValuesPsy($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA, $dataInicio, $dataFim, $dataInicioPeriodoA, $dataFimPeriodoA);
     }
@@ -53,10 +53,10 @@ class PerformanceLaboratorioNewDates
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPardini($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePardini($idExecutivo);
 
-        $dataInicio = $dataInicio->toDateString();
-        $dataFim = $dataFim->toDateString();
-        $dataInicioPeriodoA = $dataInicioPeriodoA->toDateString();
-        $dataFimPeriodoA = $dataFimPeriodoA->toDateString();
+        $dataInicio = $dataInicio->format('d/m/Y');
+        $dataFim = $dataFim->format('d/m/Y');
+        $dataInicioPeriodoA = $dataInicioPeriodoA->format('d/m/Y');
+        $dataFimPeriodoA = $dataFimPeriodoA->format('d/m/Y');
 
         return $this->pushValuesPardini($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA, $dataInicio, $dataFim, $dataInicioPeriodoA, $dataFimPeriodoA);
     }
@@ -114,14 +114,11 @@ class PerformanceLaboratorioNewDates
     private function getPerformanceLaboratoriosPsy(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
         return $this->vendaOrigemRepository
-        ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
+        ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $idExecutivo) {
             return $query
             ->where("data_inclusao", ">=", $dataInicio->toDateTimeString())
-            ->where("data_inclusao", "<=", $dataFim->toDateTimeString());
-        })
-        ->with(["laboratorio"])
-        ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
-            $query->whereIn('id_executivo_psy', $idExecutivo);
+            ->where("data_inclusao", "<=", $dataFim->toDateTimeString())
+            ->whereIn('id_executivo_psy', $idExecutivo);
         })
         ->groupBy("id_laboratorio")
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
@@ -130,14 +127,11 @@ class PerformanceLaboratorioNewDates
     private function getPerformanceLaboratoriosPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
         return $this->vendaOrigemRepository
-        ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
+        ->scopeQuery(function ($query) use ($dataInicio, $dataFim, $idExecutivo) {
             return $query
             ->where("data_inclusao", ">=", $dataInicio->toDateTimeString())
-            ->where("data_inclusao", "<=", $dataFim->toDateTimeString());
-        })
-        ->with(["laboratorio"])
-        ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
-            $query->whereIn('id_laboratorio', $idExecutivo);
+            ->where("data_inclusao", "<=", $dataFim->toDateTimeString())
+            ->whereIn('id_laboratorio', $idExecutivo);
         })
         ->groupBy("id_laboratorio")
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
@@ -146,18 +140,18 @@ class PerformanceLaboratorioNewDates
     private function pushValuesPsy(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
     {
         $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA) {
-            $dadosBasicos = $dadosBasicos->where('id_laboratorio_psy', $item->id_laboratorio);
-            $dadosBasicos = $dadosBasicos->count() > 0? $dadosBasicos->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
+            $dadosBasicosQuery = $dadosBasicos->firstWhere('id_laboratorio_psy', $item->id_laboratorio);
+            $dadosBasicosQuery = $dadosBasicosQuery->count() > 0? $dadosBasicosQuery->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
 
-            $qtdPeriodoA = $novosDadosA->where('id_laboratorio', $item->id_laboratorio);
-            $qtdPeriodoA = $qtdPeriodoA->count() > 0? (int)$qtdPeriodoA->first()->qtd : 0;
+            $qtdPeriodoA = $novosDadosA->firstWhere('id_laboratorio', $item->id_laboratorio);
+            $qtdPeriodoA = (isset($qtdPeriodoA) && $qtdPeriodoA->count() > 0)? (int)$qtdPeriodoA->qtd : 0;
 
-            $qtdPeriodoB = isset($item->qtd) ? (int) $item->qtd:0;
+            $qtdPeriodoB = (int) $item->qtd;
 
             $variacao = $qtdPeriodoB - $qtdPeriodoA;
             $variacaoPorcentagem = $qtdPeriodoA > 0? round((($qtdPeriodoB - $qtdPeriodoA)/$qtdPeriodoA)*100, 2) : 0;
 
-            $this->pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
+            $this->pushValues($dadosBasicosQuery, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
         });
 
         return collect([
@@ -170,18 +164,18 @@ class PerformanceLaboratorioNewDates
     private function pushValuesPardini(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
     {
         $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA) {
-            $dadosBasicos = $dadosBasicos->where('id_laboratorio_pardini', $item->id_laboratorio);
-            $dadosBasicos = $dadosBasicos->count() > 0? $dadosBasicos->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
+            $dadosBasicosQuery = $dadosBasicos->firstWhere('id_laboratorio_pardini', $item->id_laboratorio);
+            $dadosBasicosQuery = $dadosBasicosQuery->count() > 0? $dadosBasicosQuery->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
 
-            $qtdPeriodoA = $novosDadosA->where('id_laboratorio', $item->id_laboratorio);
-            $qtdPeriodoA = $qtdPeriodoA->count() > 0? (int) $qtdPeriodoA->first()->qtd : 0;
+            $qtdPeriodoA = $novosDadosA->firstWhere('id_laboratorio', $item->id_laboratorio);
+            $qtdPeriodoA = (isset($qtdPeriodoA) && $qtdPeriodoA->count() > 0)? (int) $qtdPeriodoA->first()->qtd : 0;
 
-            $qtdPeriodoB = isset($item->qtd) ? (int) $item->qtd:0;
+            $qtdPeriodoB = (int) $item->qtd;
 
             $variacao = $qtdPeriodoB - $qtdPeriodoA;
             $variacaoPorcentagem = $qtdPeriodoA > 0? round((($qtdPeriodoB - $qtdPeriodoA)/$qtdPeriodoA)*100, 2) : 0;
 
-            $this->pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
+            $this->pushValues($dadosBasicosQuery, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
         });
 
         return collect([

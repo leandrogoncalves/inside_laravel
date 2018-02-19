@@ -15,9 +15,9 @@
                     <form class="form-inline" method="POST" action="{{ route('performance') }}">
                         @csrf
                         <label class="col-sm-2 col-form-label" for="data_inicio">Periodo</label>
-                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2018-01-01"
                                id="data_inicio" name="data_inicio">
-                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2018-01-01"
                                id="data_fim" name="data_fim">
                         <button type="submit" class="btn btn-primary">Ok</button>
                     </form>
