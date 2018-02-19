@@ -82,6 +82,7 @@ class PerformanceLaboratorioNewDates
             'id_laboratorio_psy',
             'id_laboratorio_pardini',
             'rede',
+            'logistica_pardini',
         ]);
     }
 
@@ -106,6 +107,7 @@ class PerformanceLaboratorioNewDates
             'id_laboratorio_psy',
             'id_laboratorio_pardini',
             'rede',
+            'logistica_pardini',
         ]);
     }
 
@@ -206,6 +208,7 @@ class PerformanceLaboratorioNewDates
             'nome_ultimo_comentario' => $dadosBasicos['nome_ultimo_comentario'],
             'id_laboratorio_psy' => $dadosBasicos['id_laboratorio_psy'],
             'id_laboratorio_pardini' => $dadosBasicos['id_laboratorio_pardini'],
+            'logistica_pardini' => $dadosBasicos['logistica_pardini'],
             'rede' => $dadosBasicos['rede'],
             'dataInicioPeriodoB' => $dtInicioB,
             'dataFimPeriodoB' => $dtFimB,
@@ -215,7 +218,25 @@ class PerformanceLaboratorioNewDates
             'quantidadePeriodoA' => $qtdA,
             'variacao' => $variacao,
             'variacaoPorcentual' => $variacaoPorcentagem,
+            'bg_color'=> $this->getBgColor($dadosBasicos['rede'], $dadosBasicos['logistica_pardini'])
         ]));
+    }
+
+    public function getBgColor($rede, $logistica)
+    {
+
+        if($rede == 1){ //Rede pardini
+            return 'list-group-item-danger';
+        }
+
+        if($rede == 2){ //Rede Psy
+            return 'list-group-item-info';
+        }
+
+        if($logistica == 'S'){ // Logisica Pardini
+            return 'list-group-item-warning';
+        }
+
     }
 
     private function returnDadosBasicosWhenValuesNotFound($id)
