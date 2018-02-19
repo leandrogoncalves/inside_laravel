@@ -12,12 +12,13 @@
             <div class="card bg-light mb-3">
                 <div class="card-header">Consulta de Periodos</div>
                 <div class="card-body">
-                    <form class="form-inline">
-                        <label class="col-sm-2 col-form-label" for="inputPerido">Periodo</label>
+                    <form class="form-inline" method="POST" action="{{ route('performance') }}">
+                        @csrf
+                        <label class="col-sm-2 col-form-label" for="data_inicio">Periodo</label>
                         <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
-                               id="example-date-input">
+                               id="data_inicio" name="data_inicio">
                         <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
-                               id="example-date-input2">
+                               id="data_fim" name="data_fim">
                         <button type="submit" class="btn btn-primary">Ok</button>
                     </form>
                 </div>
