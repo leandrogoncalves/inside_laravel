@@ -50,7 +50,6 @@ class VendasUnidadesColetas
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPsy($idExecutivo);
-            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($idExecutivo);
 
             if ($isDefaultDate) {
                 $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($idExecutivo);
@@ -71,7 +70,6 @@ class VendasUnidadesColetas
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPardini($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPardini($idExecutivo);
-            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($idExecutivo);
 
             if ($isDefaultDate) {
                 $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($idExecutivo);
