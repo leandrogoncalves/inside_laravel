@@ -161,7 +161,7 @@ class UsuarioLogado
 
     private function idGerenteValido($idGerente)
     {
-        return $idGerente === ID_GERENTE_LABORATORIOS || $idGerente === ID_GERENTE_CORPORATIVO? true: false;
+        return ($idGerente === self::ID_GERENTE_LABORATORIO || $idGerente === self::ID_GERENTE_CORPORATIVO)? true: false;
     }
 
     /**
