@@ -8,6 +8,11 @@
 
 namespace Inside\Domain\VendasUnidadesColetas\NuncaVenderam;
 
+use Inside\Repositories\Contracts\VendaLaboratorioRepository;
+use Inside\Repositories\Contracts\LaboratorioRepository;
+use Carbon\Carbon;
+use \DB;
+
 
 class UnidadesColetaNuncaVenderamDetail
 {
@@ -20,4 +25,13 @@ class UnidadesColetaNuncaVenderamDetail
         $this->laboratorioRepository = $laboratorioRepository;
     }
 
+    public function getDetailPsy(array $id_executivo)
+    {
+        return '';
+    }
+
+    public function getDetailPardini(array $id_executivo)
+    {
+        return '';
+    }
 }

@@ -43,7 +43,7 @@
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC com Venda</div>
                 <div class="card-body">
-                    <strong><p style="text-align: center"> 0</p></strong>
+                    <strong><p style="text-align: center">{{ $data['unidadesColetasComVenda'] }}</p></strong>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC sem Venda</div>
                 <div class="card-body">
-                    <strong> <p style="text-align: center"> 0</p></strong>
+                    <strong> <p style="text-align: center">{{ $data['unidadesColetasSemVenda'] }}</p></strong>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC Nunca Venda</div>
                 <div class="card-body">
-                   <strong> <p style="text-align: center"> 0</p></strong>
+                   <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
             </div>
         </div>
@@ -79,18 +79,34 @@
                             <th>Periodo B</th>
                             <th>Variação</th>
                             <th>Variação %</th>
-                            <th>Valor Exame</th>
+                            <th>Valor Exame CLT</th>
+                            <th>Valor Exame CNH</th>
                             <th>Ultimo Coment.</th>
                             <th>Nome Último Coment</th>
                         </tr>
                         </thead>
                         <tbody>
+                            @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
+                                <tr class=" {{ $lab['bg_color']  }}" >
+                                    <td>{{ $lab['nome_laboratorio'] }}</td>
+                                    <td>{{ $lab['cidade'] }}</td>
+                                    <td>{{ $lab['estado'] }}</td>
+                                    <td>{{ $lab['quantidadePeriodoA'] }}</td>
+                                    <td>{{ $lab['quantidadePeriodoB'] }}</td>
+                                    <td>{{ $lab['variacao'] }}</td>
+                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}%</td>
+                                    <td>{{ $lab['valor_exame_clt'] }}</td>
+                                    <td>{{ $lab['valor_exame_cnh'] }}</td>
+                                    <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                    <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <td colspan="3"><strong>Total:</strong></td>
-                            <td><strong>1692</strong></td>
-                            <td><strong>1750</strong></td>
+                            <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoA'] }}</strong></td>
+                            <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoB'] }}</strong></td>
                         </tr>
                         </tfoot>
                     </table>

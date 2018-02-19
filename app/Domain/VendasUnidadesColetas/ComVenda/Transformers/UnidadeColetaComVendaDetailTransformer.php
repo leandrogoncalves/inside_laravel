@@ -34,6 +34,7 @@ class UnidadeColetaComVendaDetailTransformer
 
     private function pushValue($data, $quantidadePeriodoB, $quantidadePeriodoA, $variacao, $variacaoPorcentual)
     {
+
         $this->performanceDataResults->push(collect([
             'nome_laboratorio' => isset($data['nome_laboratorio'])? $data['nome_laboratorio']: null,
             'cidade' => isset($data['cidade'])? $data['cidade']: null,
@@ -45,7 +46,7 @@ class UnidadeColetaComVendaDetailTransformer
             'nome_executivo_pardini'=> isset($data['nome_executivo_pardini'])? $data['nome_executivo_pardini']: null,
             'valor_exame_clt'=> isset($data['valor_exame_clt'])? $data['valor_exame_clt']: null,
             'valor_exame_cnh'=> isset($data['valor_exame_cnh'])? $data['valor_exame_cnh']: null,
-            'data_ultimo_comentario'=> isset($data['data_ultimo_comentario'])? $data['data_ultimo_comentario']: null,
+            'data_ultimo_comentario'=> isset($data['data_ultimo_comentario'])? Carbon::createFromFormat('Y-m-d',$data['data_ultimo_comentario'])->format('d/m/Y'): null,
             'nome_ultimo_comentario'=> isset($data['nome_ultimo_comentario'])? $data['nome_ultimo_comentario']: null,
             'id_laboratorio_psy'=> isset($data['id_laboratorio_psy'])? $data['id_laboratorio_psy']: null,
             'id_laboratorio_pardini'=> isset($data['id_laboratorio_pardini'])? $data['id_laboratorio_pardini']: null,
@@ -58,6 +59,25 @@ class UnidadeColetaComVendaDetailTransformer
             'quantidadePeriodoA'=> isset($quantidadePeriodoA)? $quantidadePeriodoA: null,
             'variacao'=> isset($variacao)? $variacao: null,
             'variacaoPorcentual'=> isset($variacaoPorcentual)? $variacaoPorcentual: null,
+            'bg_color'=> $this->getBgColor($data['rede'],$data['logistica_pardini'])
         ]));
+    }
+
+
+    public function getBgColor($rede, $logistica)
+    {
+
+        if($rede == 1){ //Rede pardini
+            return 'list-group-item-danger';
+        }
+
+        if($rede == 2){ //Rede Psy
+            return 'list-group-item-info';
+        }
+
+        if($logistica == 'S'){ // Logisica Pardini
+            return 'list-group-item-warning';
+        }
+
     }
 }
