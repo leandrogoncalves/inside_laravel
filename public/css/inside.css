@@ -8,10 +8,7 @@ li.nav-item{
     margin-right: 0px;
 }
 
-.title-Grafico  {
-    border:1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px;
-}
+
 .nav-hover:hover{
     background-color:#C0C0C0 !important ;
 }
