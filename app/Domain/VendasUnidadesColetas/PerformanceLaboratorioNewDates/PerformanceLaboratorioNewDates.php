@@ -33,7 +33,7 @@ class PerformanceLaboratorioNewDates
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPsy($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePsy($idExecutivo);
 
-        return $this->pushValues($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA);
+        return $this->pushValuesPsy($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA, $dataInicio, $dataFim, $dataInicioPeriodoA, $dataFimPeriodoA);
     }
 
     public function getPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
@@ -48,7 +48,12 @@ class PerformanceLaboratorioNewDates
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPardini($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePardini($idExecutivo);
 
-        return $this->pushValues($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA);
+        $dataInicio = $dataInicio->toDateString();
+        $dataFim = $dataFim->toDateString();
+        $dataInicioPeriodoA = $dataInicioPeriodoA->toDateString();
+        $dataFimPeriodoA = $dataFimPeriodoA->toDateString();
+
+        return $this->pushValuesPardini($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA, $dataInicio, $dataFim, $dataInicioPeriodoA, $dataFimPeriodoA);
     }
 
     public function getDadosBasicosPerformancePsy(array $idExecutivo)
@@ -131,44 +136,74 @@ class PerformanceLaboratorioNewDates
         ->all(["id_laboratorio", DB::raw("SUM(quantidade) as qtd")]);
     }
 
-    private function pushValues(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA)
+    private function pushValuesPsy(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
     {
-        //dd($novosDadosB[0]);
         $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA) {
+            $dadosBasicos = $dadosBasicos->where('id_laboratorio_psy', $item->id_laboratorio);
+            $dadosBasicos = $dadosBasicos->count() > 0? $dadosBasicos->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
+
+            dd($dadosBasicos->where('id_laboratorio_psy', $item->id_laboratorio)->first());
             dd($item, "xaninha");
         });
         dd("xana");
     }
 
-    private function pushValuesWhenFound()
+    private function pushValuesPardini(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA)
     {
-        $this->push(collect([
-            'nome_laboratorio',
-            'cidade',
-            'estado',
-            'ativo',
-            'id_executivo_psy',
-            'id_executivo_pardini',
-            'nome_executivo_psy',
-            'nome_executivo_pardini',
-            'valor_exame_clt',
-            'valor_exame_cnh',
-            'data_ultimo_comentario',
-            'nome_ultimo_comentario',
-            'id_laboratorio_psy',
-            'id_laboratorio_pardini',
-            'rede',
-            'dataInicioPeriodoB',
-            'dataFimPeriodoB',
-            'dataInicioPeriodoA',
-            'dataFimPeriodoA',
-            'quantidadePeriodoB',
-            'quantidadePeriodoA',
+        $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA) {
+            dd($dadosBasicos[0]);
+            dd($item, "xaninha");
+        });
+        dd("xana");
+    }
+
+    private function pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
+    {
+        $this->performanceDataResults->push(collect([
+            'nome_laboratorio' => $dadosBasicos['nome_laboratorio'],
+            'cidade' => $dadosBasicos['cidade'],
+            'estado' => $dadosBasicos['estado'],
+            'ativo' => $dadosBasicos['ativo'],
+            'id_executivo_psy' => $dadosBasicos['id_executivo_psy'],
+            'id_executivo_pardini' => $dadosBasicos['id_executivo_pardini'],
+            'nome_executivo_psy' => $dadosBasicos['nome_executivo_psy'],
+            'nome_executivo_pardini' => $dadosBasicos['nome_executivo_pardini'],
+            'valor_exame_clt' => $dadosBasicos['valor_exame_clt'],
+            'valor_exame_cnh' => $dadosBasicos['valor_exame_cnh'],
+            'data_ultimo_comentario' => $dadosBasicos['data_ultimo_comentario'],
+            'nome_ultimo_comentario' => $dadosBasicos['nome_ultimo_comentario'],
+            'id_laboratorio_psy' => $dadosBasicos['id_laboratorio_psy'],
+            'id_laboratorio_pardini' => $dadosBasicos['id_laboratorio_pardini'],
+            'rede' => $dadosBasicos['rede'],
+            'dataInicioPeriodoB' => $dtInicioB,
+            'dataFimPeriodoB' => '',
+            'dataInicioPeriodoA' => '',
+            'dataFimPeriodoA' => '',
+            'quantidadePeriodoB' => '',
+            'quantidadePeriodoA' => '',
+            'variacao' => '',
+            'variacaoPorcentual' => '',
         ]));
     }
 
-    private function pushValuesWhenNotFound()
+    private function returnDadosBasicosWhenValuesNotFound($id)
     {
-
+        return [
+            'nome_laboratorio' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'cidade' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'estado' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'ativo' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'id_executivo_psy' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'id_executivo_pardini' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'nome_executivo_psy' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'nome_executivo_pardini' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'valor_exame_clt' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'valor_exame_cnh' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'data_ultimo_comentario' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'nome_ultimo_comentario' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'id_laboratorio_psy' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'id_laboratorio_pardini' => 'não encontrado na pesquisa - id laboratorio' . $id,
+            'rede' => 'não encontrado na pesquisa - id laboratorio' . $id,
+        ];
     }
 }
