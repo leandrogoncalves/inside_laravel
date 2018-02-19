@@ -24,7 +24,12 @@ class UnidadeColetaComVendaDetailTransformer
 
             $this->pushValue($item->toArray(), $quantidadePeriodoB, $quantidadePeriodoA, $variacao, $variacaoPorcentual);
         });
-        return $this->performanceDataResults;
+
+        return collect([
+            'data' => $this->performanceDataResults,
+            'totalPeriodoB' => $this->performanceDataResults->sum('quantidadePeriodoB'),
+            'totalPeriodoA' => $this->performanceDataResults->sum('quantidadePeriodoA'),
+        ]);
     }
 
     private function pushValue($data, $quantidadePeriodoB, $quantidadePeriodoA, $variacao, $variacaoPorcentual)
