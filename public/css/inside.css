@@ -1,0 +1,14 @@
+.table-hover tbody tr:hover{
+    background-color:#C0C0C0 !important ;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color:#b3b3b3 ;
+}
+li.nav-item{
+    margin-right: 0px;
+}
+
+
+.nav-hover:hover{
+    background-color:#C0C0C0 !important ;
+}

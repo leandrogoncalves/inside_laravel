@@ -18,7 +18,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        showLoginForm as traitShowLoginForm;
+    }
 
     /**
      * Where to redirect users after login.

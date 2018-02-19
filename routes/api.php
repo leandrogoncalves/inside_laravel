@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::get('/', function () {
+    return response()->json(['message' => 'Inside API', 'status' => 'Connected']);;
 });
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('home/quadros-totais','Api\HomeController@getQuadrosTotais');
+});
+
+
