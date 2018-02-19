@@ -8,6 +8,7 @@ use Inside\Domain\SolicitacoesExames\TotalExames;
 use Inside\Domain\PrecoMedio\PrecoMedio;
 use Carbon\Carbon;
 use Inside\Transformers\TotalExamesSolicitadosTransformer;
+use Inside\Domain\VendasUnidadesColetas\VendasUnidadesColetas;
 
 class HomeService
 {
@@ -15,11 +16,12 @@ class HomeService
     private $totalExames;
     private $precoMedio;
 
-    public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames, PrecoMedio $precoMedio)
+    public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames, PrecoMedio $precoMedio, VendasUnidadesColetas $vendasUnidadesColetas)
     {
         $this->usuarioLogadoService = $usuarioLogadoService;
         $this->totalExames = $totalExames;
         $this->precoMedio = $precoMedio;
+        $this->vendasUnidadesColetas = $vendasUnidadesColetas;
     }
 
     public function getData(Request $request)
@@ -35,6 +37,16 @@ class HomeService
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 
+        $dataInicio = $request->exists('data_inicio')
+            ? Carbon::createFromFormat('Y-m-d', $request->input('data_inicio'))->hour(0)->minute(0)->second(0)
+            : Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
+        $dataFim = $request->exists('data_fim')
+            ? Carbon::createFromFormat('Y-m-d', $request->input('data_fim'))->hour(23)->minute(59)->second(59)
+            : Carbon::now()->copy()->hour(23)->minute(59)->second(59);
+        $existsDate = $request->exists('data_inicio');
+
+        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->getTotais($dataInicio, $dataFim, $user, !$existsDate);
+
         $data->put('periodo1', $periodOne);
         $data->put('periodo2', $periodTwo);
         $data->put('periodo3', $periodThree);
@@ -42,7 +54,13 @@ class HomeService
         $transformer = new TotalExamesSolicitadosTransformer();
         $data = $transformer->transform($data);
 
-        return ['data' => $data, 'precoMedio' => $precoMedio];
+        return [
+            'data' => $data,
+            'precoMedio' => $precoMedio,
+            'unidadesColetasComVenda' => $unidadesColetasTotalizadores['unidadesColetasComVenda'],
+            'unidadesColetasSemVenda' => $unidadesColetasTotalizadores['unidadesColetasSemVenda'],
+            'unidadesColetasNuncaVenderam' => $unidadesColetasTotalizadores['unidadesColetasNuncaVenderam'],
+        ];
     }
 
     private function getExamesDaysDate()
