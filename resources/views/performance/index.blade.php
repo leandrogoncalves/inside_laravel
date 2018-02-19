@@ -14,9 +14,9 @@
                 <div class="card-body">
                     <form class="form-inline" method="POST" action="">
                         <label class="col-sm-2 col-form-label" for="inputPerido">Periodo</label>
-                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date"
                                id="example-date-input">
-                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date" value="2011-08-19"
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0" type="date"
                                id="example-date-input2">
                         <button type="submit" class="btn btn-primary">Ok</button>
                     </form>
@@ -29,9 +29,9 @@
                 <div class="card-header">Legendas</div>
                 <div class="panel-body">
                     <ul class="list-inline" style="text-align: center; top: 0px;">
-                        <li class="list-inline-item list-group-item-info" style="padding: 25px; border-radius: 10px;">LC Psychemedics</li>
-                        <li class="list-inline-item list-group-item-danger" style="padding: 25px; border-radius: 10px;">LC Rede Pardini</li>
-                        <li class="list-inline-item list-group-item-warning" style="border-radius: 10px; padding: 25px;">LC Pardini Log. Psy</li>
+                        <li class="list-inline-item list-group-item-info legenda">LC Psychemedics</li>
+                        <li class="list-inline-item list-group-item-danger legenda">LC Rede Pardini</li>
+                        <li class="list-inline-item list-group-item-warning legenda">LC Pardini Log. Psy</li>
                     </ul>
                 </div>
             </div>
