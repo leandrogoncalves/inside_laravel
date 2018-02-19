@@ -27,11 +27,16 @@ class PerformanceLaboratorioNewDates
 
         $differenceInDaysNegative = $dataFim->copy()->diffInDays($dataInicio);
         $differenceInDaysNegative = $differenceInDaysNegative * (-1);
-        $dataInicioPeriodoA = $dataInicio->copy()->addDays(-1);
-        $dataFimPeriodoA = $dataInicioPeriodoA->copy()->addDays($differenceInDaysNegative);
+        $dataFimPeriodoA = $dataInicio->copy()->addDays(-1);
+        $dataInicioPeriodoA = $dataFimPeriodoA->copy()->addDays($differenceInDaysNegative);
 
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPsy($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePsy($idExecutivo);
+
+        $dataInicio = $dataInicio->toDateString();
+        $dataFim = $dataFim->toDateString();
+        $dataInicioPeriodoA = $dataInicioPeriodoA->toDateString();
+        $dataFimPeriodoA = $dataFimPeriodoA->toDateString();
 
         return $this->pushValuesPsy($dadosBasicos, $newValuesPerformanceB, $newValuesPerformanceA, $dataInicio, $dataFim, $dataInicioPeriodoA, $dataFimPeriodoA);
     }
@@ -42,8 +47,8 @@ class PerformanceLaboratorioNewDates
 
         $differenceInDaysNegative = $dataFim->copy()->diffInDays($dataInicio);
         $differenceInDaysNegative = $differenceInDaysNegative * (-1);
-        $dataInicioPeriodoA = $dataInicio->copy()->addDays(-1);
-        $dataFimPeriodoA = $dataInicioPeriodoA->copy()->addDays($differenceInDaysNegative);
+        $dataFimPeriodoA = $dataInicio->copy()->addDays(-1);
+        $dataInicioPeriodoA = $dataFimPeriodoA->copy()->addDays($differenceInDaysNegative);
 
         $newValuesPerformanceA = $this->getPerformanceLaboratoriosPardini($dataInicioPeriodoA, $dataFimPeriodoA, $idExecutivo);
         $dadosBasicos = $this->getDadosBasicosPerformancePardini($idExecutivo);
@@ -138,26 +143,53 @@ class PerformanceLaboratorioNewDates
 
     private function pushValuesPsy(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
     {
-        $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA) {
+        $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA) {
             $dadosBasicos = $dadosBasicos->where('id_laboratorio_psy', $item->id_laboratorio);
             $dadosBasicos = $dadosBasicos->count() > 0? $dadosBasicos->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
 
-            dd($dadosBasicos->where('id_laboratorio_psy', $item->id_laboratorio)->first());
-            dd($item, "xaninha");
+            $qtdPeriodoA = $novosDadosA->where('id_laboratorio', $item->id_laboratorio);
+            $qtdPeriodoA = $qtdPeriodoA->count() > 0? (int)$qtdPeriodoA->first()->qtd : 0;
+
+            $qtdPeriodoB = isset($item->qtd) ? (int) $item->qtd:0;
+
+            $variacao = $qtdPeriodoB - $qtdPeriodoA;
+            $variacaoPorcentagem = $qtdPeriodoA > 0? round((($qtdPeriodoB - $qtdPeriodoA)/$qtdPeriodoA)*100, 2) : 0;
+
+            $this->pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
         });
-        dd("xana");
+
+        return collect([
+            'data' => $this->performanceDataResults,
+            'totalPeriodoB' => $this->performanceDataResults->sum('quantidadePeriodoB'),
+            'totalPeriodoA' => $this->performanceDataResults->sum('quantidadePeriodoA'),
+        ]);
     }
 
-    private function pushValuesPardini(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA)
+    private function pushValuesPardini(DatabaseCollection $dadosBasicos, DatabaseCollection $novosDadosB, DatabaseCollection $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
     {
-        $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA) {
-            dd($dadosBasicos[0]);
-            dd($item, "xaninha");
+        $novosDadosB->each(function ($item) use ($dadosBasicos, $novosDadosA, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA) {
+            $dadosBasicos = $dadosBasicos->where('id_laboratorio_pardini', $item->id_laboratorio);
+            $dadosBasicos = $dadosBasicos->count() > 0? $dadosBasicos->first()->toArray() : $this->returnDadosBasicosWhenValuesNotFound($item->id_laboratorio);
+
+            $qtdPeriodoA = $novosDadosA->where('id_laboratorio', $item->id_laboratorio);
+            $qtdPeriodoA = $qtdPeriodoA->count() > 0? (int) $qtdPeriodoA->first()->qtd : 0;
+
+            $qtdPeriodoB = isset($item->qtd) ? (int) $item->qtd:0;
+
+            $variacao = $qtdPeriodoB - $qtdPeriodoA;
+            $variacaoPorcentagem = $qtdPeriodoA > 0? round((($qtdPeriodoB - $qtdPeriodoA)/$qtdPeriodoA)*100, 2) : 0;
+
+            $this->pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdPeriodoB, $qtdPeriodoA, $variacao, $variacaoPorcentagem);
         });
-        dd("xana");
+
+        return collect([
+            'data' => $this->performanceDataResults,
+            'totalPeriodoB' => $this->performanceDataResults->sum('quantidadePeriodoB'),
+            'totalPeriodoA' => $this->performanceDataResults->sum('quantidadePeriodoA'),
+        ]);
     }
 
-    private function pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA)
+    private function pushValues($dadosBasicos, $dtInicioB, $dtFimB, $dtInicioA, $dtFimA, $qtdB, $qtdA, $variacao, $variacaoPorcentagem)
     {
         $this->performanceDataResults->push(collect([
             'nome_laboratorio' => $dadosBasicos['nome_laboratorio'],
@@ -176,13 +208,13 @@ class PerformanceLaboratorioNewDates
             'id_laboratorio_pardini' => $dadosBasicos['id_laboratorio_pardini'],
             'rede' => $dadosBasicos['rede'],
             'dataInicioPeriodoB' => $dtInicioB,
-            'dataFimPeriodoB' => '',
-            'dataInicioPeriodoA' => '',
-            'dataFimPeriodoA' => '',
-            'quantidadePeriodoB' => '',
-            'quantidadePeriodoA' => '',
-            'variacao' => '',
-            'variacaoPorcentual' => '',
+            'dataFimPeriodoB' => $dtFimB,
+            'dataInicioPeriodoA' => $dtInicioA,
+            'dataFimPeriodoA' => $dtFimA,
+            'quantidadePeriodoB' => $qtdB,
+            'quantidadePeriodoA' => $qtdA,
+            'variacao' => $variacao,
+            'variacaoPorcentual' => $variacaoPorcentagem,
         ]));
     }
 
