@@ -23,6 +23,7 @@ class VendasUnidadesColetas
                                 UnidadesColetasComVenda $unidadesColetasComVenda,
                                 UnidadesColetasSemVenda $unidadesColetasSemVenda,
                                 UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
+                                UnidadesColetasNuncaVenderamDetail $unidadesColetasNuncaVenderamDetail,
                                 UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail
     )
     {
@@ -42,6 +43,7 @@ class VendasUnidadesColetas
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $idExecutivo);
+            $nuncaVenderamDetail = $this->unidadesColetasNuncaVenderamDetail->getDetailPsy($idExecutivo);
             $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($idExecutivo);
 
             return collect([
