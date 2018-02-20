@@ -7,7 +7,6 @@ use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetasComVenda;
 use Inside\Domain\VendasUnidadesColetas\SemVenda\UnidadesColetasSemVenda;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetasNuncaVenderam;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetaNuncaVenderamDetail;
-use Inside\Domain\VendasUnidadesColetas\PerformanceLaboratorioNewDates\PerformanceLaboratorioNewDates;
 
 use Inside\Domain\UsuarioLogado;
 use Inside\Domain\Executivos\Executivos;
@@ -20,18 +19,11 @@ class VendasUnidadesColetas
     private $unidadesColetasComVenda;
     private $unidadesColetasSemVenda;
     private $unidadesColetasNuncaVenderam;
+    private $unidadesColetaNuncaVenderamDetail;
     private $unidadesColetaComVendaDetail;
-    private $performanceLaboratorioNewDates;
     private $idExecutivos;
 
-    public function __construct(Executivos $executivos,
-                                UnidadesColetasComVenda $unidadesColetasComVenda,
-                                UnidadesColetasSemVenda $unidadesColetasSemVenda,
-                                UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
-                                UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail,
-                                UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail,
-                                PerformanceLaboratorioNewDates $performanceLaboratorioNewDates
-                                )
+    public function __construct(Executivos $executivos, UnidadesColetasComVenda $unidadesColetasComVenda, UnidadesColetasSemVenda $unidadesColetasSemVenda, UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam, UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail, UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail)
     {
         $this->executivos = $executivos;
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
@@ -39,7 +31,6 @@ class VendasUnidadesColetas
         $this->unidadesColetasNuncaVenderam = $unidadesColetasNuncaVenderam;
         $this->unidadesColetaNuncaVenderamDetail = $unidadesColetaNuncaVenderamDetail;
         $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
-        $this->performanceLaboratorioNewDates = $performanceLaboratorioNewDates;
     }
 
     public function getTotais(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
@@ -50,7 +41,6 @@ class VendasUnidadesColetas
             $comVenda = $this->unidadesColetasComVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
-
 
             return collect([
                 'unidadesColetasComVenda' => $comVenda,
@@ -87,9 +77,7 @@ class VendasUnidadesColetas
                 $comVendaDetail = $this->unidadesColetaPsyNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
             }
 
-            return collect([
-                'unidadesColetasDetalhes' => $comVendaDetail
-            ]);
+            return  $comVendaDetail;
         }
 
         if ($user->isUserPardini()) {
@@ -101,9 +89,7 @@ class VendasUnidadesColetas
                 $comVendaDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
             }
 
-            return collect([
-                'unidadesColetasDetalhes' => $comVendaDetail
-            ]);
+            return $comVendaDetail;
         }
 
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);

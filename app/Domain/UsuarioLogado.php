@@ -8,6 +8,7 @@ class UsuarioLogado
 {
     private $perfilAcesso;
     private $idExecutivo;
+    private $idGerente;
 
     const PERFIL_ACESSO = [
         "ADMIN-PSY" => "admin",
@@ -29,10 +30,14 @@ class UsuarioLogado
     const SUPERVISOR_PARDINI = 'SUPERVISOR-PARDINI';
     const GERENTE_PARDINI = 'GERENTE-PARDINI';
 
-    public function __construct(string $perfilAcesso = null,int $idExecutivo = 0)
+    const ID_GERENTE_LABORATORIO = 10;
+    const ID_GERENTE_CORPORATIVO = 20;
+
+    public function __construct(string $perfilAcesso = null, int $idExecutivo = 0, int $idGerente = 0)
     {
         $perfilAcesso !== null? $this->setPerfilAcesso($perfilAcesso) : null;
         $idExecutivo > 0? $this->setIdExecutivo($idExecutivo) : null;
+        $idGerente > 0? $this->setIdGerente($idGerente) : null;
     }
 
     public function isUserPsy()
@@ -134,9 +139,29 @@ class UsuarioLogado
         }
     }
 
+    public function isUserAdmin()
+    {
+        return $this->perfilAcesso === self::ADMIN_PSY || $this->perfilAcesso === self::ADMIN_PARDINI? true: false;
+    }
+
+    public function isUserAdminPsy()
+    {
+        return $this->perfilAcesso === self::ADMIN_PSY? true: false;
+    }
+
+    public function isUserAdminPardini()
+    {
+        return $this->perfilAcesso === self::ADMIN_PARDINI? true: false;
+    }
+
     private function idExecutivoValido($idExecutivo)
     {
         return ( (isset($idExecutivo)  && $idExecutivo > 0) || ($this->perfilAcesso === self::ADMIN_PSY || $this->perfilAcesso === self::ADMIN_PARDINI)) ? true: false;
+    }
+
+    private function idGerenteValido($idGerente)
+    {
+        return ($idGerente === self::ID_GERENTE_LABORATORIO || $idGerente === self::ID_GERENTE_CORPORATIVO)? true: false;
     }
 
     /**
@@ -198,6 +223,30 @@ class UsuarioLogado
         }
     }
 
+    /**
+    * Get the value of idGerente
+    */
+    public function getIdGerente()
+    {
+        return $this->idGerente;
+    }
 
-
+    /**
+    * Set the value of idGerente
+    *
+    * @return  self
+    */
+    public function setIdGerente($idGerente)
+    {
+        try {
+            if ($this->idGerenteValido($idGerente)) {
+                $this->idGerente = $idGerente;
+                return $this;
+            } else {
+                throw new Exception("Erro, id de Gerente Inválido", 400);
+            }
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
 }
