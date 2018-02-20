@@ -69,7 +69,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
-                <div class="card-header">Total de UC Nunca Venda</div>
+                <div class="card-header">Total de UC Nunca Venderam</div>
                 <div class="card-body">
                    <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
@@ -98,12 +98,14 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover" id="table-listagem-leads">
+                    <table class="table table-hover" id="table-listagem-leads" style="font-size:12px;">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
                             <th>Cidade</th>
                             <th>Estado</th>
+                            <th>Executivo Psy</th>
+                            <th>Executivo Pardini</th>
                             <th>Periodo A</th>
                             <th>Periodo B</th>
                             <th>Variação</th>
@@ -120,10 +122,12 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
+                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
-                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}%</td>
+                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
                                     <td>{{ $lab['valor_exame_clt'] }}</td>
                                     <td>{{ $lab['valor_exame_cnh'] }}</td>
                                     <td>{{ $lab['data_ultimo_comentario'] }}</td>
