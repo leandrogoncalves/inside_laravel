@@ -104,6 +104,8 @@
                             <th>Laboratório</th>
                             <th>Cidade</th>
                             <th>Estado</th>
+                            <th>Executivo Psy</th>
+                            <th>Executivo Pardini</th>
                             <th>Periodo A</th>
                             <th>Periodo B</th>
                             <th>Variação</th>
@@ -120,6 +122,8 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
+                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>

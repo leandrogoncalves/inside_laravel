@@ -31,7 +31,9 @@ class UnidadesColetaComVendaDetail
     {
         $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
             ->scopeQuery(function ($query) use ($idExecutivo) {
-                return $query->whereIn('id_executivo_psy', $idExecutivo);
+                return $query
+                        ->whereIn('id_executivo_psy', $idExecutivo)
+                        ->orderBy('id_laboratorio_psy','asc');
             })
             ->all([
                 'nome_laboratorio',
@@ -68,7 +70,9 @@ class UnidadesColetaComVendaDetail
     {
         $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
             ->scopeQuery(function ($query) use ($idExecutivo) {
-                return $query->whereIn('id_executivo_pardini', $idExecutivo);
+                return $query
+                        ->whereIn('id_executivo_psy', $idExecutivo)
+                        ->orderBy('id_laboratorio_psy','asc');
             })
             ->all([
                 'nome_laboratorio',
