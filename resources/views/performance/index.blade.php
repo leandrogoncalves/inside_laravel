@@ -69,7 +69,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
-                <div class="card-header">Total de UC Nunca Venda</div>
+                <div class="card-header">Total de UC Nunca Venderam</div>
                 <div class="card-body">
                    <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
@@ -98,7 +98,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover" id="table-listagem-leads">
+                    <table class="table table-hover" id="table-listagem-leads" style="font-size:12px;">
                         <thead>
                         <tr>
                             <th>Laboratório</th>

@@ -44,10 +44,14 @@ class PerformanceLaboratorio
             ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
             ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
 
-            ->where('dw_vendas_origem.origem', '<>', 'CLI')->orWhere(function ($queryOr) {
-                $queryOr->where('dw_vendas_origem.origem', 'SIS')
-                ->where('dw_vendas_origem.tipo', '<>', 'R');
+            ->where(function ($queryWhere) {
+                $queryWhere->where('dw_vendas_origem.origem', '<>', 'CLI')
+                ->orWhere(function ($queryOr) {
+                    $queryOr->where('dw_vendas_origem.origem', 'SIS')
+                    ->where('dw_vendas_origem.tipo', '<>', 'R');
+                });
             })
+
             ->where('dw_vendas_origem.teste', 'N')
             ->where('dw_vendas_origem.fluxo', '>=', 1)
             ->whereIn('dw_vendas_origem.id_executivo_psy', $idExecutivo)
@@ -107,9 +111,12 @@ class PerformanceLaboratorio
             ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
             ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
 
-            ->where('dw_vendas_origem.origem', '=', 'CLI')->orWhere(function ($queryOr) {
-                $queryOr->where('dw_vendas_origem.origem', 'SIS')
-                ->where('dw_vendas_origem.tipo', '=', 'R');
+            ->where(function ($queryWhere) {
+                $queryWhere->where('dw_vendas_origem.origem', '=', 'CLI')
+                ->orWhere(function ($queryOr) {
+                    $queryOr->where('dw_vendas_origem.origem', 'SIS')
+                    ->where('dw_vendas_origem.tipo', '=', 'R');
+                });
             })
             ->where('dw_vendas_origem.teste', 'N')
             ->where('dw_vendas_origem.fluxo', '>=', 1)
