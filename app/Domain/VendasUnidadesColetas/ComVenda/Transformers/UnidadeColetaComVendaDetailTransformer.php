@@ -27,6 +27,12 @@ class UnidadeColetaComVendaDetailTransformer
 
         return collect([
             'data' => $this->performanceDataResults,
+
+            'dataInicioPeriodoB' => Carbon::now()->copy()->hour(0)->minute(0)->second(0)->format('d/m/Y'),
+            'dataFimPeriodoB' => Carbon::now()->copy()->addDays(-30)->hour(23)->minute(59)->second(59)->format('d/m/Y'),
+            'dataInicioPeriodoA' => Carbon::now()->copy()->addDays(-31)->hour(0)->minute(0)->second(0)->format('d/m/Y'),
+            'dataFimPeriodoA' => Carbon::now()->copy()->addDays(-61)->hour(23)->minute(59)->second(59)->format('d/m/Y'),
+
             'totalPeriodoB' => $this->performanceDataResults->sum('quantidadePeriodoB'),
             'totalPeriodoA' => $this->performanceDataResults->sum('quantidadePeriodoA'),
         ]);
@@ -51,10 +57,6 @@ class UnidadeColetaComVendaDetailTransformer
             'id_laboratorio_psy'=> isset($data['id_laboratorio_psy'])? $data['id_laboratorio_psy']: null,
             'id_laboratorio_pardini'=> isset($data['id_laboratorio_pardini'])? $data['id_laboratorio_pardini']: null,
             'rede'=> isset($data['rede'])? $data['rede']: null,
-            'dataInicioPeriodoB'=> Carbon::now()->copy()->hour(0)->minute(0)->second(0)->toDateString(),
-            'dataFimPeriodoB'=> Carbon::now()->copy()->addDays(-30)->hour(23)->minute(59)->second(59)->toDateString(),
-            'dataInicioPeriodoA'=> Carbon::now()->copy()->addDays(-31)->hour(0)->minute(0)->second(0)->toDateString(),
-            'dataFimPeriodoA'=> Carbon::now()->copy()->addDays(-61)->hour(23)->minute(59)->second(59)->toDateString(),
             'quantidadePeriodoB'=> isset($quantidadePeriodoB)? $quantidadePeriodoB: null,
             'quantidadePeriodoA'=> isset($quantidadePeriodoA)? $quantidadePeriodoA: null,
             'variacao'=> isset($variacao)? $variacao: null,

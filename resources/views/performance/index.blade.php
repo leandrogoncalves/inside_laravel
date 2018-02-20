@@ -123,7 +123,7 @@
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
-                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}%</td>
+                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
                                     <td>{{ $lab['valor_exame_clt'] }}</td>
                                     <td>{{ $lab['valor_exame_cnh'] }}</td>
                                     <td>{{ $lab['data_ultimo_comentario'] }}</td>

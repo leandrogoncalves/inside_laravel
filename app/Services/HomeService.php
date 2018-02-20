@@ -15,6 +15,7 @@ class HomeService
     private $usuarioLogadoService;
     private $totalExames;
     private $precoMedio;
+    private $vendasUnidadesColetas;
 
     public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames, PrecoMedio $precoMedio, VendasUnidadesColetas $vendasUnidadesColetas)
     {
@@ -37,16 +38,6 @@ class HomeService
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 
-        $dataInicio = $request->exists('data_inicio')
-            ? Carbon::createFromFormat('Y-m-d', $request->input('data_inicio'))->hour(0)->minute(0)->second(0)
-            : Carbon::now()->copy()->subMonth(1)->hour(0)->minute(0)->second(0);
-        $dataFim = $request->exists('data_fim')
-            ? Carbon::createFromFormat('Y-m-d', $request->input('data_fim'))->hour(23)->minute(59)->second(59)
-            : Carbon::now()->copy()->hour(23)->minute(59)->second(59);
-        $existsDate = $request->exists('data_inicio');
-
-        $unidadesColetasTotalizadores = $this->vendasUnidadesColetas->getTotais($dataInicio, $dataFim, $user, !$existsDate);
-
         $data->put('periodo1', $periodOne);
         $data->put('periodo2', $periodTwo);
         $data->put('periodo3', $periodThree);
@@ -57,9 +48,6 @@ class HomeService
         return [
             'data' => $data,
             'precoMedio' => $precoMedio,
-            'unidadesColetasComVenda' => $unidadesColetasTotalizadores['unidadesColetasComVenda'],
-            'unidadesColetasSemVenda' => $unidadesColetasTotalizadores['unidadesColetasSemVenda'],
-            'unidadesColetasNuncaVenderam' => $unidadesColetasTotalizadores['unidadesColetasNuncaVenderam'],
         ];
     }
 
