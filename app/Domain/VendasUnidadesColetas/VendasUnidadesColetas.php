@@ -7,7 +7,6 @@ use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetasComVenda;
 use Inside\Domain\VendasUnidadesColetas\SemVenda\UnidadesColetasSemVenda;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetasNuncaVenderam;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetaNuncaVenderamDetail;
-use Inside\Domain\VendasUnidadesColetas\PerformanceLaboratorioNewDates\PerformanceLaboratorioNewDates;
 
 use Inside\Domain\UsuarioLogado;
 use Inside\Domain\Executivos\Executivos;
@@ -20,8 +19,8 @@ class VendasUnidadesColetas
     private $unidadesColetasComVenda;
     private $unidadesColetasSemVenda;
     private $unidadesColetasNuncaVenderam;
+    private $unidadesColetaNuncaVenderamDetail;
     private $unidadesColetaComVendaDetail;
-    private $performanceLaboratorioNewDates;
     private $idExecutivos;
 
     public function __construct(Executivos $executivos,
@@ -30,7 +29,6 @@ class VendasUnidadesColetas
                                 UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
                                 UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail,
                                 UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail,
-                                PerformanceLaboratorioNewDates $performanceLaboratorioNewDates
                                 )
     {
         $this->executivos = $executivos;
@@ -39,7 +37,6 @@ class VendasUnidadesColetas
         $this->unidadesColetasNuncaVenderam = $unidadesColetasNuncaVenderam;
         $this->unidadesColetaNuncaVenderamDetail = $unidadesColetaNuncaVenderamDetail;
         $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
-        $this->performanceLaboratorioNewDates = $performanceLaboratorioNewDates;
     }
 
     public function getTotais(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
