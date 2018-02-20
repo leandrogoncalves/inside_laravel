@@ -3,7 +3,6 @@
 ])
 
 @section('page_style')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
 @endsection
 
@@ -210,38 +209,4 @@
         </div>
     </div>
 
-@endsection
-
-
-@section('page_scripts')
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#table-listagem-leads').DataTable({
-                language: {
-                    processing:     "Aguarde Processando...",
-                    search:         "Buscar:",
-                    lengthMenu:     "Mostrar _MENU_ linhas",
-                    info:           "Mostrando  _START_ de _END_ - total: _MAX_ leads",
-                    infoEmpty:      "Mostrando  _START_ de _END_ - total: _TOTAL_ leads",
-                    infoFiltered:   " ",
-                    infoPostFix:    "",
-                    loadingRecords: "Aguarde carregando...",
-                    zeroRecords:    "Nenhum registro encontrado",
-                    emptyTable:     "Nenhum registro encontrado",
-                    paginate: {
-                        first:      "Primeiro",
-                        previous:   "Anterior",
-                        next:       "Próximo",
-                        last:       "Último"
-                    },
-                    aria: {
-                        sortAscending:  ": Ordenar crescentet",
-                        sortDescending: ": Ordenar decrescente"
-                    },
-                    decimal: ","
-                }
-            });
-        } );
-    </script>
 @endsection
