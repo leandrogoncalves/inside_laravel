@@ -30,18 +30,6 @@ class PerformanceLaboratorioNewDates
         return $this->returnData($periodoB, $periodoA, $dataInicio, $dataFim);
     }
 
-    private function getDatesPeriodoA(Carbon $dataInicio, Carbon $dataFim)
-    {
-        $differenceInDaysNegative = $dataFim->copy()->diffInDays($dataInicio);
-        $differenceInDaysNegative = $differenceInDaysNegative * (-1);
-
-        $dataFimPeriodoA = $dataInicio->copy()->addDays(-1);
-        $dataInicioPeriodoA = $dataFimPeriodoA->copy()->addDays($differenceInDaysNegative);
-
-
-        return ['dataInicio' => $dataInicioPeriodoA, 'dataFim' => $dataFimPeriodoA];
-    }
-
     public function getPerformanceLaboratorioPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
     {
         $periodoB = $this->performanceLaboratorioPardini->get($dataInicio, $dataFim, $idExecutivo, $user);
@@ -71,5 +59,17 @@ class PerformanceLaboratorioNewDates
             'totalPeriodoB' => $performanceLaboratorioPeriodos->sum('qtd'),
             'totalPeriodoA' => $performanceLaboratorioPeriodos->sum('qtdPeriodoA'),
         ]);
+    }
+
+    private function getDatesPeriodoA(Carbon $dataInicio, Carbon $dataFim)
+    {
+        $differenceInDaysNegative = $dataFim->copy()->diffInDays($dataInicio);
+        $differenceInDaysNegative = $differenceInDaysNegative * (-1);
+
+        $dataFimPeriodoA = $dataInicio->copy()->addDays(-1);
+        $dataInicioPeriodoA = $dataFimPeriodoA->copy()->addDays($differenceInDaysNegative);
+
+
+        return ['dataInicio' => $dataInicioPeriodoA, 'dataFim' => $dataFimPeriodoA];
     }
 }
