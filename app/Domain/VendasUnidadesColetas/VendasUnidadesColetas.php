@@ -23,13 +23,7 @@ class VendasUnidadesColetas
     private $unidadesColetaComVendaDetail;
     private $idExecutivos;
 
-    public function __construct(Executivos $executivos,
-                                UnidadesColetasComVenda $unidadesColetasComVenda,
-                                UnidadesColetasSemVenda $unidadesColetasSemVenda,
-                                UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
-                                UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail,
-                                UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail,
-                                )
+    public function __construct(Executivos $executivos, UnidadesColetasComVenda $unidadesColetasComVenda, UnidadesColetasSemVenda $unidadesColetasSemVenda, UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam, UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail, UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail)
     {
         $this->executivos = $executivos;
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
