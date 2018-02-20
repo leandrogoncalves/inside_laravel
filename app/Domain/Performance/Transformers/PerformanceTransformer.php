@@ -52,6 +52,11 @@ class PerformanceTransformer
 
     private function getBgColor($rede, $logistica)
     {
+        // Logisica Pardini
+        if ($logistica == 'S') {
+            return 'list-group-item-warning';
+        }
+
         //Rede pardini
         if ($rede == 1) {
             return 'list-group-item-danger';
@@ -60,11 +65,6 @@ class PerformanceTransformer
         //Rede Psy
         if ($rede == 2) {
             return 'list-group-item-info';
-        }
-
-        // Logisica Pardini
-        if ($logistica == 'S') {
-            return 'list-group-item-warning';
         }
 
         return "";
