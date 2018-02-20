@@ -47,16 +47,15 @@ class PerformanceService
 
         if ($existsDate == true) {
             $unidadesColetasTotalizadoresDetail = $this->performanceLaboratorios->get($dataInicio, $dataFim, $user);
-            $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail);
         } else {
             $unidadesColetasTotalizadoresDetail = $this->vendasUnidadesColetas->getTotaisDetail($dataInicio, $dataFim, $user, !$existsDate);
-            $unidadesColetasTotalizadores->toBase()->merge($unidadesColetasTotalizadoresDetail);
         }
+
+        $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail);
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 
         $unidadesColetasTotalizadores->put('precoMedio', $precoMedio);
-        $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail['unidadesColetasDetalhes']);
 
         return $unidadesColetasTotalizadores;
     }
