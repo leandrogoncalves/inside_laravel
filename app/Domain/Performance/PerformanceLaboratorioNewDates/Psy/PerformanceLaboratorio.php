@@ -39,7 +39,6 @@ class PerformanceLaboratorio
         $dataFim =  $dataFim->toDateTimeString();
 
         return $this->vendaOrigemRepository
-        /* PRIMEIRA LEVA DE WHERES - FILTRA DATAS, EXECUTIVOS E FILTROS COMERCIAIS DA TABELA dw_vendas_origem */
         ->scopeQuery(function ($query) use ($idExecutivo, $dataInicio, $dataFim) {
             return $query
             ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
@@ -94,17 +93,128 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.id_laboratorio_pardini',
             ]);
         })
-        /* SEGUNDA LEVA DE WHERES - AGORA PARA JUNTAR COM A TABELA dw_performance_laboratorio E GANHAR CAMPOS DELA. */
         ->all();
     }
 
     private function queryGerenteCorporativo()
     {
+        $dataInicio = $dataInicio->toDateTimeString();
+        $dataFim =  $dataFim->toDateTimeString();
 
+        return $this->vendaOrigemRepository
+        ->scopeQuery(function ($query) use ($idExecutivo, $dataInicio, $dataFim) {
+            return $query
+            ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
+            ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
+
+            ->where('dw_vendas_origem.origem', '=', 'CLI')->orWhere(function ($queryOr) {
+                $queryOr->where('dw_vendas_origem.origem', 'SIS')
+                ->where('dw_vendas_origem.tipo', '=', 'R');
+            })
+            ->where('dw_vendas_origem.teste', 'N')
+            ->where('dw_vendas_origem.fluxo', '>=', 1)
+            ->whereIn('dw_vendas_origem.id_executivo_psy', $idExecutivo)
+
+            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
+            ->select([
+                'dw_vendas_origem.id_laboratorio',
+                'dw_performance_laboratorio.nome_laboratorio',
+                'dw_performance_laboratorio.cidade',
+                'dw_performance_laboratorio.estado',
+                'dw_performance_laboratorio.ativo',
+                'dw_performance_laboratorio.rede',
+                'dw_performance_laboratorio.logistica_pardini',
+                'dw_performance_laboratorio.id_executivo_psy',
+                'dw_performance_laboratorio.id_executivo_pardini',
+                'dw_performance_laboratorio.nome_executivo_psy',
+                'dw_performance_laboratorio.nome_executivo_pardini',
+                'dw_performance_laboratorio.valor_exame_clt',
+                'dw_performance_laboratorio.valor_exame_cnh',
+                'dw_performance_laboratorio.data_ultimo_comentario',
+                'dw_performance_laboratorio.nome_ultimo_comentario',
+                'dw_performance_laboratorio.id_laboratorio_psy',
+                'dw_performance_laboratorio.id_laboratorio_pardini',
+                DB::raw('SUM(dw_vendas_origem.quantidade) AS qtd')
+            ])
+            ->groupBy([
+                'dw_vendas_origem.id_laboratorio',
+                'dw_performance_laboratorio.nome_laboratorio',
+                'dw_performance_laboratorio.cidade',
+                'dw_performance_laboratorio.estado',
+                'dw_performance_laboratorio.ativo',
+                'dw_performance_laboratorio.rede',
+                'dw_performance_laboratorio.logistica_pardini',
+                'dw_performance_laboratorio.id_executivo_psy',
+                'dw_performance_laboratorio.id_executivo_pardini',
+                'dw_performance_laboratorio.nome_executivo_psy',
+                'dw_performance_laboratorio.nome_executivo_pardini',
+                'dw_performance_laboratorio.valor_exame_clt',
+                'dw_performance_laboratorio.valor_exame_cnh',
+                'dw_performance_laboratorio.data_ultimo_comentario',
+                'dw_performance_laboratorio.nome_ultimo_comentario',
+                'dw_performance_laboratorio.id_laboratorio_psy',
+                'dw_performance_laboratorio.id_laboratorio_pardini',
+            ]);
+        })
+        ->all();
     }
 
     private function queryAdmin()
     {
+        $dataInicio = $dataInicio->toDateTimeString();
+        $dataFim =  $dataFim->toDateTimeString();
 
+        return $this->vendaOrigemRepository
+        ->scopeQuery(function ($query) use ($idExecutivo, $dataInicio, $dataFim) {
+            return $query
+            ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
+            ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
+
+            ->where('dw_vendas_origem.teste', 'N')
+            ->where('dw_vendas_origem.fluxo', '>=', 1)
+            ->whereIn('dw_vendas_origem.id_executivo_psy', $idExecutivo)
+
+            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
+            ->select([
+                'dw_vendas_origem.id_laboratorio',
+                'dw_performance_laboratorio.nome_laboratorio',
+                'dw_performance_laboratorio.cidade',
+                'dw_performance_laboratorio.estado',
+                'dw_performance_laboratorio.ativo',
+                'dw_performance_laboratorio.rede',
+                'dw_performance_laboratorio.logistica_pardini',
+                'dw_performance_laboratorio.id_executivo_psy',
+                'dw_performance_laboratorio.id_executivo_pardini',
+                'dw_performance_laboratorio.nome_executivo_psy',
+                'dw_performance_laboratorio.nome_executivo_pardini',
+                'dw_performance_laboratorio.valor_exame_clt',
+                'dw_performance_laboratorio.valor_exame_cnh',
+                'dw_performance_laboratorio.data_ultimo_comentario',
+                'dw_performance_laboratorio.nome_ultimo_comentario',
+                'dw_performance_laboratorio.id_laboratorio_psy',
+                'dw_performance_laboratorio.id_laboratorio_pardini',
+                DB::raw('SUM(dw_vendas_origem.quantidade) AS qtd')
+            ])
+            ->groupBy([
+                'dw_vendas_origem.id_laboratorio',
+                'dw_performance_laboratorio.nome_laboratorio',
+                'dw_performance_laboratorio.cidade',
+                'dw_performance_laboratorio.estado',
+                'dw_performance_laboratorio.ativo',
+                'dw_performance_laboratorio.rede',
+                'dw_performance_laboratorio.logistica_pardini',
+                'dw_performance_laboratorio.id_executivo_psy',
+                'dw_performance_laboratorio.id_executivo_pardini',
+                'dw_performance_laboratorio.nome_executivo_psy',
+                'dw_performance_laboratorio.nome_executivo_pardini',
+                'dw_performance_laboratorio.valor_exame_clt',
+                'dw_performance_laboratorio.valor_exame_cnh',
+                'dw_performance_laboratorio.data_ultimo_comentario',
+                'dw_performance_laboratorio.nome_ultimo_comentario',
+                'dw_performance_laboratorio.id_laboratorio_psy',
+                'dw_performance_laboratorio.id_laboratorio_pardini',
+            ]);
+        })
+        ->all();
     }
 }
