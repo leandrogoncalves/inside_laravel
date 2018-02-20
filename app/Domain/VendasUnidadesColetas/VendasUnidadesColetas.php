@@ -51,6 +51,11 @@ class VendasUnidadesColetas
             $semVenda = $this->unidadesColetasSemVenda->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
             $nuncaVenderam = $this->unidadesColetasNuncaVenderam->getUnidadesColetasPsy($dataInicio, $dataFim, $this->idExecutivos);
 
+            if ($isDefaultDate == false) {
+
+                $user->setIdGerente($this->executivos->getIdGerente($user)['codigo_gerente']);
+                dd($this->performanceLaboratorioNewDates->getPerformanceLaboratorioPsy($dataInicio, $dataFim, $this->idExecutivos, $user));
+            }
 
             return collect([
                 'unidadesColetasComVenda' => $comVenda,
