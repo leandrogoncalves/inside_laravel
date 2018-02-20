@@ -77,9 +77,7 @@ class VendasUnidadesColetas
                 $comVendaDetail = $this->unidadesColetaPsyNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
             }
 
-            return collect([
-                'unidadesColetasDetalhes' => $comVendaDetail
-            ]);
+            return  $comVendaDetail;
         }
 
         if ($user->isUserPardini()) {
@@ -91,9 +89,7 @@ class VendasUnidadesColetas
                 $comVendaDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
             }
 
-            return collect([
-                'unidadesColetasDetalhes' => $comVendaDetail
-            ]);
+            return $comVendaDetail;
         }
 
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);
