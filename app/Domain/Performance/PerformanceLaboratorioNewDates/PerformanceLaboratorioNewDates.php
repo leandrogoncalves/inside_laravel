@@ -27,7 +27,7 @@ class PerformanceLaboratorioNewDates
         $datesPeriodoA = $this->getDatesPeriodoA($dataInicio, $dataFim);
         $periodoA = $this->performanceLaboratorioPsy->get($datesPeriodoA['dataInicio'], $datesPeriodoA['dataFim'], $idExecutivo, $user);
 
-        return $this->returnData($periodoB, $periodoA);
+        return $this->returnData($periodoB, $periodoA, $dataInicio, $dataFim);
     }
 
     private function getDatesPeriodoA(Carbon $dataInicio, Carbon $dataFim)
@@ -49,11 +49,13 @@ class PerformanceLaboratorioNewDates
         $datesPeriodoA = $this->getDatesPeriodoA($dataInicio, $dataFim);
         $periodoA = $this->performanceLaboratorioPardini->get($datesPeriodoA['dataInicio'], $datesPeriodoA['dataFim'], $idExecutivo, $user);
 
-        return $this->returnData($periodoB, $periodoA);
+        return $this->returnData($periodoB, $periodoA, $dataInicio, $dataFim);
     }
 
-    private function returnData($periodoB, $periodoA)
+    private function returnData($periodoB, $periodoA, $dataInicio, $dataFim)
     {
+        $datesPeriodoA = $this->getDatesPeriodoA($dataInicio, $dataFim);
+
         $performanceLaboratorioPeriodos = new PerformanceLaboratorioPeriodos();
         $performanceLaboratorioPeriodos = $performanceLaboratorioPeriodos->mergePeriodoAOnPeriodoB($periodoB, $periodoA);
 
