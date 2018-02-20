@@ -15,6 +15,7 @@ class HomeService
     private $usuarioLogadoService;
     private $totalExames;
     private $precoMedio;
+    private $vendasUnidadesColetas;
 
     public function __construct(UsuarioLogadoService $usuarioLogadoService, TotalExames $totalExames, PrecoMedio $precoMedio, VendasUnidadesColetas $vendasUnidadesColetas)
     {
