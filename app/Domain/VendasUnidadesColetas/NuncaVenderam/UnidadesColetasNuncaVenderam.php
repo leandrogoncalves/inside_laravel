@@ -12,9 +12,6 @@ class UnidadesColetasNuncaVenderam
     private $vendaLaboratorioRepository;
     private $laboratorioRepository;
 
-    const NUNCA_VENDEU = 1;
-    const MOVIDO_EXCLUSAO = 1;
-
     public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository, LaboratorioRepository $laboratorioRepository)
     {
         $this->vendaLaboratorioRepository = $vendaLaboratorioRepository;

@@ -98,7 +98,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover font-12" id="table-listagem-leads" >
+                    <table class="table table-hover font-12 table-sorter" id="table-listagem-leads" >
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -152,7 +152,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas</div>
                 <div class="card-body">
-                    <table class="table table-hover font-12">
+                    <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -200,7 +200,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
                 <div class="card-body">
-                    <table class="table table-hover font-12">
+                    <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <th>Laboratório</th>
                         <th>Cidade</th>
@@ -243,5 +243,10 @@
 
 @section('page_scripts')
     <script type="text/javascript">
+        $(document).ready(function()
+            {
+                $(".table-sorter").tablesorter();
+            }
+        );
     </script>
 @endsection
