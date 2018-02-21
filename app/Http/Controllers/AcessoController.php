@@ -4,6 +4,7 @@ namespace Inside\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inside\Services\AcessoService;
+use Inside\Http\Requests\AcessoRequest;
 
 class AcessoController extends Controller
 {
@@ -15,7 +16,7 @@ class AcessoController extends Controller
         $this->service = $service;
     }
 
-    public function index(Request $request)
+    public function index(AcessoRequest $request)
     {
         $data = ['data'=>$this->service->getData($request)];
         return view('acesso.index', $data);

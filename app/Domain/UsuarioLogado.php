@@ -147,6 +147,39 @@ class UsuarioLogado
         return $this->perfilAcesso;
     }
 
+    public function isNotExecutivo()
+    {
+        switch ($this->perfilAcesso) {
+            case 'admin':
+                return true;
+                break;
+            case 'exec-psy':
+                return false;
+                break;
+            case 'sup-psy':
+                return true;
+                break;
+            case 'ger-psy':
+                return true;
+                break;
+            case 'admin-pard':
+                return true;
+                break;
+            case 'executivo':
+                return false;
+                break;
+            case 'supervisor':
+                return true;
+                break;
+            case 'gerente':
+                return true;
+                break;
+            default:
+                return false;
+                break;
+        }
+    }
+
     public function getPerfilAcessoPorExtenso()
     {
         return array_search($this->perfilAcesso, self::PERFIL_ACESSO);
