@@ -3,6 +3,7 @@
 ])
 
 @section('page_style')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
 @endsection
 
@@ -104,6 +105,8 @@
                             <th>Laboratório</th>
                             <th>Cidade</th>
                             <th>Estado</th>
+                            <th>Executivo Psy</th>
+                            <th>Executivo Pardini</th>
                             <th>Periodo A</th>
                             <th>Periodo B</th>
                             <th>Variação</th>
@@ -120,6 +123,8 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
+                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
@@ -133,7 +138,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3"><strong>Total:</strong></td>
+                            <td colspan="5"><strong>Total:</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoA'] }}</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoB'] }}</strong></td>
                         </tr>
@@ -209,4 +214,40 @@
         </div>
     </div>
 
+@endsection
+
+
+@section('page_scripts')
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table-listagem-leads').DataTable({
+                "paging": false,
+                "ordering": false,
+                language: {
+                    processing:     "Aguarde Processando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ linhas",
+                    info:           "Mostrando  _START_ de _END_ - total: _MAX_ laboratórios",
+                    infoEmpty:      "Mostrando  _START_ de _END_ - total: _TOTAL_ laboratórios",
+                    infoFiltered:   " ",
+                    infoPostFix:    "",
+                    loadingRecords: "Aguarde carregando...",
+                    zeroRecords:    "Nenhum registro encontrado",
+                    emptyTable:     "Nenhum registro encontrado",
+                    paginate: {
+                        first:      "Primeiro",
+                        previous:   "Anterior",
+                        next:       "Próximo",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Ordenar crescente",
+                        sortDescending: ": Ordenar decrescente"
+                    },
+                    decimal: ","
+                }
+            });
+        } );
+    </script>
 @endsection
