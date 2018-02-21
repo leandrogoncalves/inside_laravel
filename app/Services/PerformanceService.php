@@ -51,10 +51,12 @@ class PerformanceService
             $unidadesColetasTotalizadoresDetail = $this->vendasUnidadesColetas->getTotalComVendaDetail($dataInicio, $dataFim, $user, !$existsDate);
         }
 
-        $nuncaVenderamDetail = $this->vendasUnidadesColetas->getNuncaVenderamDetail($dataInicio, $dataFim, $user, !$existsDate);
+        $nuncaVenderamDetail = $this->vendasUnidadesColetas->getNuncaVenderamDetail($user);
+        $movidosExclusaoDetail = $this->vendasUnidadesColetas->getMovidosExclusaoDetail($user);
 
         $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail);
         $unidadesColetasTotalizadores->put('nuncaVenderamDetail', $nuncaVenderamDetail);
+        $unidadesColetasTotalizadores->put('movidosExclusaoDetail', $movidosExclusaoDetail);
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 
