@@ -19,7 +19,7 @@ class PerformanceLaboratorio
     public function get(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
     {
         if ($user->isUserAdminPsy()) {
-            return $this->queryAdmin();
+            return $this->queryAdmin($dataInicio, $dataFim, $idExecutivo);
         }
 
         if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO) {
@@ -100,7 +100,7 @@ class PerformanceLaboratorio
         ->all();
     }
 
-    private function queryGerenteCorporativo()
+    private function queryGerenteCorporativo(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
         $dataInicio = $dataInicio->toDateTimeString();
         $dataFim =  $dataFim->toDateTimeString();
@@ -166,7 +166,7 @@ class PerformanceLaboratorio
         ->all();
     }
 
-    private function queryAdmin()
+    private function queryAdmin(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
         $dataInicio = $dataInicio->toDateTimeString();
         $dataFim =  $dataFim->toDateTimeString();

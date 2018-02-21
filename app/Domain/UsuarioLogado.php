@@ -141,22 +141,22 @@ class UsuarioLogado
 
     public function isUserAdmin()
     {
-        return $this->perfilAcesso === self::ADMIN_PSY || $this->perfilAcesso === self::ADMIN_PARDINI? true: false;
+        return $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PSY] || $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PARDINI]? true: false;
     }
 
     public function isUserAdminPsy()
     {
-        return $this->perfilAcesso === self::ADMIN_PSY? true: false;
+        return $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PSY]? true: false;
     }
 
     public function isUserAdminPardini()
     {
-        return $this->perfilAcesso === self::ADMIN_PARDINI? true: false;
+        return $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PARDINI]? true: false;
     }
 
     private function idExecutivoValido($idExecutivo)
     {
-        return ( (isset($idExecutivo)  && $idExecutivo > 0) || ($this->perfilAcesso === self::ADMIN_PSY || $this->perfilAcesso === self::ADMIN_PARDINI)) ? true: false;
+        return ( (isset($idExecutivo)  && $idExecutivo > 0) || ($this->perfilAcesso === self::PERFIL_ACESSO[ADMIN_PSY] || $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PARDINI])) ? true: false;
     }
 
     private function idGerenteValido($idGerente)
