@@ -64,12 +64,11 @@ class VendasUnidadesColetas
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);
     }
 
-    public function getTotaisDetail(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
+    public function getTotalComVendaDetail(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
     {
         $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
 
         if ($user->isUserPsy()) {
-            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPsy($this->idExecutivos);
 
             if ($isDefaultDate) {
                 $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($this->idExecutivos);
@@ -81,7 +80,6 @@ class VendasUnidadesColetas
         }
 
         if ($user->isUserPardini()) {
-            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPardini($this->idExecutivos);
 
             if ($isDefaultDate) {
                 $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($this->idExecutivos);
@@ -105,4 +103,26 @@ class VendasUnidadesColetas
     {
         return $this->performanceLaboratorioNewDates->getPardini($dataInicio, $dataFim, $idExecutivo);
     }
+
+    public function getNuncaVenderamDetail(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user, bool $isDefaultDate = true)
+    {
+        $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
+
+        if ($user->isUserPsy()) {
+
+            $nuncaVenderamDetail = $this->unidadesColetaNuncaVenderamDetail->getDetailPsy($this->idExecutivos);
+
+            return $nuncaVenderamDetail;
+        }
+
+        if ($user->isUserPardini()) {
+
+            $nuncaVenderamDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
+
+            return $nuncaVenderamDetail;
+        }
+
+        throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+    }
+
 }

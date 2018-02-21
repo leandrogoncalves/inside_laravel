@@ -3,7 +3,6 @@
 ])
 
 @section('page_style')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
 @endsection
 
@@ -99,7 +98,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover" id="table-listagem-leads" style="font-size:12px;">
+                    <table class="table table-hover font-12" id="table-listagem-leads" >
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -153,7 +152,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas</div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover font-12">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -167,6 +166,23 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['estado'] }}</td>
+                                <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoA'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoB'] }}</td>
+                                <td>{{ $lab['variacao'] }}</td>
+                                <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
+                                <td>{{ $lab['valor_exame_clt'] }}</td>
+                                <td>{{ $lab['valor_exame_cnh'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
@@ -184,7 +200,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover font-12">
                         <thead>
                         <th>Laboratório</th>
                         <th>Cidade</th>
@@ -192,6 +208,14 @@
                         <th>Nome Último Coment</th>
                         </thead>
                         <tbody>
+                        @foreach($data['nuncaVenderamDetail']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -201,7 +225,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">movidos para Exclusão</div>
                 <div class="card-body">
-                    <table class="table table-hover ">
+                    <table class="table table-hover font-12">
                         <thead>
                         <th>Laboratório</th>
                         <th>Cidade</th>
@@ -218,36 +242,6 @@
 
 
 @section('page_scripts')
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#table-listagem-leads').DataTable({
-                "paging": false,
-                "ordering": false,
-                language: {
-                    processing:     "Aguarde Processando...",
-                    search:         "Buscar:",
-                    lengthMenu:     "Mostrar _MENU_ linhas",
-                    info:           "Mostrando  _START_ de _END_ - total: _MAX_ laboratórios",
-                    infoEmpty:      "Mostrando  _START_ de _END_ - total: _TOTAL_ laboratórios",
-                    infoFiltered:   " ",
-                    infoPostFix:    "",
-                    loadingRecords: "Aguarde carregando...",
-                    zeroRecords:    "Nenhum registro encontrado",
-                    emptyTable:     "Nenhum registro encontrado",
-                    paginate: {
-                        first:      "Primeiro",
-                        previous:   "Anterior",
-                        next:       "Próximo",
-                        last:       "Último"
-                    },
-                    aria: {
-                        sortAscending:  ": Ordenar crescente",
-                        sortDescending: ": Ordenar decrescente"
-                    },
-                    decimal: ","
-                }
-            });
-        } );
     </script>
 @endsection
