@@ -10,7 +10,6 @@ class PerformanceLaboratorioPeriodos
     {
         $periodoB->each(function ($itemPeriodoB) use ($periodoA) {
             $itemPeriodoA = $periodoA->firstWhere('id_laboratorio', $itemPeriodoB->id_laboratorio);
-
             if (isset($itemPeriodoA)) {
                 $totalB = isset($itemPeriodoB->qtd)? $itemPeriodoB->qtd:0;
                 $totalA = isset($itemPeriodoA->qtd)? $itemPeriodoA->qtd:0;

@@ -34,7 +34,7 @@ class PerformanceLaboratorioNewDates
 
         if ($user->isUserPardini()) {
             $idExecutivo = $this->executivos->getIdExecutivo($user);
-            return $this->getPerformanceLaboratorioPardini($dataInicio, $dataFim, $idExecutivo, $user->isUserAdminPardini());
+            return $this->getPerformanceLaboratorioPardini($dataInicio, $dataFim, $idExecutivo);
         }
 
         throw new \Exception("Perfil de acesso inválido", 400);
@@ -49,12 +49,12 @@ class PerformanceLaboratorioNewDates
         return $this->returnData($periodoB, $periodoA, $dataInicio, $dataFim);
     }
 
-    public function getPerformanceLaboratorioPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
+    public function getPerformanceLaboratorioPardini(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
-        $periodoB = $this->performanceLaboratorioPardini->get($dataInicio, $dataFim, $idExecutivo, $user);
+        $periodoB = $this->performanceLaboratorioPardini->get($dataInicio, $dataFim, $idExecutivo);
 
         $datesPeriodoA = $this->getDatesPeriodoA($dataInicio, $dataFim);
-        $periodoA = $this->performanceLaboratorioPardini->get($datesPeriodoA['dataInicio'], $datesPeriodoA['dataFim'], $idExecutivo, $user);
+        $periodoA = $this->performanceLaboratorioPardini->get($datesPeriodoA['dataInicio'], $datesPeriodoA['dataFim'], $idExecutivo);
 
         return $this->returnData($periodoB, $periodoA, $dataInicio, $dataFim);
     }
@@ -62,7 +62,6 @@ class PerformanceLaboratorioNewDates
     private function returnData($periodoB, $periodoA, $dataInicio, $dataFim)
     {
         $datesPeriodoA = $this->getDatesPeriodoA($dataInicio, $dataFim);
-
         $performanceLaboratorioPeriodos = new PerformanceLaboratorioPeriodos();
         $performanceLaboratorioPeriodos = $performanceLaboratorioPeriodos->mergePeriodoAOnPeriodoB($periodoB, $periodoA);
 
