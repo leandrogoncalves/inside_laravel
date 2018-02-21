@@ -223,6 +223,7 @@
         $(document).ready(function() {
             $('#table-listagem-leads').DataTable({
                 "paging": false,
+                "ordering": false,
                 language: {
                     processing:     "Aguarde Processando...",
                     search:         "Buscar:",
