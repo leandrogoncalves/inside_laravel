@@ -16,25 +16,18 @@ class PerformanceLaboratorio
         $this->vendaOrigemRepository = $vendaOrigemRepository;
     }
 
-    public function get(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
+    public function get(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, bool $isUserAdmin)
     {
-        if ($user->isUserAdminPardini()) {
-            return $this->queryAdmin();
+        if ($isUserAdmin) {
+            return $this->queryAdmin($dataInicio, $dataFim, $idExecutivo);
         }
 
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO) {
-            return $this->queryGerenteLaboratorio($dataInicio, $dataFim, $idExecutivo);
-        }
-
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_CORPORATIVO) {
-            return $this->queryGerenteCorporativo($dataInicio, $dataFim, $idExecutivo);
-        }
-
-        throw new \Exception("Perfil de acesso inválido", 400);
+        return $this->queryBasic($dataInicio, $dataFim, $idExecutivo);
     }
 
-    private function queryGerenteLaboratorio(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
+    private function queryBasic(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
+        dd($idExecutivo);
         $dataInicio = $dataInicio->toDateTimeString();
         $dataFim =  $dataFim->toDateTimeString();
 
@@ -45,13 +38,9 @@ class PerformanceLaboratorio
             ->where("data_inclusao", ">=", $dataInicio)
             ->where("data_inclusao", "<=", $dataFim)
 
-            ->where('origem', '<>', 'CLI')->orWhere(function ($queryOr) {
-                $queryOr->where('origem', 'SIS')
-                ->where('tipo', '<>', 'R');
-            })
             ->where('teste', 'N')
             ->where('fluxo', '>=', 1)
-            ->whereIn('id_executivo_psy', $idExecutivo);
+            ->whereIn('id_executivo_pardini', $idExecutivo);
         })
         /* SEGUNDA LEVA DE WHERES - AGORA PARA JUNTAR COM A TABELA dw_performance_laboratorio E GANHAR CAMPOS DELA. */
         ->scopeQuery(function ($query) {
@@ -97,11 +86,6 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.id_laboratorio_pardini',
             ]);
         })->all();
-    }
-
-    private function queryGerenteCorporativo()
-    {
-
     }
 
     private function queryAdmin()

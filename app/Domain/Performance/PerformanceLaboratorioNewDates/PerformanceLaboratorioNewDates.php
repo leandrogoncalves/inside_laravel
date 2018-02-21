@@ -8,17 +8,36 @@ use Inside\Domain\Performance\PerformanceLaboratorioNewDates\PerformanceLaborato
 use Inside\Domain\Performance\Transformers\PerformanceTransformer;
 
 use Carbon\Carbon;
+use Inside\Domain\Executivos\Executivos;
 use Inside\Domain\UsuarioLogado;
 
 class PerformanceLaboratorioNewDates
 {
+    private $executivos;
     private $performanceLaboratorioPsy;
     private $performanceLaboratorioPardini;
 
-    public function __construct(PerformanceLaboratorioPsy $performanceLaboratorioPsy, PerformanceLaboratorioPardini $performanceLaboratorioPardini)
+    public function __construct(Executivos $executivos, PerformanceLaboratorioPsy $performanceLaboratorioPsy, PerformanceLaboratorioPardini $performanceLaboratorioPardini)
     {
+        $this->executivos = $executivos;
         $this->performanceLaboratorioPsy = $performanceLaboratorioPsy;
         $this->performanceLaboratorioPardini = $performanceLaboratorioPardini;
+    }
+
+    public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
+    {
+        if ($user->isUserPsy()) {
+            $idExecutivo = $this->executivos->getIdExecutivo($user);
+            $user->setIdGerente($this->executivos->getIdGerente($user)['codigo_gerente']);
+            return $this->getPerformanceLaboratorioPsy($dataInicio, $dataFim, $idExecutivo, $user);
+        }
+
+        if ($user->isUserPardini()) {
+            $idExecutivo = $this->executivos->getIdExecutivo($user);
+            return $this->getPerformanceLaboratorioPardini($dataInicio, $dataFim, $idExecutivo, $user->isUserAdminPardini());
+        }
+
+        throw new \Exception("Perfil de acesso inválido", 400);
     }
 
     public function getPerformanceLaboratorioPsy(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
