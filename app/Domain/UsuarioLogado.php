@@ -151,7 +151,7 @@ class UsuarioLogado
 
     public function isUserAdminPardini()
     {
-        return $this->perfilAcesso === self::PERFIL_ACESSO[ADMIN_PARDINI]? true: false;
+        return $this->perfilAcesso === self::PERFIL_ACESSO[self::ADMIN_PARDINI]? true: false;
     }
 
     private function idExecutivoValido($idExecutivo)
