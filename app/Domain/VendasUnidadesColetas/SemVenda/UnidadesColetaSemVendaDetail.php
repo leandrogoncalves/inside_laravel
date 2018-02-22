@@ -3,42 +3,82 @@
 namespace Inside\Domain\VendasUnidadesColetas\SemVenda;
 
 use Inside\Repositories\Contracts\PerformanceLaboratorioRepository;
-use Inside\Repositories\Contracts\VendaLaboratorioRepository;
-use Inside\Repositories\Contracts\LaboratorioRepository;
-use Carbon\Carbon;
-use \DB;
+use Inside\Domain\VendasUnidadesColetas\SemVenda\Transformers\UnidadeColetaSemVendaDetailTransformer;
 
 
 class UnidadesColetaSemVendaDetail
 {
     private $vendaLaboratorioRepository;
-    private $laboratorioRepository;
+    private $transformer;
 
     public function __construct( PerformanceLaboratorioRepository $performanceLaboratorioRepository,
-                                LaboratorioRepository $laboratorioRepository)
+                                 UnidadeColetaSemVendaDetailTransformer $transformer)
     {
-        $this->performanceLaboratorioRepository = $performanceLaboratorioRepository;
-        $this->laboratorioRepository = $laboratorioRepository;
+        $this->vendaLaboratorioRepository = $performanceLaboratorioRepository;
+        $this->transformer = $transformer;
     }
 
     public function getDetailPsy(array $idExecutivo)
     {
-        $laboratorios = $this->laboratorioRepository
-            ->scopeQuery(function ($query) use ($idExecutivo) {
-                return $query->whereIn('id_executivo_psy', $idExecutivo);
-            })->all(['pespeslabauto']);
 
-        $laboratoriosComVenda = $this->vendaLaboratorioRepository
-            ->scopeQuery(function ($query) use ($laboratorios) {
-                return $query->whereIn('id_laboratorio', $laboratorios->toArray());
+        $labsSemVendaDetail =   $this->vendaLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
+                return $query
+                    ->whereIn('id_executivo_psy', $idExecutivo)
+                    ->where('dias_sem_vender','>=','10')
+                    ->orderBy('id_laboratorio_psy', 'asc');
             })
-            ->groupBy("id_laboratorio")
             ->all([
-                "id_laboratorio",
                 'nome_laboratorio',
-                'cidade'
+                'cidade',
+                'estado',
+                'rede',
+                'logistica_pardini',
+                'id_executivo_psy',
+                'id_executivo_pardini',
+                'id_laboratorio_psy',
+                'id_laboratorio_pardini',
+                'nome_executivo_psy',
+                'nome_executivo_pardini',
+                'data_ultima_venda',
+                'dias_sem_vender',
+                'qtd_vendas_trinta_dias',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
             ]);
 
-        return $laboratorios->whereNotIn('pespeslabauto', $laboratoriosComVenda->pluck('id_laboratorio'))->count();
+        return $this->transformer->transform($labsSemVendaDetail);
+    }
+
+    public function getDetailPardini(array $idExecutivo)
+    {
+        $labsSemVendaDetail = $this->vendaLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
+                return $query
+                    ->whereIn('id_executivo_pardini', $idExecutivo)
+                    ->where('dias_sem_vender','>=','10')
+                    ->orderBy('id_laboratorio_psy', 'asc');
+            })
+            ->all([
+                'nome_laboratorio',
+                'cidade',
+                'estado',
+                'ativo',
+                'rede',
+                'logistica_pardini',
+                'id_executivo_psy',
+                'id_executivo_pardini',
+                'id_laboratorio_psy',
+                'id_laboratorio_pardini',
+                'nome_executivo_psy',
+                'nome_executivo_pardini',
+                'data_ultima_venda',
+                'dias_sem_vender',
+                'qtd_vendas_trinta_dias',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
+            ]);
+
+        return $this->transformer->transform($labsSemVendaDetail);
     }
 }

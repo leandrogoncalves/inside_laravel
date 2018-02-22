@@ -6,6 +6,7 @@ use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetaComVendaDetail;
 use Inside\Domain\VendasUnidadesColetas\ComVenda\UnidadesColetasComVenda;
 use Inside\Domain\VendasUnidadesColetas\MovidosExclusao\MovidosExclusao;
 use Inside\Domain\VendasUnidadesColetas\SemVenda\UnidadesColetasSemVenda;
+use Inside\Domain\VendasUnidadesColetas\SemVenda\UnidadesColetaSemVendaDetail;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetasNuncaVenderam;
 use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\UnidadesColetaNuncaVenderamDetail;
 
@@ -19,6 +20,7 @@ class VendasUnidadesColetas
     private $executivos;
     private $unidadesColetasComVenda;
     private $unidadesColetasSemVenda;
+    private $unidadesColetaSemVendaDetail;
     private $unidadesColetasNuncaVenderam;
     private $unidadesColetaNuncaVenderamDetail;
     private $unidadesColetaComVendaDetail;
@@ -28,11 +30,19 @@ class VendasUnidadesColetas
     const MOVIDO_EXCLUSAO = 1;
     const NUNCA_VENDEU = 1;
 
-    public function __construct(Executivos $executivos, UnidadesColetasComVenda $unidadesColetasComVenda, UnidadesColetasSemVenda $unidadesColetasSemVenda, UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam, UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail, UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail, MovidosExclusao $movidosExclusao)
+    public function __construct(Executivos $executivos,
+                                UnidadesColetasComVenda $unidadesColetasComVenda,
+                                UnidadesColetasSemVenda $unidadesColetasSemVenda,
+                                UnidadesColetaSemVendaDetail $unidadesColetaSemVendaDetail,
+                                UnidadesColetasNuncaVenderam $unidadesColetasNuncaVenderam,
+                                UnidadesColetaNuncaVenderamDetail $unidadesColetaNuncaVenderamDetail,
+                                UnidadesColetaComVendaDetail $unidadesColetaComVendaDetail,
+                                MovidosExclusao $movidosExclusao)
     {
         $this->executivos = $executivos;
         $this->unidadesColetasComVenda = $unidadesColetasComVenda;
         $this->unidadesColetasSemVenda = $unidadesColetasSemVenda;
+        $this->unidadesColetaSemVendaDetail = $unidadesColetaSemVendaDetail;
         $this->unidadesColetasNuncaVenderam = $unidadesColetasNuncaVenderam;
         $this->unidadesColetaNuncaVenderamDetail = $unidadesColetaNuncaVenderamDetail;
         $this->unidadesColetaComVendaDetail = $unidadesColetaComVendaDetail;
@@ -125,6 +135,27 @@ class VendasUnidadesColetas
             $nuncaVenderamDetail =  $this->unidadesColetaNuncaVenderamDetail->getDetailPardini($this->idExecutivos);
 
             return $nuncaVenderamDetail;
+        }
+
+        throw new \Exception("Erro, perfil de acesso desconhecido", 400);
+    }
+
+    public function getLabsSemVendaDetail(UsuarioLogado $user)
+    {
+        $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
+
+        if ($user->isUserPsy()) {
+
+            $unidadesColetaSemVendaDetail = $this->unidadesColetaSemVendaDetail->getDetailPsy($this->idExecutivos);
+
+            return $unidadesColetaSemVendaDetail;
+        }
+
+        if ($user->isUserPardini()) {
+
+            $unidadesColetaSemVendaDetail =  $this->unidadesColetaSemVendaDetail->getDetailPardini($this->idExecutivos);
+
+            return $unidadesColetaSemVendaDetail;
         }
 
         throw new \Exception("Erro, perfil de acesso desconhecido", 400);
