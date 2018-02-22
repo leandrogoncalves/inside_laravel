@@ -1,5 +1,3 @@
-var global = {};
-
 var inside = inside || {};
 
 inside.home = {
@@ -64,26 +62,12 @@ inside.home = {
             beforeSend: _callBackBefore,
             complete: _callBackAfter
         }).done(function(data) {
-            global.home.convertDate(data);
+            inside.home.convertDate(data);
         });;
     },
 
     chart_home : function () {
         var url = '/total-exames-acumulado/'+$('#id_executivo').text()+'/'+$('#perfil_acesso').text();
         this.loadData(url, function () {}, function () {});
-    }
-}
-var global = global || {};
-
-global.performance_lab = {
-
-    init: function () {
-        this.laod_tablesorter();
-    },
-
-    laod_tablesorter: function () {
-        $(document).ready(function(){
-            $(".table-sorter").tablesorter();
-        });
     }
 }
