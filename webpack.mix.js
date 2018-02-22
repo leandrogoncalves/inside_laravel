@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.scripts([
+mix.js([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/tablesorter/dist/js/jquery.tablesorter.js',
     'resources/assets/js/app.js'

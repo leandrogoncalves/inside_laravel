@@ -97,7 +97,7 @@
 
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter" id="table-listagem-leads" >
                         <thead>
                         <tr>
@@ -122,8 +122,14 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
-                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                    <td>
+                                        {{ $lab['nome_executivo_psy'] }}
+                                        {{ isset($lab['id_executivo_psy']) && $lab['id_executivo_psy'] > 0? '- id:' . $lab['id_executivo_psy']: '' }}
+                                    </td>
+                                    <td>
+                                        {{ $lab['nome_executivo_pardini'] }}
+                                        {{ isset($lab['id_executivo_pardini']) && $lab['id_executivo_pardini'] > 0? '- id:' . $lab['id_executivo_pardini']:'' }}
+                                    </td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
@@ -151,7 +157,7 @@
         <div class="col-12">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
@@ -171,8 +177,14 @@
                                 <td>{{ $lab['nome_laboratorio'] }}</td>
                                 <td>{{ $lab['cidade'] }}</td>
                                 <td>{{ $lab['estado'] }}</td>
-                                <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>
+                                    {{ $lab['nome_executivo_psy'] }}
+                                    {{ isset($lab['id_executivo_psy']) && $lab['id_executivo_psy'] > 0? '- id:' . $lab['id_executivo_psy']: '' }}
+                                </td>
+                                <td>
+                                    {{ $lab['nome_executivo_pardini'] }}
+                                    {{ isset($lab['id_executivo_pardini']) && $lab['id_executivo_pardini'] > 0? '- id:' . $lab['id_executivo_pardini']: '' }}
+                                </td>
                                 <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                 <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                 <td>{{ $lab['variacao'] }}</td>
@@ -199,7 +211,7 @@
         <div class="col-6">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <th>Laboratório</th>
