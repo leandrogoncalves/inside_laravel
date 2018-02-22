@@ -11,16 +11,16 @@ class PerformanceLaboratorioPeriodos
         $periodoB->each(function ($itemPeriodoB) use ($periodoA) {
             $itemPeriodoA = $periodoA->firstWhere('id_laboratorio', $itemPeriodoB->id_laboratorio);
 
-            if (isset($itemPeriodoA)) {
-                $totalB = isset($itemPeriodoB->qtd)? $itemPeriodoB->qtd:0;
-                $totalA = isset($itemPeriodoA->qtd)? $itemPeriodoA->qtd:0;
+            $totalB = isset($itemPeriodoB->qtd)? $itemPeriodoB->qtd:0;
+            $totalA = isset($itemPeriodoA->qtd)? $itemPeriodoA->qtd:0;
 
+            if (isset($itemPeriodoA)) {
                 $itemPeriodoB->qtdPeriodoA = $totalA;
                 $itemPeriodoB->variacao = $this->getVariacao($totalB, $totalA);
                 $itemPeriodoB->variacaoPorcentual = $this->getVariacaoPorcentual($totalB, $totalA);
             } else {
                 $itemPeriodoB->qtdPeriodoA = 0;
-                $itemPeriodoB->variacao = 0;
+                $itemPeriodoB->variacao = $this->getVariacao($totalB, $totalA);
                 $itemPeriodoB->variacaoPorcentual = 0;
             }
 

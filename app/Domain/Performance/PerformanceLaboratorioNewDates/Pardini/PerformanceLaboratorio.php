@@ -4,7 +4,6 @@ namespace Inside\Domain\Performance\PerformanceLaboratorioNewDates\Pardini;
 
 use Carbon\Carbon;
 use Inside\Repositories\Contracts\VendaOrigemRepository;
-use Inside\Domain\UsuarioLogado;
 use \DB;
 
 class PerformanceLaboratorio
@@ -16,46 +15,22 @@ class PerformanceLaboratorio
         $this->vendaOrigemRepository = $vendaOrigemRepository;
     }
 
-    public function get(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo, UsuarioLogado $user)
-    {
-        if ($user->isUserAdminPardini()) {
-            return $this->queryAdmin();
-        }
-
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO) {
-            return $this->queryGerenteLaboratorio($dataInicio, $dataFim, $idExecutivo);
-        }
-
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_CORPORATIVO) {
-            return $this->queryGerenteCorporativo($dataInicio, $dataFim, $idExecutivo);
-        }
-
-        throw new \Exception("Perfil de acesso inválido", 400);
-    }
-
-    private function queryGerenteLaboratorio(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
+    public function get(Carbon $dataInicio, Carbon $dataFim, array $idExecutivo)
     {
         $dataInicio = $dataInicio->toDateTimeString();
         $dataFim =  $dataFim->toDateTimeString();
 
-        $this->vendaOrigemRepository
-        /* PRIMEIRA LEVA DE WHERES - FILTRA DATAS, EXECUTIVOS E FILTROS COMERCIAIS DA TABELA dw_vendas_origem */
-        ->scopeQuery(function ($query) use ($idExecutivo, $dataInicio, $dataFim) {
-            return $query
-            ->where("data_inclusao", ">=", $dataInicio)
-            ->where("data_inclusao", "<=", $dataFim)
-
-            ->where('origem', '<>', 'CLI')->orWhere(function ($queryOr) {
-                $queryOr->where('origem', 'SIS')
-                ->where('tipo', '<>', 'R');
-            })
-            ->where('teste', 'N')
-            ->where('fluxo', '>=', 1)
-            ->whereIn('id_executivo_psy', $idExecutivo);
+        return $this->vendaOrigemRepository
+        ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
+            $query->whereIn('id_laboratorio', $idExecutivo);
         })
-        /* SEGUNDA LEVA DE WHERES - AGORA PARA JUNTAR COM A TABELA dw_performance_laboratorio E GANHAR CAMPOS DELA. */
-        ->scopeQuery(function ($query) {
+        ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
             return $query
+            ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
+            ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
+            ->where("dw_performance_laboratorio.rede", 1)
+            ->where('dw_vendas_origem.teste', 'N')
+            ->where('dw_vendas_origem.fluxo', '>=', 1)
             ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
             ->select([
                 'dw_vendas_origem.id_laboratorio',
@@ -96,16 +71,7 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.id_laboratorio_psy',
                 'dw_performance_laboratorio.id_laboratorio_pardini',
             ]);
-        })->all();
-    }
-
-    private function queryGerenteCorporativo()
-    {
-
-    }
-
-    private function queryAdmin()
-    {
-
+        })
+        ->all();
     }
 }

@@ -2,28 +2,30 @@
 
 namespace Inside\Domain\Performance;
 
-use Inside\Domain\Executivos\Executivos;
 use Inside\Domain\Performance\PerformanceLaboratorioNewDates\PerformanceLaboratorioNewDates;
-use Inside\Domain\UsuarioLogado;
 
+use Inside\Domain\UsuarioLogado;
 use Carbon\Carbon;
 
 class PerformanceLaboratorios
 {
-    private $executivos;
     private $performanceLaboratorioNewDates;
 
-    public function __construct(Executivos $executivos, PerformanceLaboratorioNewDates $performanceLaboratorioNewDates)
+    public function __construct(PerformanceLaboratorioNewDates $performanceLaboratorioNewDates)
     {
-        $this->executivos = $executivos;
         $this->performanceLaboratorioNewDates = $performanceLaboratorioNewDates;
     }
 
     public function get(Carbon $dataInicio, Carbon $dataFim, UsuarioLogado $user)
     {
-        $idExecutivo = $this->executivos->getIdExecutivo($user);
-        $user->setIdGerente($this->executivos->getIdGerente($user)['codigo_gerente']);
+        if (Carbon::now()->toDateString() === $dataInicio->toDateString()) {
+            return $this->getPsy($dataInicio, $dataFim, $user);
+        }
 
-        return $this->performanceLaboratorioNewDates->getPerformanceLaboratorioPsy($dataInicio, $dataFim, $idExecutivo, $user);
+        if (Carbon::now() > $dataInicio) {
+            return $this->performanceLaboratorioNewDates->get($dataInicio, $dataFim, $user);
+        }
+
+        throw new \Exception("Periodo informado inválido", 400);
     }
 }

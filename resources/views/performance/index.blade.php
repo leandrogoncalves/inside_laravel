@@ -94,7 +94,7 @@
 
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter" id="table-listagem-leads" >
                         <thead>
                         <tr>
@@ -114,23 +114,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
-                            <tr class=" {{ $lab['bg_color']  }}" >
-                                <td>{{ $lab['nome_laboratorio'] }}</td>
-                                <td>{{ $lab['cidade'] }}</td>
-                                <td>{{ $lab['estado'] }}</td>
-                                <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
-                                <td>{{ $lab['quantidadePeriodoA'] }}</td>
-                                <td>{{ $lab['quantidadePeriodoB'] }}</td>
-                                <td>{{ $lab['variacao'] }}</td>
-                                <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
-                                <td>{{ $lab['valor_exame_clt'] }}</td>
-                                <td>{{ $lab['valor_exame_cnh'] }}</td>
-                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
-                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
-                            </tr>
-                        @endforeach
+                            @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
+                                <tr class=" {{ $lab['bg_color']  }}" >
+                                    <td>{{ $lab['nome_laboratorio'] }}</td>
+                                    <td>{{ $lab['cidade'] }}</td>
+                                    <td>{{ $lab['estado'] }}</td>
+                                    <td>
+                                        {{ $lab['nome_executivo_psy'] }}
+                                        {{ isset($lab['id_executivo_psy']) && $lab['id_executivo_psy'] > 0? '- id:' . $lab['id_executivo_psy']: '' }}
+                                    </td>
+                                    <td>
+                                        {{ $lab['nome_executivo_pardini'] }}
+                                        {{ isset($lab['id_executivo_pardini']) && $lab['id_executivo_pardini'] > 0? '- id:' . $lab['id_executivo_pardini']:'' }}
+                                    </td>
+                                    <td>{{ $lab['quantidadePeriodoA'] }}</td>
+                                    <td>{{ $lab['quantidadePeriodoB'] }}</td>
+                                    <td>{{ $lab['variacao'] }}</td>
+                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
+                                    <td>{{ $lab['valor_exame_clt'] }}</td>
+                                    <td>{{ $lab['valor_exame_cnh'] }}</td>
+                                    <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                    <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
@@ -158,7 +164,7 @@
         <div class="col-12">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas nos últimos 10 dias</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
@@ -213,7 +219,7 @@
         <div class="col-6">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <th>Laboratório</th>
@@ -256,7 +262,7 @@
                 </div>
             </div>
         </div>
-    </div>'
+    </div>
 
 @endsection
 
