@@ -16,6 +16,11 @@
             <li class="nav-item nav-hover mr-3 {{ $menu == 'performance'? 'active':null }}">
                 <a href="{{ route('performance') }}" class="nav-link">Performance {!! $menu == 'performance'? '<span class="sr-only">(current)</span>':null !!}</a>
             </li>
+            @can('ver-acessos', app('request'))
+            <li class="nav-item nav-hover mr-4 {{ $menu == 'Acesso'? 'active':null }}">
+                <a href="{{ route('acesso') }}" class="nav-link">Acesso {!! $menu == 'acesso'? '<span class="sr-only">(current)</span>':null !!}</a>
+            </li>
+            @endcan
         </ul>
         @include('layouts.header')
 </nav>
