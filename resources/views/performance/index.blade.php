@@ -122,8 +122,14 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
-                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                    <td>
+                                        {{ $lab['nome_executivo_psy'] }}
+                                        {{ isset($lab['id_executivo_psy']) '- [' . $lab['id_executivo_psy']: ']': '' }}
+                                    </td>
+                                    <td>
+                                        {{ $lab['nome_executivo_pardini'] }}
+                                        {{ isset($lab['id_executivo_pardini'])? '- [' . $lab['id_executivo_pardini'] . ']':'' }}
+                                    </td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
@@ -171,8 +177,14 @@
                                 <td>{{ $lab['nome_laboratorio'] }}</td>
                                 <td>{{ $lab['cidade'] }}</td>
                                 <td>{{ $lab['estado'] }}</td>
-                                <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>
+                                    {{ $lab['nome_executivo_psy'] }}
+                                    {{ isset($lab['id_executivo_psy'])? '- [' . $lab['id_executivo_psy'] . ']': '' }}
+                                </td>
+                                <td>
+                                    {{ $lab['nome_executivo_pardini'] }}
+                                    {{ isset($lab['id_executivo_psy'])? '- [' . $lab['id_executivo_pardini'] . ']': '' }}
+                                </td>
                                 <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                 <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                 <td>{{ $lab['variacao'] }}</td>
