@@ -23,6 +23,7 @@ class ObterTodosUsuarioService
         return $users;
     }
     public function getNewUser($email){
+
         \Auth::logout();
         $userdata = array(
             'email'     => $email,
