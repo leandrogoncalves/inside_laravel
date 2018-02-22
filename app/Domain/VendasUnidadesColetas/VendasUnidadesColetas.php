@@ -75,24 +75,12 @@ class VendasUnidadesColetas
         $this->idExecutivos = !empty($this->idExecutivos) ? $this->idExecutivos : $this->executivos->getIdExecutivo($user);
 
         if ($user->isUserPsy()) {
-
-            if ($isDefaultDate) {
-                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($this->idExecutivos);
-            } else {
-                $comVendaDetail = $this->unidadesColetaPsyNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
-            }
-
+            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPsyDetail($this->idExecutivos);
             return  $comVendaDetail;
         }
 
         if ($user->isUserPardini()) {
-
-            if ($isDefaultDate) {
-                $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($this->idExecutivos);
-            } else {
-                $comVendaDetail = $this->unidadesColetaPardiniNotDefaultDate($dataInicio, $dataFim, $this->idExecutivos);
-            }
-
+            $comVendaDetail = $this->unidadesColetaComVendaDetail->getUnidadesColetaPardiniDetail($this->idExecutivos);
             return $comVendaDetail;
         }
 
