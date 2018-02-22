@@ -18,9 +18,7 @@ class AcessoService
         $user = $this->obterUsuarios->getAllUsers($request);
         return $user;
     }
-    public function getNewUser($id){
-
-        $newUser = $this->obterUsuarios->getNewUser($id);
-        return dd($newUser);
+    public function getNewUser($email){
+         return $this->obterUsuarios->getNewUser($email);
     }
 }

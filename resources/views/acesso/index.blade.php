@@ -30,7 +30,7 @@
                         <td>{{ $user['nome'] }}</td>
                         <td>{{ !empty($user['ultimo_acesso']) ? $user['ultimo_acesso']: 'Não Disponível' }}</td>
                         <td>{{ $user['perfil_acesso'] }}</td>
-                        <td><a href="acesso/" class="btn btn-primary">Acessar como {{$user['nome']}}</a></td>
+                        <td><a href="acesso/{{$user['email']}}" class="btn btn-primary">Acessar como {{$user['nome']}}</a></td>
                     </tr>
                 @endforeach
                 </tbody>

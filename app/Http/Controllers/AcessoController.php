@@ -21,7 +21,7 @@ class AcessoController extends Controller
         $data = ['data'=>$this->service->getData($request)];
         return view('acesso.index', $data);
     }
-    public function redirectNewUser($id){
-        $this->service->getNewUser($id);
+    public function redirectNewUser($email){
+       return  $this->service->getNewUser($email);
     }
 }

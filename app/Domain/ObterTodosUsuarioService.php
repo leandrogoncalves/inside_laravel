@@ -22,8 +22,13 @@ class ObterTodosUsuarioService
         $users = $this->getUsers($user);
         return $users;
     }
-    public function getNewUser($id){
-        return $this->repository->find($id, ['id'])->toArray();
+    public function getNewUser($email){
+        \Auth::logout();
+        $userdata = array(
+            'email'     => $email,
+            'password'  => 'inside01'
+        );
+        return  \Auth::attempt($userdata) ?  redirect('/home') :  redirect('/login');
     }
     public function getUsers(UsuarioLogado $user){
         switch ($user->getPerfilAcessoPorExtenso()) {
