@@ -1,6 +1,6 @@
 Inside
 ===================
-____
+
 
 O inside é um software fechado desenvolvido pela equipe de TI da Psychemedics.
 
@@ -13,3 +13,37 @@ Para efetuar edições neste software,certifique-se que possua os seguintes requ
 * Composer
 * Git
 * Docker + docker compose
+
+#### 1 - Clone o projeto 
+____
+```
+git clone git@bitbucket.org:psychemedics001/inside.git
+```
+
+#### 2 - Inicie o Composer 
+____
+```
+Composer install
+```
+
+#### 3 - Instale 0 NPM
+____
+```
+npm install
+```
+
+
+#### 4 - Suba os 'containers' do Docker 
+____
+```
+docker-compose up
+```
+
+#### 5 - Acesse 
+____
+```
+http://localhost:9100
+```
+
+
+
