@@ -1,6 +1,6 @@
-var global = global || {};
+var inside = inside || {};
 
-global.performance_lab = {
+inside.performance_lab = {
 
     init: function () {
         this.laod_tablesorter();

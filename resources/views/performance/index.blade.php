@@ -250,7 +250,8 @@
 
 
 @section('page_scripts')
+    <script src="{{ asset('js/performance_lab.js') }}"></script>
     <script type="text/javascript">
-        global.performance_lab.init();
+        inside.performance_lab.init();
     </script>
 @endsection

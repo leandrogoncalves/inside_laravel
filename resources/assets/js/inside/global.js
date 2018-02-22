@@ -1,1 +1,1 @@
-var global = {};
+var inside = {};

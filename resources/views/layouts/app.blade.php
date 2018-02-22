@@ -30,7 +30,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js?') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
     @stack('scripts')
 
     @yield('page_scripts')

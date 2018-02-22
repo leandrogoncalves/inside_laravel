@@ -1,6 +1,6 @@
-var global = global || {};
+var inside = inside || {};
 
-global.home = {
+inside.home = {
 
     init : function () {
         this.chart_home();
@@ -62,7 +62,7 @@ global.home = {
             beforeSend: _callBackBefore,
             complete: _callBackAfter
         }).done(function(data) {
-            global.home.convertDate(data);
+            inside.home.convertDate(data);
         });;
     },
 
