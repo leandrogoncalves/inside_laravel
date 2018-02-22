@@ -3,7 +3,6 @@
 ])
 
 @section('page_style')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
 @endsection
 
@@ -70,7 +69,7 @@
         </div>
         <div class="col-3">
             <div class="card bg-light mb-3 colorGelo boderTable">
-                <div class="card-header">Total de UC Nunca Venda</div>
+                <div class="card-header">Total de UC Nunca Venderam</div>
                 <div class="card-body">
                    <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
@@ -99,12 +98,14 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Performance Laboratório</div>
                 <div class="card-body">
-                    <table class="table table-hover" id="table-listagem-leads">
+                    <table class="table table-hover font-12 table-sorter" id="table-listagem-leads" >
                         <thead>
                         <tr>
                             <th>Laboratório</th>
                             <th>Cidade</th>
                             <th>Estado</th>
+                            <th>Executivo Psy</th>
+                            <th>Executivo Pardini</th>
                             <th>Periodo A</th>
                             <th>Periodo B</th>
                             <th>Variação</th>
@@ -121,10 +122,12 @@
                                     <td>{{ $lab['nome_laboratorio'] }}</td>
                                     <td>{{ $lab['cidade'] }}</td>
                                     <td>{{ $lab['estado'] }}</td>
+                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoA'] }}</td>
                                     <td>{{ $lab['quantidadePeriodoB'] }}</td>
                                     <td>{{ $lab['variacao'] }}</td>
-                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}%</td>
+                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
                                     <td>{{ $lab['valor_exame_clt'] }}</td>
                                     <td>{{ $lab['valor_exame_cnh'] }}</td>
                                     <td>{{ $lab['data_ultimo_comentario'] }}</td>
@@ -134,7 +137,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3"><strong>Total:</strong></td>
+                            <td colspan="5"><strong>Total:</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoA'] }}</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoB'] }}</strong></td>
                         </tr>
@@ -149,7 +152,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas</div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
@@ -163,6 +166,23 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['estado'] }}</td>
+                                <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoA'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoB'] }}</td>
+                                <td>{{ $lab['variacao'] }}</td>
+                                <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
+                                <td>{{ $lab['valor_exame_clt'] }}</td>
+                                <td>{{ $lab['valor_exame_cnh'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
@@ -180,7 +200,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <th>Laboratório</th>
                         <th>Cidade</th>
@@ -188,6 +208,14 @@
                         <th>Nome Último Coment</th>
                         </thead>
                         <tbody>
+                        @foreach($data['nuncaVenderamDetail']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -197,7 +225,7 @@
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">movidos para Exclusão</div>
                 <div class="card-body">
-                    <table class="table table-hover ">
+                    <table class="table table-hover font-12">
                         <thead>
                         <th>Laboratório</th>
                         <th>Cidade</th>
@@ -214,34 +242,11 @@
 
 
 @section('page_scripts')
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#table-listagem-leads').DataTable({
-                language: {
-                    processing:     "Aguarde Processando...",
-                    search:         "Buscar:",
-                    lengthMenu:     "Mostrar _MENU_ linhas",
-                    info:           "Mostrando  _START_ de _END_ - total: _MAX_ leads",
-                    infoEmpty:      "Mostrando  _START_ de _END_ - total: _TOTAL_ leads",
-                    infoFiltered:   " ",
-                    infoPostFix:    "",
-                    loadingRecords: "Aguarde carregando...",
-                    zeroRecords:    "Nenhum registro encontrado",
-                    emptyTable:     "Nenhum registro encontrado",
-                    paginate: {
-                        first:      "Primeiro",
-                        previous:   "Anterior",
-                        next:       "Próximo",
-                        last:       "Último"
-                    },
-                    aria: {
-                        sortAscending:  ": Ordenar crescentet",
-                        sortDescending: ": Ordenar decrescente"
-                    },
-                    decimal: ","
-                }
-            });
-        } );
+        $(document).ready(function()
+            {
+                $(".table-sorter").tablesorter();
+            }
+        );
     </script>
 @endsection
