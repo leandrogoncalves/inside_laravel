@@ -48,10 +48,15 @@ class PerformanceService
         if ($existsDate == true) {
             $unidadesColetasTotalizadoresDetail = $this->performanceLaboratorios->get($dataInicio, $dataFim, $user);
         } else {
-            $unidadesColetasTotalizadoresDetail = $this->vendasUnidadesColetas->getTotaisDetail($dataInicio, $dataFim, $user, !$existsDate);
+            $unidadesColetasTotalizadoresDetail = $this->vendasUnidadesColetas->getTotalComVendaDetail($dataInicio, $dataFim, $user, !$existsDate);
         }
 
+        $nuncaVenderamDetail = $this->vendasUnidadesColetas->getNuncaVenderamDetail($user);
+        $movidosExclusaoDetail = $this->vendasUnidadesColetas->getMovidosExclusaoDetail($user);
+
         $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail);
+        $unidadesColetasTotalizadores->put('nuncaVenderamDetail', $nuncaVenderamDetail);
+        $unidadesColetasTotalizadores->put('movidosExclusaoDetail', $movidosExclusaoDetail);
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 

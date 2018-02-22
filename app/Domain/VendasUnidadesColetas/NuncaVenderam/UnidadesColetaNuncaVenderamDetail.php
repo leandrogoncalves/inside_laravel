@@ -1,37 +1,64 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leandro-psychemedics
- * Date: 19/02/18
- * Time: 00:30
- */
 
 namespace Inside\Domain\VendasUnidadesColetas\NuncaVenderam;
 
-use Inside\Repositories\Contracts\VendaLaboratorioRepository;
-use Inside\Repositories\Contracts\LaboratorioRepository;
-use Carbon\Carbon;
-use \DB;
+use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\Transformers\UnidadeColetaSemVendaDetailsTransformer;
+use Inside\Domain\VendasUnidadesColetas\VendasUnidadesColetas;
+use Inside\Repositories\Contracts\PerformanceLaboratorioRepository;
 
 
 class UnidadesColetaNuncaVenderamDetail
 {
-    private $vendaLaboratorioRepository;
-    private $laboratorioRepository;
+    private $performanceLaboratorioRepository;
+    private $transformer;
 
-    public function __construct(VendaLaboratorioRepository $vendaLaboratorioRepository, LaboratorioRepository $laboratorioRepository)
+    public function __construct(PerformanceLaboratorioRepository $performanceLaboratorioRepository,UnidadeColetaSemVendaDetailsTransformer $transformer)
     {
-        $this->vendaLaboratorioRepository = $vendaLaboratorioRepository;
-        $this->laboratorioRepository = $laboratorioRepository;
+        $this->performanceLaboratorioRepository = $performanceLaboratorioRepository;
+        $this->transformer = $transformer;
     }
 
-    public function getDetailPsy(array $id_executivo)
+    public function getDetailPsy(array $idExecutivo)
     {
-        return '';
+        $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
+                return $query
+                    ->whereIn('id_executivo_psy', $idExecutivo)
+                    ->where('nunca_vendeu',VendasUnidadesColetas::NUNCA_VENDEU)
+                    ->orderBy('id_laboratorio_psy', 'asc');
+            })
+            ->all([
+                'nome_laboratorio',
+                'cidade',
+                'rede',
+                'logistica_pardini',
+                'id_laboratorio_psy',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
+            ]);
+
+        return $this->transformer->transform($laboratoriosComVendaDetail);
     }
 
-    public function getDetailPardini(array $id_executivo)
+    public function getDetailPardini(array $idExecutivo)
     {
-        return '';
+        $laboratoriosComVendaDetail = $this->performanceLaboratorioRepository
+            ->scopeQuery(function ($query) use ($idExecutivo) {
+                return $query
+                    ->whereIn('id_executivo_pardini', $idExecutivo)
+                    ->where('nunca_vendeu',VendasUnidadesColetas::NUNCA_VENDEU)
+                    ->orderBy('id_laboratorio_pardini', 'asc');
+            })
+            ->all([
+                'nome_laboratorio',
+                'cidade',
+                'rede',
+                'logistica_pardini',
+                'id_laboratorio_psy',
+                'data_ultimo_comentario',
+                'nome_ultimo_comentario'
+            ]);
+
+        return $this->transformer->transform($laboratoriosComVendaDetail);
     }
 }
