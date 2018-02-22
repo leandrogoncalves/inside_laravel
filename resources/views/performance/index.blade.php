@@ -2,9 +2,6 @@
     'menu' => 'performance'
 ])
 
-@section('page_style')
-    <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
-@endsection
 
 @section('content')
 
@@ -71,7 +68,7 @@
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC Nunca Venderam</div>
                 <div class="card-body">
-                   <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
+                    <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
             </div>
         </div>
@@ -143,9 +140,19 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="5"><strong>Total:</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoA'] }}</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoB'] }}</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -198,8 +205,19 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3"><strong>Total:</strong></td>
-                            <td><strong>1168</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
+                            <td><strong>0</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -243,6 +261,12 @@
                         <th>Cidade</th>
                         </thead>
                         <tbody>
+                        @foreach($data['movidosExclusaoDetail']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -254,11 +278,8 @@
 
 
 @section('page_scripts')
+    <script src="{{ asset('js/performance_lab.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function()
-            {
-                $(".table-sorter").tablesorter();
-            }
-        );
+        inside.performance_lab.init();
     </script>
 @endsection
