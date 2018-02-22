@@ -151,7 +151,7 @@
         <div class="col-12">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header title-Grafico">Laboratório sem Vendas</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
@@ -199,7 +199,7 @@
         <div class="col-6">
             <div class="card bg-light mb-3  colorGelo boderTable">
                 <div class="card-header">Nunca Venderam</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <th>Laboratório</th>
