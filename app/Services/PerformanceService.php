@@ -52,11 +52,13 @@ class PerformanceService
         }
 
         $nuncaVenderamDetail = $this->vendasUnidadesColetas->getNuncaVenderamDetail($user);
+        $labsSemVendaDetail = $this->vendasUnidadesColetas->getLabsSemVendaDetail($user);
         $movidosExclusaoDetail = $this->vendasUnidadesColetas->getMovidosExclusaoDetail($user);
 
         $unidadesColetasTotalizadores->put('unidadesColetasDetalhes', $unidadesColetasTotalizadoresDetail);
         $unidadesColetasTotalizadores->put('nuncaVenderamDetail', $nuncaVenderamDetail);
         $unidadesColetasTotalizadores->put('movidosExclusaoDetail', $movidosExclusaoDetail);
+        $unidadesColetasTotalizadores->put('labsSemVendaDetail', $labsSemVendaDetail);
 
         $precoMedio = $this->precoMedio->getPrecoMedio($user);
 
@@ -67,8 +69,6 @@ class PerformanceService
 
     private function getDatesOfThePeriods(Request $request)
     {
-        $dataInicio;
-        $dataFim;
 
         if ($request->exists('data_inicio')) {
             $dataInicio = Carbon::createFromFormat('Y-m-d', $request->input('data_inicio'))->hour(0)->minute(0)->second(0);

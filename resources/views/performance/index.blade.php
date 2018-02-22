@@ -157,14 +157,16 @@
     <div class="row">
         <div class="col-12">
             <div class="card bg-light mb-3  colorGelo boderTable">
-                <div class="card-header title-Grafico">Laboratório sem Vendas</div>
+                <div class="card-header title-Grafico">Laboratório sem Vendas nos últimos 10 dias</div>
                 <div class="card-body">
                     <table class="table table-hover font-12 table-sorter">
                         <thead>
                         <tr>
                             <th>Laboratório</th>
                             <th>Cidade</th>
-                            <th>Executivo</th>
+                            <th>Estado</th>
+                            <th>Executivo Psy</th>
+                            <th>Executivo Pardini</th>
                             <th>Dias sem Vender</th>
                             <th>Data Última Venda</th>
                             <th>Qtd Vendas 30 dias</th>
@@ -173,7 +175,20 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                        @foreach($data['labsSemVendaDetail']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['estado'] }}</td>
+                                <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>{{ $lab['dias_sem_vender'] }}</td>
+                                <td>{{ $lab['data_ultima_venda'] }}</td>
+                                <td>{{ $lab['qtd_vendas_trinta_dias'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
@@ -181,13 +196,10 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
                             <td><strong>Total:</strong></td>
-                            <td><strong>0</strong></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><strong>{{ $data['labsSemVendaDetail']['total_vendas_trinta_dias'] }}</strong></td>
                             <td></td>
                             <td></td>
                         </tr>

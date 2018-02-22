@@ -2,7 +2,7 @@
 
 namespace Inside\Domain\VendasUnidadesColetas\NuncaVenderam;
 
-use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\Transformers\UnidadeColetaSemVendaDetailsTransformer;
+use Inside\Domain\VendasUnidadesColetas\NuncaVenderam\Transformers\UnidadeColetaNuncaVendeuDetailsTransformer;
 use Inside\Domain\VendasUnidadesColetas\VendasUnidadesColetas;
 use Inside\Repositories\Contracts\PerformanceLaboratorioRepository;
 
@@ -12,7 +12,7 @@ class UnidadesColetaNuncaVenderamDetail
     private $performanceLaboratorioRepository;
     private $transformer;
 
-    public function __construct(PerformanceLaboratorioRepository $performanceLaboratorioRepository,UnidadeColetaSemVendaDetailsTransformer $transformer)
+    public function __construct(PerformanceLaboratorioRepository $performanceLaboratorioRepository, UnidadeColetaNuncaVendeuDetailsTransformer $transformer)
     {
         $this->performanceLaboratorioRepository = $performanceLaboratorioRepository;
         $this->transformer = $transformer;

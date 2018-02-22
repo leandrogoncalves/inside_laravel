@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection as DatabaseCollection;
 use Carbon\Carbon;
 
 
-class UnidadeColetaSemVendaDetailsTransformer
+class UnidadeColetaNuncaVendeuDetailsTransformer
 {
     private $performanceDataResults;
 
