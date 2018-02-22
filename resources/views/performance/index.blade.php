@@ -2,9 +2,6 @@
     'menu' => 'performance'
 ])
 
-@section('page_style')
-    <link href="{{ asset('css/performance.css') }}" rel="stylesheet">
-@endsection
 
 @section('content')
 
@@ -71,7 +68,7 @@
             <div class="card bg-light mb-3 colorGelo boderTable">
                 <div class="card-header">Total de UC Nunca Venderam</div>
                 <div class="card-body">
-                   <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
+                    <strong> <p style="text-align: center">{{ $data['unidadesColetasNuncaVenderam'] }}</p></strong>
                 </div>
             </div>
         </div>
@@ -117,29 +114,39 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
-                                <tr class=" {{ $lab['bg_color']  }}" >
-                                    <td>{{ $lab['nome_laboratorio'] }}</td>
-                                    <td>{{ $lab['cidade'] }}</td>
-                                    <td>{{ $lab['estado'] }}</td>
-                                    <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                    <td>{{ $lab['nome_executivo_pardini'] }}</td>
-                                    <td>{{ $lab['quantidadePeriodoA'] }}</td>
-                                    <td>{{ $lab['quantidadePeriodoB'] }}</td>
-                                    <td>{{ $lab['variacao'] }}</td>
-                                    <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
-                                    <td>{{ $lab['valor_exame_clt'] }}</td>
-                                    <td>{{ $lab['valor_exame_cnh'] }}</td>
-                                    <td>{{ $lab['data_ultimo_comentario'] }}</td>
-                                    <td>{{ $lab['nome_ultimo_comentario'] }}</td>
-                                </tr>
-                            @endforeach
+                        @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                                <td>{{ $lab['estado'] }}</td>
+                                <td>{{ $lab['nome_executivo_psy'] }}</td>
+                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoA'] }}</td>
+                                <td>{{ $lab['quantidadePeriodoB'] }}</td>
+                                <td>{{ $lab['variacao'] }}</td>
+                                <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
+                                <td>{{ $lab['valor_exame_clt'] }}</td>
+                                <td>{{ $lab['valor_exame_cnh'] }}</td>
+                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
+                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="5"><strong>Total:</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoA'] }}</strong></td>
                             <td><strong>{{ $data['unidadesColetasDetalhes']['totalPeriodoB'] }}</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -166,28 +173,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($data['unidadesColetasDetalhes']['data'] as $lab)
-                            <tr class=" {{ $lab['bg_color']  }}" >
-                                <td>{{ $lab['nome_laboratorio'] }}</td>
-                                <td>{{ $lab['cidade'] }}</td>
-                                <td>{{ $lab['estado'] }}</td>
-                                <td>{{ $lab['nome_executivo_psy'] }}</td>
-                                <td>{{ $lab['nome_executivo_pardini'] }}</td>
-                                <td>{{ $lab['quantidadePeriodoA'] }}</td>
-                                <td>{{ $lab['quantidadePeriodoB'] }}</td>
-                                <td>{{ $lab['variacao'] }}</td>
-                                <td class="text-white {{ $lab['variacao'] > 0 ? 'bg-success' : 'bg-danger' }}">{{ $lab['variacaoPorcentual'] }}</td>
-                                <td>{{ $lab['valor_exame_clt'] }}</td>
-                                <td>{{ $lab['valor_exame_cnh'] }}</td>
-                                <td>{{ $lab['data_ultimo_comentario'] }}</td>
-                                <td>{{ $lab['nome_ultimo_comentario'] }}</td>
-                            </tr>
-                        @endforeach
+
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3"><strong>Total:</strong></td>
-                            <td><strong>1168</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
+                            <td><strong>0</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </tfoot>
                     </table>
@@ -231,22 +233,25 @@
                         <th>Cidade</th>
                         </thead>
                         <tbody>
+                        @foreach($data['movidosExclusaoDetail']['data'] as $lab)
+                            <tr class=" {{ $lab['bg_color']  }}" >
+                                <td>{{ $lab['nome_laboratorio'] }}</td>
+                                <td>{{ $lab['cidade'] }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+    </div>'
 
 @endsection
 
 
 @section('page_scripts')
+    <script src="{{ asset('js/performance_lab.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function()
-            {
-                $(".table-sorter").tablesorter();
-            }
-        );
+        inside.performance_lab.init();
     </script>
 @endsection

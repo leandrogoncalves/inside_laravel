@@ -1,7 +1,8 @@
 @extends('layouts.app', [
     'menu' => 'home'
 ])
-<link href="{{ asset('css/inside.css') }}" rel="stylesheet">
+
+
 @section('content')
 
 <div id="page-title" class="d-flex mb-4">
@@ -82,34 +83,13 @@
     </div>
 </div>
 <div class="loading" style="display: none"></div>
-@push('scripts')
-<script>
-    function convertDate(date) {
-        var grafico = date;
-        var dias = [];
-        var quantidade = [];
-        for(var i=0; i <  Object.keys(grafico).length; i++){
-            dias.push(grafico[i].data_inclusao);
-            quantidade.push(grafico[i].quantidade);
-        }
-        init(dias, quantidade );
-    }
-    function loadData(link, _callBackBefore, _callBackAfter) {
-        $.ajax({
-            url:link,
-            context: document.body,
-            beforeSend: _callBackBefore,
-            complete: _callBackAfter
-        }).done(function(data) {
-            convertDate(data);
-        });;
-    }
-    loadData('/total-exames-acumulado/'+$('#id_executivo').text()+'/'+$('#perfil_acesso').text(),
-        function () {
-            /*Fazer loading*/
-         }, function () {
 
-    });
+@push('scripts')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="{{ asset('js/home.js') }}"></script>
+<script>
+    inside.home.init();
 </script>
 @endpush
+
 @endsection
