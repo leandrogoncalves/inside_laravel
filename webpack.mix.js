@@ -14,8 +14,15 @@ let mix = require('laravel-mix');
 mix.js([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/tablesorter/dist/js/jquery.tablesorter.js',
+    'resources/assets/js/inside/global.js',
+    'resources/assets/js/inside/home.js',
+    'resources/assets/js/inside/performance_lab.js',
     'resources/assets/js/app.js'
 ],'public/js/app.js')
-.sourceMaps();
+    .sourceMaps();
 
 mix.sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.copy('resources/assets/images', 'public/images');
+
+mix.copy('node_modules/tablesorter/dist/css/images', 'public/css/images');

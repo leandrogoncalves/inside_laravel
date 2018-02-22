@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/global.css') }}" rel="stylesheet">
 
     @yield('page_style')
 
@@ -32,8 +31,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js?') }}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/chart.js') }}"></script>
     @stack('scripts')
 
     @yield('page_scripts')

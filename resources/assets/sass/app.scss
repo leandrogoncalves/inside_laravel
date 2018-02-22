@@ -8,6 +8,15 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+
+// Inside Css
+@import '../css/global.css';
+@import '../css/inside.css';
+@import '../css/performance.css';
+
+//table sorter
+@import '~tablesorter/dist/css/scss/theme';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
