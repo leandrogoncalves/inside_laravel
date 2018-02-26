@@ -59,7 +59,7 @@ class UnidadeColetaComVendaDetailTransformer
             'quantidadePeriodoB'=> isset($quantidadePeriodoB)? $quantidadePeriodoB: null,
             'quantidadePeriodoA'=> isset($quantidadePeriodoA)? $quantidadePeriodoA: null,
             'variacao'=> isset($variacao)? $variacao: null,
-            'variacaoPorcentual'=> isset($variacaoPorcentual)? $variacaoPorcentual: null,
+            'variacaoPorcentual'=> isset($variacaoPorcentual) && $variacaoPorcentual != 0? $variacaoPorcentual . '%': '0%',
             'bg_color'=> $this->getBgColor($data['rede'],$data['logistica_pardini'])
         ]));
     }
