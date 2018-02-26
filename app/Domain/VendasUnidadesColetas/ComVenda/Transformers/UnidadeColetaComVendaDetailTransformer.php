@@ -27,9 +27,8 @@ class UnidadeColetaComVendaDetailTransformer
 
         return collect([
             'data' => $this->performanceDataResults,
-
-            'dataInicioPeriodoB' => Carbon::now()->copy()->hour(0)->minute(0)->second(0)->format('d/m/Y'),
-            'dataFimPeriodoB' => Carbon::now()->copy()->addDays(-30)->hour(23)->minute(59)->second(59)->format('d/m/Y'),
+            'dataInicioPeriodoB' => Carbon::now()->copy()->addDays(-30)->hour(23)->minute(59)->second(59)->format('d/m/Y'),
+            'dataFimPeriodoB' => Carbon::now()->copy()->hour(0)->minute(0)->second(0)->format('d/m/Y'),
             'dataInicioPeriodoA' => Carbon::now()->copy()->addDays(-31)->hour(0)->minute(0)->second(0)->format('d/m/Y'),
             'dataFimPeriodoA' => Carbon::now()->copy()->addDays(-61)->hour(23)->minute(59)->second(59)->format('d/m/Y'),
 
