@@ -40,9 +40,9 @@ class PerformanceLaboratorioPeriodos
 
     private function getVariacaoPorcentual($totalB, $totalA)
     {
-        $totalB = isset($totalB)? intval($totalB): 0;
-        $totalA = isset($totalA)? intval($totalA): 0;
+        $totalB = isset($totalB)? floatval($totalB): 0;
+        $totalA = isset($totalA)? floatval($totalA): 0;
 
-        return $totalA > 0? round((($totalB - $totalA)/$totalA)*100) : 0;
+        return $totalA > 0? floatval(round((($totalB - $totalA)/$totalA)*100, 2)) : 0;
     }
 }
