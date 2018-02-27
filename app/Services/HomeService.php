@@ -46,7 +46,7 @@ class HomeService
         $data = $transformer->transform($data);
 
         return [
-            'data' => $data,
+            'data' => $data->reverse(),
             'precoMedio' => $precoMedio,
         ];
     }
