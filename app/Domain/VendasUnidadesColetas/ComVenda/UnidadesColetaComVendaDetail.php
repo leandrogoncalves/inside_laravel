@@ -60,7 +60,8 @@ class UnidadesColetaComVendaDetail
                 'valor_exame_clt',
                 'valor_exame_cnh',
                 'data_ultimo_comentario',
-                'nome_ultimo_comentario'
+                'nome_ultimo_comentario',
+                'preco_medio',
             ]);
 
         return $this->transformer->transform($laboratoriosComVendaDetail);
@@ -99,8 +100,8 @@ class UnidadesColetaComVendaDetail
                 'valor_exame_clt',
                 'valor_exame_cnh',
                 'data_ultimo_comentario',
-                'nome_ultimo_comentario'
-
+                'nome_ultimo_comentario',
+                'preco_medio',
             ]);
 
         return $this->transformer->transform($laboratoriosComVendaDetail);

@@ -75,6 +75,7 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.nome_ultimo_comentario',
                 'dw_performance_laboratorio.id_laboratorio_psy',
                 'dw_performance_laboratorio.id_laboratorio_pardini',
+                DB::raw("(sum(dw_vendas_origem.total_venda) / sum(dw_vendas_origem.quantidade)) as preco_medio"),
                 DB::raw('SUM(dw_vendas_origem.quantidade) AS qtd')
             ])
             ->groupBy([
@@ -140,6 +141,7 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.nome_ultimo_comentario',
                 'dw_performance_laboratorio.id_laboratorio_psy',
                 'dw_performance_laboratorio.id_laboratorio_pardini',
+                DB::raw("(sum(dw_vendas_origem.total_venda) / sum(dw_vendas_origem.quantidade)) as preco_medio"),
                 DB::raw('SUM(dw_vendas_origem.quantidade) AS qtd')
             ])
             ->groupBy([
@@ -199,6 +201,7 @@ class PerformanceLaboratorio
                 'dw_performance_laboratorio.nome_ultimo_comentario',
                 'dw_performance_laboratorio.id_laboratorio_psy',
                 'dw_performance_laboratorio.id_laboratorio_pardini',
+                DB::raw("(sum(dw_vendas_origem.total_venda) / sum(dw_vendas_origem.quantidade)) as preco_medio"),
                 DB::raw('SUM(dw_vendas_origem.quantidade) AS qtd')
             ])
             ->groupBy([

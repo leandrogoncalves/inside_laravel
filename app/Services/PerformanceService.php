@@ -60,7 +60,7 @@ class PerformanceService
         $unidadesColetasTotalizadores->put('movidosExclusaoDetail', $movidosExclusaoDetail);
         $unidadesColetasTotalizadores->put('labsSemVendaDetail', $labsSemVendaDetail);
 
-        $precoMedio = $this->precoMedio->getPrecoMedio($user);
+        $precoMedio = $this->precoMedio->getPrecoMedio($user, $dataInicio, $dataFim);
 
         $unidadesColetasTotalizadores->put('precoMedio', $precoMedio);
 
