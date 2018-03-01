@@ -45,10 +45,16 @@ class PerformanceTransformer
             'quantidadePeriodoA'=> isset($data->qtdPeriodoA)? $data->qtdPeriodoA: null,
             'variacao'=> isset($data->variacao)? $data->variacao: null,
             'variacaoPorcentual'=> isset($data->variacaoPorcentual)? $data->variacaoPorcentual . '%': '0%',
-            'bg_color'=> $this->getBgColor($data->rede, $data->logistica_pardini)
+            'bg_color'=> $this->getBgColor($data->rede, $data->logistica_pardini),
+            'preco_medio' => isset($data->preco_medio)? $this->formatNumberToBrazilian($data->preco_medio): '0',
         ]));
     }
 
+    private function formatNumberToBrazilian($value, $maskMoney = false)
+    {
+        $value = number_format($value, 2, ',', '.');
+        return $maskMoney? $this->maskMoney($value): $value;
+    }
 
     private function getBgColor($rede, $logistica)
     {

@@ -117,6 +117,7 @@
                             <th>Estado</th>
                             <th>Executivo Psy</th>
                             <th>Executivo Pardini</th>
+                            <th>Preço médio</th>
                             <th>Periodo A</th>
                             <th>Periodo B</th>
                             <th>Variação</th>
@@ -141,6 +142,7 @@
                                 {{ $lab['nome_executivo_pardini'] }}
                                 {{ isset($lab['id_executivo_pardini']) && $lab['id_executivo_pardini'] > 0? '- id:' . $lab['id_executivo_pardini']:'' }}
                             </td>
+                            <td>{{ $lab['preco_medio'] }}</td>
                             <td>{{ $lab['quantidadePeriodoA'] }}</td>
                             <td>{{ $lab['quantidadePeriodoB'] }}</td>
                             <td>{{ $lab['variacao'] }}</td>
