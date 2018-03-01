@@ -26,7 +26,7 @@ inside.home = {
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Acumulado nos Últimos 6 meses'
+                    text: 'Acumulado nos últimos 6 meses'
                 },
                 scales: {
                     xAxes: [{
