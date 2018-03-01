@@ -31,7 +31,7 @@ class PerformanceLaboratorio
             ->where("dw_performance_laboratorio.rede", 1)
             ->where('dw_vendas_origem.teste', 'N')
             ->where('dw_vendas_origem.fluxo', '>=', 1)
-            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
+            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_pardini', '=', 'dw_vendas_origem.id_laboratorio')
             ->select([
                 'dw_vendas_origem.id_laboratorio',
                 'dw_performance_laboratorio.nome_laboratorio',
