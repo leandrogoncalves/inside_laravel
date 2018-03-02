@@ -44,7 +44,7 @@ class UnidadeColetaComVendaDetailTransformer
             'nome_laboratorio' => isset($data['nome_laboratorio'])? $data['nome_laboratorio']: null,
             'cidade' => isset($data['cidade'])? $data['cidade']: null,
             'estado'=> isset($data['estado'])? $data['estado']: null,
-            'ativo'=> isset($data['ativo'])? $data['ativo']: null,
+            'status'=> isset($data['status'])? $data['status']: null,
             'id_executivo_psy'=> isset($data['id_executivo_psy'])? $data['id_executivo_psy']: null,
             'id_executivo_pardini'=> isset($data['id_executivo_pardini'])? $data['id_executivo_pardini']: null,
             'nome_executivo_psy'=> isset($data['nome_executivo_psy'])? $data['nome_executivo_psy']: null,
