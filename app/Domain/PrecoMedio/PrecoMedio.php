@@ -87,7 +87,8 @@ class PrecoMedio
         ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
             return $query
             ->where('data_inclusao', '>=', $dataInicio->toDateTimeString())
-            ->where('data_inclusao', '<=', $dataFim->toDateTimeString());
+            ->where('data_inclusao', '<=', $dataFim->toDateTimeString())
+            ->where('fluxo', '>', 1);
         })
         ->all([
             DB::raw("sum(total_venda) as total"),
@@ -105,7 +106,8 @@ class PrecoMedio
         ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
             return $query
             ->where('data_inclusao', '>=', $dataInicio->toDateTimeString())
-            ->where('data_inclusao', '<=', $dataFim->toDateTimeString());
+            ->where('data_inclusao', '<=', $dataFim->toDateTimeString())
+            ->where('fluxo', '>', 1);
         })
         ->with(["laboratorio"])
         ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
@@ -127,7 +129,8 @@ class PrecoMedio
         ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
             return $query
             ->where('data_inclusao', '>=', $dataInicio->toDateTimeString())
-            ->where('data_inclusao', '<=', $dataFim->toDateTimeString());
+            ->where('data_inclusao', '<=', $dataFim->toDateTimeString())
+            ->where('fluxo', '>', 1);
         })
         ->with(["laboratorio"])
         ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
