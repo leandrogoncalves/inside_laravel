@@ -63,7 +63,7 @@ class UnidadesColetaSemVendaDetail
                 'nome_laboratorio',
                 'cidade',
                 'estado',
-                'ativo',
+                'status',
                 'rede',
                 'logistica_pardini',
                 'id_executivo_psy',
