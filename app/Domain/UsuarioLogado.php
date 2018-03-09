@@ -32,6 +32,7 @@ class UsuarioLogado
 
     const ID_GERENTE_LABORATORIO = 10;
     const ID_GERENTE_CORPORATIVO = 20;
+    const ID_GERENTE_PONTO_PARCEIRO = 30;
 
     public function __construct(string $perfilAcesso = null, int $idExecutivo = 0, int $idGerente = 0)
     {
