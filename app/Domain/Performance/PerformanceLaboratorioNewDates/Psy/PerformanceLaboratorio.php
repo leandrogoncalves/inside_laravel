@@ -22,7 +22,7 @@ class PerformanceLaboratorio
             return $this->queryAdmin($dataInicio, $dataFim, $idExecutivo);
         }
 
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO) {
+        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO || UsuarioLogado::ID_GERENTE_PONTO_PARCEIRO) {
             return $this->queryGerenteLaboratorio($dataInicio, $dataFim, $idExecutivo);
         }
 
