@@ -21,9 +21,6 @@ class PerformanceLaboratorio
         $dataFim =  $dataFim->toDateTimeString();
 
         return $this->vendaOrigemRepository
-        ->whereHas("laboratorio", function ($query) use ($idExecutivo) {
-            $query->whereIn('id_laboratorio', $idExecutivo);
-        })
         ->scopeQuery(function ($query) use ($dataInicio, $dataFim) {
             return $query
             ->where("dw_vendas_origem.data_inclusao", ">=", $dataInicio)
@@ -31,7 +28,8 @@ class PerformanceLaboratorio
             ->where("dw_performance_laboratorio.rede", 1)
             ->where('dw_vendas_origem.teste', 'N')
             ->where('dw_vendas_origem.fluxo', '>=', 1)
-            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_pardini', '=', 'dw_vendas_origem.id_laboratorio')
+            ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
+            ->join('psy_transp.vwNivelHierPardini', 'psy_transp.vwNivelHierPardini.id_laboratorio', '=', 'dw_performance_laboratorio.id_laboratorio_pardini')
             ->select([
                 'dw_vendas_origem.id_laboratorio',
                 'dw_performance_laboratorio.nome_laboratorio',
