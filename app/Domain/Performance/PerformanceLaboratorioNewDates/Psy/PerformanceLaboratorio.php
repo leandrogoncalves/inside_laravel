@@ -22,7 +22,7 @@ class PerformanceLaboratorio
             return $this->queryAdmin($dataInicio, $dataFim, $idExecutivo);
         }
 
-        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO) {
+        if ($user->getIdGerente() === UsuarioLogado::ID_GERENTE_LABORATORIO || UsuarioLogado::ID_GERENTE_PONTO_PARCEIRO) {
             return $this->queryGerenteLaboratorio($dataInicio, $dataFim, $idExecutivo);
         }
 
@@ -180,7 +180,6 @@ class PerformanceLaboratorio
 
             ->where('dw_vendas_origem.teste', 'N')
             ->where('dw_vendas_origem.fluxo', '>=', 1)
-            ->whereIn('dw_vendas_origem.id_executivo_psy', $idExecutivo)
 
             ->join('dw_performance_laboratorio', 'dw_performance_laboratorio.id_laboratorio_psy', '=', 'dw_vendas_origem.id_laboratorio')
             ->select([
