@@ -45,7 +45,7 @@ class PerformanceLaboratorio
             ->where("dw_vendas_origem.data_inclusao", "<=", $dataFim)
 
             ->where(function ($queryWhere) {
-                $queryWhere->where('dw_vendas_origem.origem', '<>', 'CLI')
+                $queryWhere->whereIn('dw_vendas_origem.origem',['MAP','LAB','SIS','TAV','CAG'])
                 ->orWhere(function ($queryOr) {
                     $queryOr->where('dw_vendas_origem.origem', 'SIS')
                     ->where('dw_vendas_origem.tipo', '<>', 'R');
